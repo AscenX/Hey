@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12118" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12086"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="ChatBottomView">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="52"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SYb-uo-cDy">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="52"/>
+                    <subviews>
+                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" keyboardDismissMode="onDrag" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Jc1-Ss-i3w">
+                            <rect key="frame" x="56" y="10" width="260" height="32"/>
+                            <color key="backgroundColor" red="0.94901960784313721" green="0.96470588235294119" blue="0.98039215686274506" alpha="0.77000000000000002" colorSpace="calibratedRGB"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="send"/>
+                        </textView>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="contactAdd" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nbr-oV-PXY">
+                            <rect key="frame" x="331" y="5" width="44" height="42"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="44" id="cv3-Gv-vAp"/>
+                            </constraints>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2cI-tB-ZbD">
+                            <rect key="frame" x="10" y="10" width="36" height="32"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="36" id="OhP-A6-oON"/>
+                            </constraints>
+                            <state key="normal" backgroundImage="icon_mic"/>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                                <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                    <integer key="value" value="18"/>
+                                </userDefinedRuntimeAttribute>
+                            </userDefinedRuntimeAttributes>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" red="0.99999600648880005" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="trailing" secondItem="nbr-oV-PXY" secondAttribute="trailing" id="3Oe-Ne-aTm"/>
+                        <constraint firstItem="2cI-tB-ZbD" firstAttribute="leading" secondItem="SYb-uo-cDy" secondAttribute="leading" constant="10" id="B6x-oz-1oj"/>
+                        <constraint firstAttribute="bottom" secondItem="Jc1-Ss-i3w" secondAttribute="bottom" constant="10" id="C4u-jD-rj5"/>
+                        <constraint firstAttribute="bottom" secondItem="2cI-tB-ZbD" secondAttribute="bottom" constant="10" id="FDC-kK-hu9"/>
+                        <constraint firstAttribute="bottom" secondItem="nbr-oV-PXY" secondAttribute="bottom" constant="5" id="FoB-Cj-zW6"/>
+                        <constraint firstItem="2cI-tB-ZbD" firstAttribute="top" secondItem="SYb-uo-cDy" secondAttribute="top" constant="10" id="VJL-KI-MhP"/>
+                        <constraint firstItem="Jc1-Ss-i3w" firstAttribute="top" secondItem="SYb-uo-cDy" secondAttribute="top" constant="10" id="aAO-Ci-ehF"/>
+                        <constraint firstItem="nbr-oV-PXY" firstAttribute="leading" secondItem="Jc1-Ss-i3w" secondAttribute="trailing" constant="15" id="bNe-AZ-kFb"/>
+                        <constraint firstItem="Jc1-Ss-i3w" firstAttribute="leading" secondItem="2cI-tB-ZbD" secondAttribute="trailing" constant="10" id="j5h-Nu-31T"/>
+                        <constraint firstItem="nbr-oV-PXY" firstAttribute="top" secondItem="SYb-uo-cDy" secondAttribute="top" constant="5" id="uvr-Gf-Igg"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="SYb-uo-cDy" secondAttribute="trailing" id="3Xb-74-5qg"/>
+                <constraint firstItem="SYb-uo-cDy" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="Vn5-02-btZ"/>
+                <constraint firstAttribute="bottom" secondItem="SYb-uo-cDy" secondAttribute="bottom" id="W4W-b7-fEb"/>
+                <constraint firstItem="SYb-uo-cDy" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="XEx-EF-bOk"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="addButton" destination="nbr-oV-PXY" id="o0n-Xw-zTj"/>
+                <outlet property="micButton" destination="2cI-tB-ZbD" id="sHw-Ed-W7o"/>
+                <outlet property="textView" destination="Jc1-Ss-i3w" id="ACk-nS-p0F"/>
+            </connections>
+            <point key="canvasLocation" x="-220" y="37"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="icon_mic" width="36" height="36"/>
+    </resources>
+</document>
