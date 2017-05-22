@@ -13,10 +13,10 @@
 
 @property (nonatomic, strong) NSArray *contacts;
 
-@property (nonatomic, copy) NSString *name;
-@property (nonatomic, copy) NSString *icon_url;
-
 @property (nonatomic, strong) RACCommand *fetchContactsCommand;
+
+- (NSString *)nameWithIndex:(NSUInteger)index;
+- (NSString *)avatarWithIndex:(NSUInteger)index;
 
 
 @end

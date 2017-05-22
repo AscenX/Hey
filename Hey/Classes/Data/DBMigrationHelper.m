@@ -9,7 +9,7 @@
 #import <FMDBMigrationManager/FMDBMigrationManager.h>
 #import "DBMigrationHelper.h"
 
-static NSString * const DATABASE_NAME = @"ascen.sqlite";
+static NSString * const DATABASE_NAME = @"hey.sqlite";
 
 @interface DBMigrationHelper ()
 
@@ -41,6 +41,7 @@ static NSString * const DATABASE_NAME = @"ascen.sqlite";
 - (void)setup {
     FMDBMigrationManager *manager = self.migrationManager;
     manager.dynamicMigrationsEnabled = NO;
+    
 #if DEBUG
     NSLog(@"Has `schema_migrations` table?: %@", manager.hasMigrationsTable ? @"YES" : @"NO");
     NSLog(@"Origin Version: %llu", manager.originVersion);

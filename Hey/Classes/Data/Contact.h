@@ -11,8 +11,8 @@
 
 @interface Contact : MTLModel<MTLJSONSerializing, MTLFMDBSerializing>
 
-@property (nonatomic, copy) NSString *Id;
+@property (nonatomic, copy) NSNumber *Id;
 @property (nonatomic, copy) NSString *name;
-@property (nonatomic, copy) NSString *iconURL;
+@property (nonatomic, copy) NSString *avatar;
 
 @end

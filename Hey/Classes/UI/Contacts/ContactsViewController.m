@@ -30,12 +30,14 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    NSLog(@"%s", __func__);
-    
-    
     [self addView];
     [self bindViewModel];
     
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    NSLog(@"%s", __func__);
     [self.viewModel.fetchContactsCommand execute:nil];
 }
 
@@ -45,7 +47,7 @@
 
 - (void)bindViewModel {
     @weakify(self)
-    [RACObserve(self.viewModel, contacts) subscribeNext:^(id  _Nullable x) {
+    [[[RACObserve(self.viewModel, contacts) distinctUntilChanged] deliverOnMainThread] subscribeNext:^(id  _Nullable x) {
         @strongify(self)
         [self.tableView reloadData];
     }];
@@ -59,8 +61,8 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ContactsTableViewCellId" forIndexPath:indexPath];
-    [cell.imageView yy_setImageWithURL:[NSURL URLWithString:self.viewModel.icon_url] placeholder:[UIImage new]];
-    cell.textLabel.text = self.viewModel.name;
+    [cell.imageView yy_setImageWithURL:[NSURL URLWithString:[self.viewModel avatarWithIndex:indexPath.row]] placeholder:[UIImage new]];
+    cell.textLabel.text = [self.viewModel nameWithIndex:indexPath.row];
     return cell;
 }
 
@@ -71,6 +73,7 @@
         _tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
         _tableView.delegate = self;
         _tableView.dataSource = self;
+        [_tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"ContactsTableViewCellId"];
     }
     return _tableView;
 }

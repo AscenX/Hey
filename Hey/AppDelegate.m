@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 #import <AFNetworking/AFNetworking.h>
 #import <AFNetworking/AFNetworkActivityIndicatorManager.h>
+#import "DBMigrationHelper.h"
 
 #import "TabBarViewController.h"
 #import "LoginViewController.h"
@@ -24,30 +25,22 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
 
+    //database
+    DBMigrationHelper *dbMigrationHelper = [DBMigrationHelper sharedInstance];
+    [dbMigrationHelper setup];
+    
     //监听网络状况
     [[AFNetworkReachabilityManager sharedManager] startMonitoring];
     [[AFNetworkActivityIndicatorManager sharedManager] setEnabled:YES];
     
+    //设置rootView，如果已经登录则直接跳转到主界面
     NSString *token = [[Store sharedStore].tokenSignal first];
-//    if () {
-//        self.window = [self windowWithRootViewController:[[TabBarViewController alloc] init]];
-//    }
-//    else {
-//        self.window = [self windowWithRootViewController:[[LoginViewController alloc] init]];
-//    }
-    
-    //设置rootView
-//    UIWindow *window;
     if (token != nil && ![token isEqualToString:@""]) {
-//        self.window = [self windowWithRootViewController:[[TabBarViewController alloc] init]];
         self.window = [self windowWithRootViewController:[[TabBarViewController alloc] init]];
         
     } else {
-//        self.window = [self windowWithRootViewController:[ [LoginViewController alloc] init]];
         self.window = [self windowWithRootViewController:[[UIStoryboard storyboardWithName:@"LoginViewController" bundle:nil] instantiateInitialViewController]];
     }
-////    [window makeKeyAndVisible];
-////    self.window = window;
     [self.window makeKeyAndVisible];
     
     return YES;

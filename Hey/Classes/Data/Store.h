@@ -30,6 +30,8 @@ typedef State*(^ReduceBlock)(State *state);
 
 - (void)updateUser:(User *)user;
 
+- (void)updateToken:(NSString *)token;
+
 - (void)clearViewer;
 
 @end

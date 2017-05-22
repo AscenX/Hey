@@ -298,20 +298,19 @@
 				98FAB0A11EA79FBB00A3FC19 /* Manager */,
 				983661AD1EA73C03004DCD07 /* DataCenter */,
 				983661AE1EA73C18004DCD07 /* Model */,
-				983661AC1EA73BF6004DCD07 /* protobuf */,
-				9836619D1EA73BF0004DCD07 /* AccessTokenStore.h */,
-				9836619E1EA73BF0004DCD07 /* AccessTokenStore.m */,
+				983661AC1EA73BF6004DCD07 /* Protobuf */,
+				98BCEA731ED322760074757A /* Token */,
 			);
 			path = Data;
 			sourceTree = "<group>";
 		};
-		983661AC1EA73BF6004DCD07 /* protobuf */ = {
+		983661AC1EA73BF6004DCD07 /* Protobuf */ = {
 			isa = PBXGroup;
 			children = (
 				983661A11EA73BF0004DCD07 /* Message.pbobjc.h */,
 				983661A21EA73BF0004DCD07 /* Message.pbobjc.m */,
 			);
-			name = protobuf;
+			name = Protobuf;
 			sourceTree = "<group>";
 		};
 		983661AD1EA73C03004DCD07 /* DataCenter */ = {
@@ -403,6 +402,15 @@
 				986E6AD71E26A2DA00CF1707 /* Info.plist */,
 			);
 			path = HeyUITests;
+			sourceTree = "<group>";
+		};
+		98BCEA731ED322760074757A /* Token */ = {
+			isa = PBXGroup;
+			children = (
+				9836619D1EA73BF0004DCD07 /* AccessTokenStore.h */,
+				9836619E1EA73BF0004DCD07 /* AccessTokenStore.m */,
+			);
+			name = Token;
 			sourceTree = "<group>";
 		};
 		98D9FC7C1E822D3C006FCB87 /* RestClient */ = {

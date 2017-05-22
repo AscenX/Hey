@@ -28,8 +28,6 @@
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
     return @{
              @"viewer" : @"viewer",
-             @"username" : @"username",
-             @"ratings" : @"ratings"
              };
 }
 

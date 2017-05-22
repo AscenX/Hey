@@ -70,6 +70,14 @@
 
 #pragma mark - Update
 
+- (void)updateToken:(NSString *)token {
+    [self updateState:^State *(State *state) {
+        Viewer *viewer = [Viewer createWithViewer:state.viewer key:@"token" value:token];
+        [self persistViewer:viewer];
+        return [State createWithState:state key:@"viewer" value:viewer];
+    }];
+}
+
 - (void)updateState:(ReduceBlock)reduceBlock {
     [self.subject sendNext:reduceBlock];
 }
@@ -88,13 +96,6 @@
     }];
 }
 
-- (void)updateUsername:(NSString *)username {
-    [self updateState:^State *(State *state) {
-        [[NSUserDefaults standardUserDefaults] setObject:username forKey:@"username"];
-        [[NSUserDefaults standardUserDefaults] synchronize];
-        return [State createWithState:state key:@"username" value:username];
-    }];
-}
 
 - (void)clearViewer {
     [self updateState:^State *(State *state) {
@@ -107,11 +108,15 @@
 
 - (void)persistViewer:(Viewer *)viewer {
     
-    [self.db executeUpdate:@"DELETE FROM t_user"];
+    [self.db executeUpdate:@"DELETE FROM t_users"];
+    
     [[AccessTokenStore sharedStore] clearToken];
     if (viewer.user) {
-        NSString *insert = [MTLFMDBAdapter insertStatementForModel:viewer.user];
-        [self.db executeUpdate:insert];
+//        NSString *insert = [MTLFMDBAdapter insertStatementForModel:viewer.user];
+//        [self.db executeUpdate:insert];
+//        [self.db executeUpdate:@"insert into t_users (identity, avatar, name) values (?, ?, ?)"];
+        NSString *insertUser = [NSString stringWithFormat:@"insert into t_users (identity, avatar, name) values (?, ?, ?)"];
+        [self.db executeUpdate:insertUser, viewer.user.Id, viewer.user.avatar, viewer.user.name];
     }
     if (viewer.token) {
         [[AccessTokenStore sharedStore] updateToken:viewer.token];
@@ -120,10 +125,9 @@
 
 - (State *)initialState {
     Viewer *viewer = [self viewerFromDB];
-    NSString *username = [[NSUserDefaults standardUserDefaults] stringForKey:@"username"];
+//    NSString *username = [[NSUserDefaults standardUserDefaults] stringForKey:@"username"];
     return [[State alloc] initWithDictionary:@{
                                                @"viewer" : viewer ?: NSNull.null,
-                                               @"username" : username ?: NSNull.null,
                                                } error:NULL];
 }
 
@@ -134,7 +138,7 @@
     }
     
     NSError *error;
-    FMResultSet *resultSet = [self.db executeQuery:@"SELECT * FROM t_user LIMIT 1"];
+    FMResultSet *resultSet = [self.db executeQuery:@"SELECT * FROM t_users LIMIT 1"];
     User *user;
     if ([resultSet next]) {
         user = [MTLFMDBAdapter modelOfClass:[User class] fromFMResultSet:resultSet error:&error];
@@ -149,7 +153,8 @@
     
     Viewer *viewer = [[Viewer alloc] initWithDictionary:@{
                                                           @"token" : token,
-                                                          @"user" : user, } error:&error];
+                                                          @"user" : user,
+                                                          } error:&error];
     if (error) {
         NSLog(@"%@", error);
     }

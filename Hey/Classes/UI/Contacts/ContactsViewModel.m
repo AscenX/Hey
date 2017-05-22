@@ -20,16 +20,25 @@
 
 - (RACCommand *)fetchContactsCommand {
     if (!_fetchContactsCommand) {
-        @weakify(self)
         _fetchContactsCommand = [[RACCommand alloc] initWithSignalBlock:^RACSignal * _Nonnull(id  _Nullable input) {
             User *user = [Store sharedStore].userSignal.first;
-            return [[[UserManager sharedManager] fetchContactsWithUserId:user.Id] doNext:^(id  _Nullable x) {
-                @strongify(self)
+            return [[[UserManager sharedManager] fetchContactsWithUserId:[user.Id stringValue]] doNext:^(id  _Nullable x) {
                 self.contacts = x;
             }];
         }];
     }
     return _fetchContactsCommand;
 }
+
+- (NSString *)nameWithIndex:(NSUInteger)index {
+    User *user = self.contacts[index];
+    return user.name;
+}
+
+- (NSString *)avatarWithIndex:(NSUInteger)index {
+    User *user = self.contacts[index];
+    return user.avatar;
+}
+
 
 @end

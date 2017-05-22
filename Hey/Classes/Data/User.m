@@ -14,15 +14,15 @@
     return @{
              @"Id" : @"UserId",
              @"name" : @"UserName",
-             @"iconURL" : @"IconURL",
+             @"avatar" : @"Avatar",
              };
 }
 
 + (NSDictionary *)FMDBColumnsByPropertyKey {
     return @{
-             @"Id" : @"id",
-             @"name" : @"username",
-             @"iconURL" : @"icon_url",
+             @"Id" : @"identity",
+             @"name" : @"name",
+             @"avatar" : @"avatar",
              };
 }
 
@@ -31,7 +31,7 @@
 }
 
 + (NSArray *)FMDBPrimaryKeys {
-    return @[@"id"];
+    return @[@"identity"];
 }
 
 @end

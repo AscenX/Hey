@@ -6,7 +6,7 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.ExceptionBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             scope = "0"
@@ -19,13 +19,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Hey/AppDelegate.m"
-            timestampString = "517119876.179954"
+            filePath = "Hey/Classes/Data/RestClient+User.m"
+            timestampString = "517155796.974871"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "41"
-            endingLineNumber = "41"
-            landmarkName = "-application:didFinishLaunchingWithOptions:"
+            startingLineNumber = "30"
+            endingLineNumber = "30"
+            landmarkName = "-contactsWithUserId:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

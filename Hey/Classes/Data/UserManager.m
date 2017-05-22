@@ -28,7 +28,7 @@
 - (RACSignal *)loginWithUserId:(NSString *)userId password:(NSString *)password {
     return [[[RestClient sharedClient] loginWithUserId:userId password:password] doNext:^(id  _Nullable x) {
         NSString *token = [x objectForKey:@"token"];
-        [[AccessTokenStore sharedStore] updateToken:token];
+        [[Store sharedStore] updateToken:token];
         NSDictionary *userDict = [x objectForKey:@"user"];
         User *user = [MTLJSONAdapter modelOfClass:[User class] fromJSONDictionary:userDict error:nil];
         [[Store sharedStore] updateUser:user];

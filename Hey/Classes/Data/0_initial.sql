@@ -1,22 +1,12 @@
 
-CREATE TABLE t_user (
+CREATE TABLE t_users (
     identity     NUMBER PRIMARY KEY ON CONFLICT REPLACE,
-    username     TEXT,
-    avatar       TEXT,
-    phone_number TEXT,
-    birthday     TEXT,
-    email        TEXT,
-    gender       TEXT,
-    created_at   TEXT
+    name     TEXT,
+    avatar       TEXT
 );
 
-CREATE TABLE t_address (
-    uid          TEXT PRIMARY KEY ON CONFLICT REPLACE,
+CREATE TABLE t_contacts (
+    identity          NUMBER PRIMARY KEY ON CONFLICT REPLACE,
     name         TEXT,
-    adcode       TEXT,
-    district     TEXT,
-    address      TEXT,
-    latitude     NUMBER,
-    longitude    NUMBER,
-    [time]       TIMESTAMP NOT NULL DEFAULT (datetime('now'))
+    avatar       TEXT
 );

@@ -27,7 +27,7 @@
                             @"userId" : userId,
                             };
     return [[self get:path param:param] tryMap:^id _Nonnull(id  _Nullable value, NSError * _Nullable __autoreleasing * _Nullable errorPtr) {
-        return [MTLJSONAdapter modelOfClass:[Contact class] fromJSONDictionary:[value objectForKey:@"contacts"] error:errorPtr];
+        return [MTLJSONAdapter modelsOfClass:[Contact class] fromJSONArray:[value objectForKey:@"contacts"] error:errorPtr];
     }];
 }
 
