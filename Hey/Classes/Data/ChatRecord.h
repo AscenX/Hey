@@ -6,10 +6,13 @@
 //  Copyright © 2017年 Ascen. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+#import <Mantle/Mantle.h>
+#import <MTLFMDBAdapter/MTLFMDBAdapter.h>
 
-@interface ChatRecord : NSObject
+@interface ChatRecord : MTLModel <MTLFMDBSerializing>
+
+@property (nonatomic, strong) NSNumber *Id;
+@property (nonatomic, strong) NSNumber *userId;
 @property (nonatomic, copy) NSString *text;
-@property (nonatomic, strong) NSData *imageData;
 @property (nonatomic, copy) NSString *imageURL;
 @end

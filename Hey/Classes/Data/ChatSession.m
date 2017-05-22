@@ -10,9 +10,33 @@
 
 @implementation ChatSession
 
-+ (NSString *)primaryKey {
-    return @"userId";
++ (NSDictionary *)FMDBColumnsByPropertyKey {
+    return @{
+             @"Id" : @"identity",
+             @"userIdsData" : @"user_ids",
+             @"userName" : @"username",
+             @"sessionName" : @"session_name",
+             @"imageURL" : @"image_url",
+             @"lastSentence" : @"last_sentence",
+             @"time" : @"time",
+             };
 }
 
-@end
++ (NSString *)FMDBTableName {
+    return @"t_chat_sessions";
+}
 
++ (NSArray *)FMDBPrimaryKeys {
+    return @[@"identity"];
+}
+
+- (NSArray *)userIds {
+    return [NSKeyedUnarchiver unarchiveObjectWithData:_userIdsData];
+}
+
+- (void)setUserIds:(NSArray *)userIds {
+    _userIdsData = [NSKeyedArchiver archivedDataWithRootObject:userIds];
+}
+
+
+@end

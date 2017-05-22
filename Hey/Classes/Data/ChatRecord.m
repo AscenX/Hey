@@ -10,4 +10,28 @@
 
 @implementation ChatRecord
 
+//+ (NSDictionary *)JSONKeyPathsByPropertyKey {
+//    return @{
+//             @"text" : @"Text",
+//             @"name" : @"UserName",
+//             @"avatar" : @"Avatar",
+//             };
+//}
+
++ (NSDictionary *)FMDBColumnsByPropertyKey {
+    return @{
+             @"Id" : @"identity",
+             @"userId" : @"user_id",
+             @"text" : @"text",
+             @"imageURL" : @"image_url",
+             };
+}
+
++ (NSString *)FMDBTableName {
+    return @"t_chat_records";
+}
+
++ (NSArray *)FMDBPrimaryKeys {
+    return @[@"identity"];
+}
 @end

@@ -41,6 +41,8 @@
 		9885B4891ED2F57000E3DC43 /* 0_initial.sql in Resources */ = {isa = PBXBuildFile; fileRef = 9885B4881ED2F57000E3DC43 /* 0_initial.sql */; };
 		988E25111EA9B53A0064FF8C /* UserManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 988E25101EA9B53A0064FF8C /* UserManager.m */; };
 		98BEE3111EBB870A00399558 /* ChatSession.m in Sources */ = {isa = PBXBuildFile; fileRef = 98BEE3101EBB870A00399558 /* ChatSession.m */; };
+		98C682AC1ED33BD300B4170A /* ContactsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 98C682AA1ED33BD300B4170A /* ContactsTableViewCell.m */; };
+		98C682AD1ED33BD300B4170A /* ContactsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98C682AB1ED33BD300B4170A /* ContactsTableViewCell.xib */; };
 		98D2900C1EA67CF400DD677C /* RestClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 98D2900B1EA67CF400DD677C /* RestClient.m */; };
 		98E4272D1EBA5037009A38D7 /* HomeViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 98E4272C1EBA5037009A38D7 /* HomeViewModel.m */; };
 		98E894321EA9FB9C0012851A /* RestClient+User.m in Sources */ = {isa = PBXBuildFile; fileRef = 98E894311EA9FB9C0012851A /* RestClient+User.m */; };
@@ -165,6 +167,9 @@
 		988E25101EA9B53A0064FF8C /* UserManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserManager.m; sourceTree = "<group>"; };
 		98BEE30F1EBB870A00399558 /* ChatSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatSession.h; sourceTree = "<group>"; };
 		98BEE3101EBB870A00399558 /* ChatSession.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatSession.m; sourceTree = "<group>"; };
+		98C682A91ED33BD300B4170A /* ContactsTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactsTableViewCell.h; sourceTree = "<group>"; };
+		98C682AA1ED33BD300B4170A /* ContactsTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactsTableViewCell.m; sourceTree = "<group>"; };
+		98C682AB1ED33BD300B4170A /* ContactsTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ContactsTableViewCell.xib; sourceTree = "<group>"; };
 		98D2900A1EA67CF400DD677C /* RestClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RestClient.h; path = RestClient/RestClient.h; sourceTree = "<group>"; };
 		98D2900B1EA67CF400DD677C /* RestClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RestClient.m; path = RestClient/RestClient.m; sourceTree = "<group>"; };
 		98E4272B1EBA5037009A38D7 /* HomeViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeViewModel.h; sourceTree = "<group>"; };
@@ -485,6 +490,9 @@
 				98E894481EAB97530012851A /* ContactsViewController.m */,
 				9885B47C1ED07D6000E3DC43 /* ContactsViewModel.h */,
 				9885B47D1ED07D6000E3DC43 /* ContactsViewModel.m */,
+				98C682A91ED33BD300B4170A /* ContactsTableViewCell.h */,
+				98C682AA1ED33BD300B4170A /* ContactsTableViewCell.m */,
+				98C682AB1ED33BD300B4170A /* ContactsTableViewCell.xib */,
 			);
 			path = Contacts;
 			sourceTree = "<group>";
@@ -719,6 +727,7 @@
 				98E894751EAB97530012851A /* LoginViewController.storyboard in Resources */,
 				983A0D221EB7771B001337B8 /* ChatBottomView.xib in Resources */,
 				981EE5BB1EADF55200EC329F /* ChatOthersTableViewCell.xib in Resources */,
+				98C682AD1ED33BD300B4170A /* ContactsTableViewCell.xib in Resources */,
 				986E6ABD1E26A2DA00CF1707 /* Assets.xcassets in Resources */,
 				981EE5B61EADEA7500EC329F /* ChatMyselfTableViewCell.xib in Resources */,
 				9885B4891ED2F57000E3DC43 /* 0_initial.sql in Resources */,
@@ -808,6 +817,7 @@
 				9885B47B1ECF619900E3DC43 /* User.m in Sources */,
 				98FAB0BA1EA7A08200A3FC19 /* SIMPUser.m in Sources */,
 				983A0D1E1EB776F4001337B8 /* ChatBottomView.m in Sources */,
+				98C682AC1ED33BD300B4170A /* ContactsTableViewCell.m in Sources */,
 				98E4272D1EBA5037009A38D7 /* HomeViewModel.m in Sources */,
 				983661A71EA73BF0004DCD07 /* AccessTokenStore.m in Sources */,
 				98E894781EAB97530012851A /* StatusNavViewController.m in Sources */,

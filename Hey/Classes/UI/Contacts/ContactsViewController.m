@@ -9,6 +9,7 @@
 #import "ContactsViewController.h"
 #import "ContactsViewModel.h"
 #import <YYWebImage/YYWebImage.h>
+#import "ContactsTableViewCell.h"
 
 @interface ContactsViewController ()<UITableViewDelegate, UITableViewDataSource>
 
@@ -53,18 +54,34 @@
     }];
 }
 
+#pragma mark - UITableViewDelegate
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+}
+
 #pragma mark - UITableViewDataSource
+
+- (NSArray<NSString *> *)sectionIndexTitlesForTableView:(UITableView *)tableView {
+    return [self.viewModel sectionIndexString];
+}
+
+- (NSInteger)tableView:(UITableView *)tableView sectionForSectionIndexTitle:(NSString *)title atIndex:(NSInteger)index {
+    return self.viewModel.contacts.count;
+}
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return self.viewModel.contacts.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ContactsTableViewCellId" forIndexPath:indexPath];
-    [cell.imageView yy_setImageWithURL:[NSURL URLWithString:[self.viewModel avatarWithIndex:indexPath.row]] placeholder:[UIImage new]];
-    cell.textLabel.text = [self.viewModel nameWithIndex:indexPath.row];
+    ContactsTableViewCell *cell = [ContactsTableViewCell cellWithTableView:tableView];
+    [cell.avatarImageView yy_setImageWithURL:[NSURL URLWithString:[self.viewModel avatarWithIndex:indexPath.row]] placeholder:[UIImage new]];
+    cell.nameLabel.text = [self.viewModel nameWithIndex:indexPath.row];
     return cell;
 }
+
 
 #pragma mark - lazy laod
 
@@ -73,7 +90,9 @@
         _tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
         _tableView.delegate = self;
         _tableView.dataSource = self;
-        [_tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"ContactsTableViewCellId"];
+        [_tableView registerNib:[UINib nibWithNibName:@"ContactsTableViewCell" bundle:nil] forCellReuseIdentifier:@"ContactsTableViewCellID"];
+        _tableView.rowHeight = 66;
+        
     }
     return _tableView;
 }

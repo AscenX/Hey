@@ -53,6 +53,14 @@
             return viewer.user;
         }] distinctUntilChanged];
         
+        _chatRecordSignal = [[_viewerSignal map:^id(Viewer *viewer) {
+            return viewer.chatRecords;
+        }] distinctUntilChanged];
+        
+        _chatSessionSignal = [[_viewerSignal map:^id(Viewer *viewer) {
+            return viewer.chatSessions;
+        }] distinctUntilChanged];
+        
 #ifdef DEBUG
         [_stateSignal subscribeNext:^(State *state) {
             NSError *error;
@@ -96,6 +104,21 @@
     }];
 }
 
+- (void)updateSession:(NSArray *)sessions {
+    [self updateState:^State *(State *state) {
+        Viewer *viewer = [Viewer createWithViewer:state.viewer key:@"chatSessions" value:sessions];
+        [self persistViewer:viewer];
+        return [State createWithState:state key:@"viewer" value:viewer];
+    }];
+}
+
+- (void)updateChatRecords:(NSArray *)chatRecords {
+    [self updateState:^State *(State *state) {
+        Viewer *viewer = [Viewer createWithViewer:state.viewer key:@"chatRecords" value:chatRecords];
+        [self persistViewer:viewer];
+        return [State createWithState:state key:@"viewer" value:viewer];
+    }];
+}
 
 - (void)clearViewer {
     [self updateState:^State *(State *state) {
@@ -112,12 +135,30 @@
     
     [[AccessTokenStore sharedStore] clearToken];
     if (viewer.user) {
-//        NSString *insert = [MTLFMDBAdapter insertStatementForModel:viewer.user];
-//        [self.db executeUpdate:insert];
-//        [self.db executeUpdate:@"insert into t_users (identity, avatar, name) values (?, ?, ?)"];
-        NSString *insertUser = [NSString stringWithFormat:@"insert into t_users (identity, avatar, name) values (?, ?, ?)"];
-        [self.db executeUpdate:insertUser, viewer.user.Id, viewer.user.avatar, viewer.user.name];
+        NSString *insertUser = [MTLFMDBAdapter insertStatementForModel:viewer.user];
+        [self.db executeUpdate:insertUser];
+//        NSString *insertUser = @"insert into t_users (identity, avatar, name) values (?, ?, ?)";
+//        [self.db executeUpdate:insertUser, viewer.user.Id, viewer.user.avatar, viewer.user.name];
     }
+    
+    if (viewer.chatSessions) {
+//        NSString *storeChatSessions = @"insert into t_chat_sessions (identity, avatar, name) values (?, ?, ?)";
+        /*
+         @property (nonatomic, strong) NSNumber *Id;
+         @property (nonatomic, copy) NSArray *userIds;
+         @property (nonatomic, strong) NSData *userIdsData;
+         @property (nonatomic, copy) NSString *username;
+         @property (nonatomic, copy) NSString *iconURL;
+         @property (nonatomic, copy) NSString *sessionName;
+         @property (nonatomic, copy) NSString *lastSentence;
+         @property (nonatomic, strong) NSDate *time;
+         */
+//        for (int i = 0; i < viewer.chatSessions.count; ++i) {
+//            ChatSession *session = viewer.chatSessions[i];
+//            [self.db executeUpdate:storeChatSessions, session.Id, session.userIdsData, session.username, session.iconURL, session.sessionName, session.lastSentence, ];
+//        }
+    }
+    
     if (viewer.token) {
         [[AccessTokenStore sharedStore] updateToken:viewer.token];
     }

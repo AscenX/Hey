@@ -24,6 +24,9 @@ typedef State*(^ReduceBlock)(State *state);
 @property (nonatomic, strong, readonly) RACSignal *tokenSignal;
 @property (nonatomic, strong, readonly) RACSignal *userSignal;
 
+@property (nonatomic, strong) RACSignal *chatRecordSignal;
+@property (nonatomic, strong) RACSignal *chatSessionSignal;
+
 - (void)updateState:(ReduceBlock)reduceBlock;
 
 - (void)updateViewer:(Viewer *)viewer;
@@ -31,6 +34,10 @@ typedef State*(^ReduceBlock)(State *state);
 - (void)updateUser:(User *)user;
 
 - (void)updateToken:(NSString *)token;
+
+- (void)updateSession:(NSArray *)sessions;
+
+- (void)updateChatRecords:(NSArray *)chatRecords;
 
 - (void)clearViewer;
 

@@ -12,6 +12,8 @@
 
 @property (nonatomic, strong, readwrite) User *user;
 @property (nonatomic, copy, readwrite) NSString *token;
+@property (nonatomic, copy, readwrite) NSArray *sessions;
+@property (nonatomic, copy, readwrite) NSArray *chatRecords;
 
 @end
 
@@ -31,11 +33,21 @@
     return @{
              @"token" :         @"token",
              @"user" :          @"user",
+             @"chatSessions" : @"chatSessions",
+             @"chatRecords" : @"chatRecords",
              };
 }
 
 + (NSValueTransformer *)userJSONTransformer {
     return [MTLJSONAdapter dictionaryTransformerWithModelClass:[User class]];
+}
+
++ (NSValueTransformer *)sessionsJSONTransformer {
+    return [MTLJSONAdapter arrayTransformerWithModelClass:[ChatSession class]];
+}
+
++ (NSValueTransformer *)chatRecordsJSONTransformer {
+    return [MTLJSONAdapter arrayTransformerWithModelClass:[ChatRecord class]];
 }
 
 @end

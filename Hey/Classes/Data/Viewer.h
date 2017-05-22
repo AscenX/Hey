@@ -8,6 +8,8 @@
 
 #import <Mantle/Mantle.h>
 #import "User.h"
+#import "ChatRecord.h"
+#import "ChatSession.h"
 
 @interface Viewer : MTLModel <MTLJSONSerializing>
 
@@ -15,6 +17,8 @@
 
 @property (nonatomic, strong, readonly) User *user;
 @property (nonatomic, copy, readonly) NSString *token;
+@property (nonatomic, copy, readonly) NSArray *chatSessions;
+@property (nonatomic, copy, readonly) NSArray *chatRecords;
 
 
 @end

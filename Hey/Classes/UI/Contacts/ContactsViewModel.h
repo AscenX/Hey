@@ -18,5 +18,7 @@
 - (NSString *)nameWithIndex:(NSUInteger)index;
 - (NSString *)avatarWithIndex:(NSUInteger)index;
 
+- (NSArray *)sectionIndexString;
+
 
 @end

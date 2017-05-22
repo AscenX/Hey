@@ -6,16 +6,18 @@
 //  Copyright © 2017年 Ascen. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+#import <Mantle/Mantle.h>
+#import <MTLFMDBAdapter/MTLFMDBAdapter.h>
 
-@interface ChatSession : NSObject
+@interface ChatSession : MTLModel <MTLFMDBSerializing>
 
-@property (nonatomic, strong) NSString *userId;
-@property (nonatomic, strong) NSString *userName;
-@property (nonatomic, strong) NSString *iconURL;
-@property (nonatomic, strong) NSString *sessionName;
-@property (nonatomic, strong) NSString *lastSentence;
+@property (nonatomic, strong) NSNumber *Id;
+@property (nonatomic, copy) NSArray *userIds;
+@property (nonatomic, strong) NSData *userIdsData;
+@property (nonatomic, copy) NSString *username;
+@property (nonatomic, copy) NSString *iconURL;
+@property (nonatomic, copy) NSString *sessionName;
+@property (nonatomic, copy) NSString *lastSentence;
 @property (nonatomic, strong) NSDate *time;
-
 
 @end

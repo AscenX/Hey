@@ -75,7 +75,7 @@
     if (!_tableView) {
         _tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
         [_tableView registerNib:[UINib nibWithNibName:@"HomeTableViewCell" bundle:nil] forCellReuseIdentifier:@"HomeTableViewCellID"];
-        _tableView.rowHeight = 54;
+        _tableView.rowHeight = 66;
         _tableView.delegate = self;
         _tableView.dataSource = self;
     }
