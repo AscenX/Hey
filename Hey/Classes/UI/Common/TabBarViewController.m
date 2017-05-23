@@ -13,6 +13,8 @@
 #import "StatusViewController.h"
 #import "ProfileViewController.h"
 
+#import "UIColor+Help.h"
+
 
 
 @interface TabBarViewController ()
@@ -49,7 +51,8 @@
     profileNav.tabBarItem.image = [UIImage imageNamed:@"icon_me"];
     [self addChildViewController:profileNav];
     
-//    [self setHidesBottomBarWhenPushed:YES];
+    [self.tabBar setTintColor:[UIColor colorWithHex:0x4990E2]];
+    
 }
 
 

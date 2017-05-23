@@ -35,7 +35,7 @@ typedef State*(^ReduceBlock)(State *state);
 
 - (void)updateToken:(NSString *)token;
 
-- (void)updateSession:(NSArray *)sessions;
+- (void)updateSessions:(NSArray *)sessions;
 
 - (void)updateChatRecords:(NSArray *)chatRecords;
 

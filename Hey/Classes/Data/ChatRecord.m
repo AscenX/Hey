@@ -10,13 +10,14 @@
 
 @implementation ChatRecord
 
-//+ (NSDictionary *)JSONKeyPathsByPropertyKey {
-//    return @{
-//             @"text" : @"Text",
-//             @"name" : @"UserName",
-//             @"avatar" : @"Avatar",
-//             };
-//}
++ (NSDictionary *)JSONKeyPathsByPropertyKey {
+    return @{
+             @"Id" : @"identity",
+             @"userId" : @"user_id",
+             @"text" : @"text",
+             @"imageURL" : @"image_url",
+             };
+}
 
 + (NSDictionary *)FMDBColumnsByPropertyKey {
     return @{

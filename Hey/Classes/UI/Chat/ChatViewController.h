@@ -8,6 +8,10 @@
 
 #import "BaseViewController.h"
 
+@class User;
+
 @interface ChatViewController : BaseViewController
+
+- (instancetype)initWithUser:(User *)user;
 
 @end

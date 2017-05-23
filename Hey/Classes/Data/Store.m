@@ -104,7 +104,7 @@
     }];
 }
 
-- (void)updateSession:(NSArray *)sessions {
+- (void)updateSessions:(NSArray *)sessions {
     [self updateState:^State *(State *state) {
         Viewer *viewer = [Viewer createWithViewer:state.viewer key:@"chatSessions" value:sessions];
         [self persistViewer:viewer];
@@ -132,13 +132,13 @@
 - (void)persistViewer:(Viewer *)viewer {
     
     [self.db executeUpdate:@"DELETE FROM t_users"];
-    
     [[AccessTokenStore sharedStore] clearToken];
+    
     if (viewer.user) {
-        NSString *insertUser = [MTLFMDBAdapter insertStatementForModel:viewer.user];
-        [self.db executeUpdate:insertUser];
-//        NSString *insertUser = @"insert into t_users (identity, avatar, name) values (?, ?, ?)";
-//        [self.db executeUpdate:insertUser, viewer.user.Id, viewer.user.avatar, viewer.user.name];
+//        NSString *insertUser = [MTLFMDBAdapter insertStatementForModel:viewer.user];
+//        [self.db executeUpdate:insertUser];
+        NSString *insertUser = @"insert into t_users (identity, avatar, name) values (?, ?, ?)";
+        [self.db executeUpdate:insertUser, viewer.user.Id, viewer.user.avatar, viewer.user.name];
     }
     
     if (viewer.chatSessions) {

@@ -10,6 +10,8 @@
 #import "ContactsViewModel.h"
 #import <YYWebImage/YYWebImage.h>
 #import "ContactsTableViewCell.h"
+#import "UserInfoViewController.h"
+#import "User.h"
 
 @interface ContactsViewController ()<UITableViewDelegate, UITableViewDataSource>
 
@@ -59,6 +61,9 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
+    User *user = self.viewModel.contacts[indexPath.row];
+    UserInfoViewController *userInfoVC = [[UserInfoViewController alloc] initWithUser:user];
+    [self.navigationController pushViewController:userInfoVC animated:YES];
 }
 
 #pragma mark - UITableViewDataSource
@@ -77,7 +82,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     ContactsTableViewCell *cell = [ContactsTableViewCell cellWithTableView:tableView];
-    [cell.avatarImageView yy_setImageWithURL:[NSURL URLWithString:[self.viewModel avatarWithIndex:indexPath.row]] placeholder:[UIImage new]];
+    [cell.avatarImageView yy_setImageWithURL:[NSURL URLWithString:[self.viewModel avatarWithIndex:indexPath.row]] placeholder:[UIImage imageNamed:@"icon_placeholder"]];
     cell.nameLabel.text = [self.viewModel nameWithIndex:indexPath.row];
     return cell;
 }

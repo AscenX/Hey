@@ -16,17 +16,26 @@
 #import "SIMPMessage.h"
 #import "ChatBottomView.h"
 #import <ReactiveObjC/ReactiveObjC.h>
+#import "ChatViewModel.h"
 
 @interface ChatViewController ()<UITableViewDelegate, UITableViewDataSource, UITextViewDelegate>
 
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) ChatBottomView *bottomView;
-
 @property (nonatomic, strong) SIMPConnection *connection;
+
+@property (nonatomic, strong) ChatViewModel *viewModel;
 
 @end
 
 @implementation ChatViewController
+
+- (instancetype)initWithUser:(User *)user {
+    if (self = [super init]) {
+        
+    }
+    return self;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];

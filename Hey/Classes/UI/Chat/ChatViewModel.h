@@ -9,8 +9,11 @@
 #import <Foundation/Foundation.h>
 
 @class RACCommand;
+@class User;
 
 @interface ChatViewModel : NSObject
+
+- (instancetype)initWithUser:(User *)user;
 
 
 @end

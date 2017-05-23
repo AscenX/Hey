@@ -7,31 +7,126 @@
 //
 
 #import "ProfileViewController.h"
+#import "ProfileViewModel.h"
+#import "ProfileTableViewCell.h"
+#import "ProfileTitleTableViewCell.h"
+#import "ProfileHeaderView.h"
+#import "Store.h"
+#import "UIColor+Help.h"
 
-@interface ProfileViewController ()
+#import <YYWebImage/YYWebImage.h>
+
+@interface ProfileViewController () <UITableViewDelegate, UITableViewDataSource>
+
+@property (nonatomic, strong) UITableView *tableView;
+@property (nonatomic, strong) ProfileHeaderView *headerView;
+
+@property (nonatomic, strong) ProfileViewModel *viewModel;
+
 
 @end
 
 @implementation ProfileViewController
 
+- (instancetype)init {
+    if (self = [super init]) {
+        _viewModel = [[ProfileViewModel alloc] init];
+    }
+    return self;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    
+    self.view.backgroundColor = [UIColor colorWithHex:0xCCC9CD];
+    
+    [self addView];
+    [self bindData];
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+- (void)addView {
+    [self.view addSubview:self.tableView];
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+- (void)bindData {
+    User *user = [Store sharedStore].userSignal.first;
+    [self.headerView.avatarImageView yy_setImageWithURL:[NSURL URLWithString:user.avatar] placeholder:[UIImage imageNamed:@"icon_placeholder"]];
+    self.headerView.nameLabel.text = user.name;
+    self.headerView.IdLabel.text = [NSString stringWithFormat:@"帐号: %@", user.Id];
+    
+    [[self.viewModel.logoutCommand.executionSignals deliverOnMainThread] subscribeNext:^(id  _Nullable x) {
+        self.view.window.rootViewController = [[UIStoryboard storyboardWithName:@"LoginViewController" bundle:nil] instantiateInitialViewController];
+    }];
 }
-*/
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+}
+
+#pragma mark - UITableViewDelegate
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    return 20;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    if (indexPath.section == self.viewModel.infos.count - 1) {
+        [self.viewModel.logoutCommand execute:nil];
+    }
+}
+
+
+#pragma mark - UITableViewDataSource
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return self.viewModel.infos.count;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    NSArray *infos = self.viewModel.infos[section];
+    return infos.count;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    NSArray *infos = self.viewModel.infos[indexPath.section];
+    NSDictionary *info = infos[indexPath.row];
+    NSString *icon = [info objectForKey:@"icon"];
+    NSString *title = [info objectForKey:@"title"];
+    
+    if (indexPath.section == self.viewModel.infos.count - 1) {
+        ProfileTitleTableViewCell *cell = [ProfileTitleTableViewCell cellWithTableView:tableView];
+        return cell;
+    } else {
+        ProfileTableViewCell *cell = [ProfileTableViewCell cellWithTableView:tableView];
+        cell.iconImageView.image = [UIImage imageNamed:icon];
+        cell.titleLabel.text = title;
+        return cell;;
+    }
+}
+
+#pragma mark - lazy laod
+
+- (UITableView *)tableView {
+    if (!_tableView) {
+        _tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
+        _tableView.delegate = self;
+        _tableView.dataSource = self;
+        _tableView.tableHeaderView = self.headerView;
+        _tableView.rowHeight = 44;
+        [_tableView registerNib:[UINib nibWithNibName:@"ProfileTableViewCell" bundle:nil] forCellReuseIdentifier:@"ProfileTableViewCellID"];
+        [_tableView registerNib:[UINib nibWithNibName:@"ProfileTitleTableViewCell" bundle:nil] forCellReuseIdentifier:@"ProfileTitleTableViewCellID"];
+        _tableView.tableFooterView = [UIView new];
+        _tableView.backgroundColor = [UIColor clearColor];
+    }
+    return _tableView;
+}
+
+- (ProfileHeaderView *)headerView {
+    if (!_headerView) {
+        _headerView = [[NSBundle mainBundle] loadNibNamed:@"ProfileHeaderView" owner:nil options:nil].firstObject;
+    }
+    return _headerView;
+}
 
 @end

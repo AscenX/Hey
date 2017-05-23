@@ -132,10 +132,7 @@ NSString * const RestClientErrorDomain = @"RestClientErrorDomain";
     if (response) {
         code = response.statusCode;
     }
-    if (code == -1001) {
-        localizedDescription = @"请求错误";
-    }
-    else if (code == 1002) {
+    if (code == 1002) {
         localizedDescription = @"登录失效，请重新登录";
     }
     else if (code == 1001) {
@@ -152,6 +149,8 @@ NSString * const RestClientErrorDomain = @"RestClientErrorDomain";
     }
     else if (code >= 500) {
         localizedDescription = @"服务暂不可用，请稍后重试";
+    } else {
+        localizedDescription = [userInfo objectForKey:@"NSLocalizedDescription"];
     }
     
     if (localizedDescription) {

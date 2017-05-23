@@ -7,7 +7,21 @@
 //
 
 #import "ChatViewModel.h"
+#import "User.h"
+
+@interface ChatViewModel ()
+
+@property (nonatomic, strong) User *user;
+
+@end
 
 @implementation ChatViewModel
+
+- (instancetype)initWithUser:(User *)user {
+    if (self = [super init]) {
+        _user = user;
+    }
+    return self;
+}
 
 @end

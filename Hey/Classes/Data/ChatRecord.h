@@ -9,7 +9,7 @@
 #import <Mantle/Mantle.h>
 #import <MTLFMDBAdapter/MTLFMDBAdapter.h>
 
-@interface ChatRecord : MTLModel <MTLFMDBSerializing>
+@interface ChatRecord : MTLModel <MTLJSONSerializing, MTLFMDBSerializing>
 
 @property (nonatomic, strong) NSNumber *Id;
 @property (nonatomic, strong) NSNumber *userId;
