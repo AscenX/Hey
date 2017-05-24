@@ -26,11 +26,12 @@
 
 - (RACCommand *)loginCommand {
     if (!_loginCommand) {
-        _loginCommand = [[RACCommand alloc] initWithSignalBlock:^RACSignal * _Nonnull(id  _Nullable input) {\
+        _loginCommand = [[RACCommand alloc] initWithSignalBlock:^RACSignal * _Nonnull(id  _Nullable input) {
             @weakify(self)
-            return [[[UserManager sharedManager] loginWithUserId:self.userId password:self.password] doNext:^(id  _Nullable x) {
+            return [[[UserManager sharedManager] loginWithUserId:self.userId password:self.password] map:^id(id value) {
                 @strongify(self)
-                [SIMPConnection connectToHost:serverAddress port:socketPort forUser:self.userId];
+                BOOL success = [[SIMPConnection sharedConnection] connectionToRemoteHost:serverHost port:socketPort forUser:self.userId];
+                return @(success);
             }];
         }];
     }

@@ -10,6 +10,7 @@
 #import "User.h"
 #import "ChatRecord.h"
 #import "ChatSession.h"
+#import "SIMPConnection.h"
 
 @interface Viewer : MTLModel <MTLJSONSerializing>
 

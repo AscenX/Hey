@@ -7,10 +7,13 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <ReactiveObjC/ReactiveObjC.h>
 
 @class User;
 
 @interface UserInfoViewModel : NSObject
+
+@property (nonatomic, strong, readonly) User *user;
 
 - (instancetype)initWithUser:(User *)user;
 

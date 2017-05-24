@@ -8,7 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
-FOUNDATION_EXPORT NSString * const serverAddress;
+FOUNDATION_EXPORT NSString * const httpPrefix;
+FOUNDATION_EXPORT NSString * const serverHost;
 FOUNDATION_EXPORT NSInteger const httpPort;
 FOUNDATION_EXPORT NSInteger const socketPort;
 FOUNDATION_EXPORT NSString * const apiVersion;

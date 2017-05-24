@@ -34,9 +34,10 @@
 @property (nonatomic, copy) NSString *host;
 
 + (instancetype)sharedConnection;
-+ (void)connectToHost:(NSString *)host port:(NSInteger)port forUser:(NSString *)userID;
-//- (instancetype)initWithRemoteHost:(NSString *)host port:(NSInteger)port forUser:(NSString *)userID;
-- (void)sendData:(NSData *)data tag:(long)tag;
+//+ (BOOL)connectToHost:(NSString *)host port:(NSInteger)port forUser:(NSString *)userID;
+- (BOOL)connectionToRemoteHost:(NSString *)host port:(NSInteger)port forUser:(NSString *)userID;
+//- (void)sendData:(NSData *)data tag:(long)tag;
+- (void)sendMessage:(SIMPMessage *)message;
 - (NSData *)getCurrentAddress;
 
 @end

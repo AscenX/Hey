@@ -17,51 +17,54 @@
 @interface SIMPConnection () <GCDAsyncSocketDelegate, GCDAsyncUdpSocketDelegate>
 
 @property (nonatomic, assign) NSString *userID;
+
 @end
 
 @implementation SIMPConnection
 
 //singleton
-+ (instancetype)sharedConnection
-{
++ (instancetype)sharedConnection {
     static SIMPConnection *sharedConnection = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         sharedConnection = [[self alloc] init];
     });
     return sharedConnection;
-}
-
-+ (void)connectToHost:(NSString *)host port:(NSInteger)port forUser:(NSString *)userID {
-    SIMPConnection *connection = [[SIMPConnection sharedConnection] initWithRemoteHost:host port:port forUser:userID];
-    if (!connection) {
-        NSLog(@"connection init error");
-    }
-}
-
-- (instancetype)initWithRemoteHost:(NSString *)host port:(NSInteger)port forUser:(NSString *)userID {
     
-    if (self = [super init]) {
-        _host = host;
-        _port = port;
-        _userID = userID;
-        _tcpSocket = [[GCDAsyncSocket alloc] initWithDelegate:self delegateQueue:dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT,0)];
-        _udpSocket = [[GCDAsyncUdpSocket alloc] initWithDelegate:self delegateQueue:dispatch_get_main_queue()];
-        [self connect];
-    }
-    return self;
 }
 
-- (void)connect {
-    if (![self.tcpSocket isConnected] && ![self.udpSocket isConnected]) {
+//+ (instancetype)connectionWithRemoteHost:(NSString *)host port:(NSInteger)port forUser:(NSString *)userID {
+////    SIMPConnection *connection = [[self alloc] initWithRemoteHost:host port:port forUser:userID];
+////    if (!connection) {
+////        NSLog(@"connection init error");
+////        return NO;
+////    } else {
+////        return YES;
+////    }
+//    
+//}
+
+- (BOOL)connectionToRemoteHost:(NSString *)host port:(NSInteger)port forUser:(NSString *)userID {
+    self.host = host;
+    self.port = port;
+    self.userID = userID;
+    self.tcpSocket = [[GCDAsyncSocket alloc] initWithDelegate:self delegateQueue:dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT,0)];
+    self.udpSocket = [[GCDAsyncUdpSocket alloc] initWithDelegate:self delegateQueue:dispatch_get_main_queue()];
+    return [self connect];
+}
+
+- (BOOL)connect {
+//    if (![self.tcpSocket isConnected] && ![self.udpSocket isConnected]) {
         NSError *error;
-        BOOL success = [self.tcpSocket connectToHost:self.host onPort:self.port error:&error];
-        NSLog(@"tcp conntect --%@", @(success));
+        BOOL tcpSuccess = [self.tcpSocket connectToHost:self.host onPort:self.port error:&error];
+        NSLog(@"tcp conntect --%@", tcpSuccess ? @"YES" : @"NO");
         CheckError(@"TCPSocketConnectToHost", &error);
         
         
-        [self.udpSocket connectToHost:self.host onPort:self.port + 1 error:&error];
+        BOOL udpSuccess = [self.udpSocket connectToHost:self.host onPort:self.port + 1 error:&error];
+        
         CheckError(@"UDPSocketConnectToHost", &error);
+        NSLog(@"udp conntect --%@", udpSuccess ? @"YES" : @"NO");
         [self.udpSocket beginReceiving:&error];
         CheckError(@"beginReceiving", &error);
         
@@ -69,11 +72,12 @@
         NSLog(@"----%@---%hu",self.udpSocket.localHost, self.udpSocket.localPort);
         
         [self sendConnectData];
-    }
+//    }
+    return tcpSuccess && udpSuccess;
 }
 
 - (BOOL)isConnected {
-    return self.udpSocket.isConnected && self.tcpSocket.isConnected;
+    return [self.udpSocket isConnected] && [self.tcpSocket isConnected];
 }
 
 - (void)sendConnectData {
@@ -81,16 +85,19 @@
     connectData.fromUser = self.userID;
     connectData.version = SIMPVersion;
     connectData.type = Message_MessageType_Connect;
-    NSLog(@"UDP地址是: %@:%hu", self.udpSocket.localHost, self.udpSocket.localPort);
-    connectData.content = [NSString stringWithFormat:@"%@:%hu", self.udpSocket.localHost, self.udpSocket.localPort];
-    [self.tcpSocket writeData:connectData.data withTimeout:15 tag:0];
+    NSLog(@"UDP地址是: %@:%hu", _udpSocket.localHost, _udpSocket.localPort);
+    connectData.content = [NSString stringWithFormat:@"%@:%hu", _udpSocket.localHost, _udpSocket.localPort];
+    [self.tcpSocket writeData:connectData.data withTimeout:5 tag:0];
 }
 
-- (void)sendData:(NSData *)data tag:(long)tag {
-    if (tag == 2) {
-        [self.udpSocket sendData:data withTimeout:15 tag:tag];
-    } else {
-        [self.tcpSocket writeData:data withTimeout:15 tag:tag];
+- (void)sendMessage:(SIMPMessage *)msg{
+    Message *message = msg.message;
+    if (msg.type == SIMPMessageTypeConnect) {
+        [self.tcpSocket writeData:message.data withTimeout:10 tag:1];
+    } else if (msg.type == SIMPMessageTypeText ||
+               msg.type == SIMPMessageTypeImage ||
+               msg.type == SIMPMessageTypeAudio) {
+        [self.udpSocket sendData:message.data withTimeout:10 tag:2];
     }
 }
 

@@ -11,7 +11,7 @@
 
 @interface UserInfoViewModel ()
 
-@property (nonatomic, strong) User *user;
+@property (nonatomic, strong, readwrite) User *user;
 
 @end
 

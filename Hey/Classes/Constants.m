@@ -8,7 +8,8 @@
 
 #import "Constants.h"
 
-NSString * const serverAddress = @"http://192.168.155.2";
+NSString * const httpPrefix = @"http://";
+NSString * const serverHost = @"192.168.155.2";
 NSInteger const httpPort = 8080;
 NSInteger const socketPort = 8081;
 NSString * const apiVersion = @"api/v1/";

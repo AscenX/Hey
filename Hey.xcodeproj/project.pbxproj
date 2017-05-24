@@ -67,7 +67,6 @@
 		98E894741EAB97530012851A /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 98E894581EAB97530012851A /* LoginViewController.m */; };
 		98E894751EAB97530012851A /* LoginViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 98E894591EAB97530012851A /* LoginViewController.storyboard */; };
 		98E894771EAB97530012851A /* ProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 98E8945E1EAB97530012851A /* ProfileViewController.m */; };
-		98E894781EAB97530012851A /* StatusNavViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 98E894611EAB97530012851A /* StatusNavViewController.m */; };
 		98E894791EAB97530012851A /* StatusViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 98E894631EAB97530012851A /* StatusViewController.m */; };
 		98E8947C1EAB977A0012851A /* LoginViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 98E8947B1EAB977A0012851A /* LoginViewModel.m */; };
 		98E894801EABD0EB0012851A /* ChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 98E8947F1EABD0EB0012851A /* ChatViewController.m */; };
@@ -79,7 +78,6 @@
 		98FAB0B71EA7A08200A3FC19 /* SIMPMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 98FAB0AD1EA7A08200A3FC19 /* SIMPMessage.m */; };
 		98FAB0B81EA7A08200A3FC19 /* SIMPMessageStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = 98FAB0AF1EA7A08200A3FC19 /* SIMPMessageStorage.m */; };
 		98FAB0B91EA7A08200A3FC19 /* SIMPParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 98FAB0B11EA7A08200A3FC19 /* SIMPParser.m */; };
-		98FAB0BA1EA7A08200A3FC19 /* SIMPUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 98FAB0B31EA7A08200A3FC19 /* SIMPUser.m */; };
 		CFF24D0D23D1DDC84E13AA4A /* Pods_Hey.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B0EDEE6DB0A0393A9C4BF725 /* Pods_Hey.framework */; };
 /* End PBXBuildFile section */
 
@@ -224,8 +222,6 @@
 		98E894591EAB97530012851A /* LoginViewController.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LoginViewController.storyboard; sourceTree = "<group>"; };
 		98E8945D1EAB97530012851A /* ProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileViewController.h; sourceTree = "<group>"; };
 		98E8945E1EAB97530012851A /* ProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileViewController.m; sourceTree = "<group>"; };
-		98E894601EAB97530012851A /* StatusNavViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StatusNavViewController.h; sourceTree = "<group>"; };
-		98E894611EAB97530012851A /* StatusNavViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StatusNavViewController.m; sourceTree = "<group>"; };
 		98E894621EAB97530012851A /* StatusViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StatusViewController.h; sourceTree = "<group>"; };
 		98E894631EAB97530012851A /* StatusViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StatusViewController.m; sourceTree = "<group>"; };
 		98E8947A1EAB977A0012851A /* LoginViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewModel.h; sourceTree = "<group>"; };
@@ -248,8 +244,6 @@
 		98FAB0AF1EA7A08200A3FC19 /* SIMPMessageStorage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SIMPMessageStorage.m; sourceTree = "<group>"; };
 		98FAB0B01EA7A08200A3FC19 /* SIMPParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SIMPParser.h; sourceTree = "<group>"; };
 		98FAB0B11EA7A08200A3FC19 /* SIMPParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SIMPParser.m; sourceTree = "<group>"; };
-		98FAB0B21EA7A08200A3FC19 /* SIMPUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SIMPUser.h; sourceTree = "<group>"; };
-		98FAB0B31EA7A08200A3FC19 /* SIMPUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SIMPUser.m; sourceTree = "<group>"; };
 		B0EDEE6DB0A0393A9C4BF725 /* Pods_Hey.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Hey.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B225B6648F8A82E931890558 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -595,8 +589,6 @@
 		98E8945F1EAB97530012851A /* Status */ = {
 			isa = PBXGroup;
 			children = (
-				98E894601EAB97530012851A /* StatusNavViewController.h */,
-				98E894611EAB97530012851A /* StatusNavViewController.m */,
 				98E894621EAB97530012851A /* StatusViewController.h */,
 				98E894631EAB97530012851A /* StatusViewController.m */,
 			);
@@ -655,8 +647,6 @@
 				98FAB0AF1EA7A08200A3FC19 /* SIMPMessageStorage.m */,
 				98FAB0B01EA7A08200A3FC19 /* SIMPParser.h */,
 				98FAB0B11EA7A08200A3FC19 /* SIMPParser.m */,
-				98FAB0B21EA7A08200A3FC19 /* SIMPUser.h */,
-				98FAB0B31EA7A08200A3FC19 /* SIMPUser.m */,
 			);
 			name = SIMP;
 			sourceTree = "<group>";
@@ -881,14 +871,12 @@
 				9885B4841ED1A04600E3DC43 /* Contact.m in Sources */,
 				98E894641EAB97530012851A /* BaseNavViewController.m in Sources */,
 				9885B47B1ECF619900E3DC43 /* User.m in Sources */,
-				98FAB0BA1EA7A08200A3FC19 /* SIMPUser.m in Sources */,
 				983A0D1E1EB776F4001337B8 /* ChatBottomView.m in Sources */,
 				98C682CF1ED4166800B4170A /* UserInfoViewModel.m in Sources */,
 				98C682AC1ED33BD300B4170A /* ContactsTableViewCell.m in Sources */,
 				98C682D31ED41A0800B4170A /* UserInfoTableViewCell.m in Sources */,
 				98E4272D1EBA5037009A38D7 /* HomeViewModel.m in Sources */,
 				983661A71EA73BF0004DCD07 /* AccessTokenStore.m in Sources */,
-				98E894781EAB97530012851A /* StatusNavViewController.m in Sources */,
 				98E8947C1EAB977A0012851A /* LoginViewModel.m in Sources */,
 				983661AA1EA73BF0004DCD07 /* Store.m in Sources */,
 				981EE5C01EAE6D7900EC329F /* UIColor+Help.m in Sources */,

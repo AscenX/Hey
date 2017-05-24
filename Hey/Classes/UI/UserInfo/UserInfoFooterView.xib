@@ -40,6 +40,9 @@
                 <constraint firstAttribute="trailing" secondItem="uYu-xC-MOv" secondAttribute="trailing" constant="20" id="cUO-bY-POc"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="comeToChatButton" destination="uYu-xC-MOv" id="lCg-kf-PDE"/>
+            </connections>
             <point key="canvasLocation" x="50.5" y="-210.5"/>
         </view>
     </objects>

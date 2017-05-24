@@ -52,6 +52,7 @@
     [self addChildViewController:profileNav];
     
     [self.tabBar setTintColor:[UIColor colorWithHex:0x4990E2]];
+    [self.tabBar setUnselectedItemTintColor:[UIColor colorWithHex:0xCCC9CD]];
     
 }
 

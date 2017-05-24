@@ -17,6 +17,8 @@
 #import "ChatBottomView.h"
 #import <ReactiveObjC/ReactiveObjC.h>
 #import "ChatViewModel.h"
+#import "User.h"
+#import "Store.h"
 
 @interface ChatViewController ()<UITableViewDelegate, UITableViewDataSource, UITextViewDelegate>
 
@@ -32,7 +34,7 @@
 
 - (instancetype)initWithUser:(User *)user {
     if (self = [super init]) {
-        
+        _viewModel = [[ChatViewModel alloc] initWithUser:user];
     }
     return self;
 }
@@ -44,7 +46,6 @@
     [self addView];
     [self defineLayout];
     [self bindData];
-    
 }
 
 - (void)addView {
@@ -76,6 +77,13 @@
     self.bottomView.frame = CGRectMake(0, size.height - 56 - height, size.width, 56);
     
 //    [self scrollTableToFoot:YES];
+    self.tableView.transform = CGAF
+}
+
+- (void)keyBoardHide:(NSNotification *)notification {
+    CGSize size = self.view.bounds.size;
+    self.bottomView.frame = CGRectMake(0, size.height - 56, size.width, 56);
+    self.tableView.frame = CGRectMake(0, 0, size.width, size.height - 56);
 }
 
 - (void)scrollTableToFoot:(BOOL)animated
@@ -86,12 +94,6 @@
     if (r<1) return;
     NSIndexPath *ip = [NSIndexPath indexPathForRow:r-1 inSection:s-1];  //取最后一行数据
     [self.tableView scrollToRowAtIndexPath:ip atScrollPosition:UITableViewScrollPositionBottom animated:animated]; //滚动到最后一行
-}
-
-- (void)keyBoardHide:(NSNotification *)notification {
-    CGSize size = self.view.bounds.size;
-    self.bottomView.frame = CGRectMake(0, size.height - 56, size.width, 56);
-    self.tableView.frame = CGRectMake(0, 0, size.width, size.height - 56);
 }
 
 #pragma mark - UITableViewDataSource
@@ -130,9 +132,15 @@
 }
 
 - (void)send {
-    NSLog(@"send");
+    
+    User *fromUser = [[Store sharedStore].userSignal first];
+    SIMPMessage *msg = [[SIMPMessage alloc] initWithType:SIMPMessageTypeText];
+    msg.content = self.bottomView.textView.text;
+    msg.time = [NSDate date];
+    msg.fromUser = fromUser.Id.stringValue;
+    msg.toUser = self.viewModel.user.Id.stringValue;
+    [self.connection sendMessage:msg];
 }
-
 
 #pragma mark - lazy load
 

@@ -10,9 +10,10 @@
 #import "LoginViewModel.h"
 
 #import "TabBarViewController.h"
+#import "SIMPConnection.h"
+#import "Store.h"
 
-//test
-#import "ChatViewController.h"
+#import <SVProgressHUD/SVProgressHUD.h>
 
 @import ReactiveObjC;
 @import SDAutoLayout;
@@ -51,14 +52,26 @@
     
     RAC(self.viewModel, userId) = self.usernameTF.rac_textSignal;
     RAC(self.viewModel, password) = self.passwordTF.rac_textSignal;
+    
+    @weakify(self)
+    [[self.viewModel.loginCommand.executing deliverOnMainThread] subscribeNext:^(id  _Nullable x) {
+        if ([x boolValue]) {
+            [SVProgressHUD show];
+        } else {
+            [SVProgressHUD dismiss];
+        }
+    }];
 
     [[[self.viewModel.loginCommand.executionSignals switchToLatest] deliverOnMainThread] subscribeNext:^(id  _Nullable x) {
-        
-        UIViewController *tabBarVc = [[TabBarViewController alloc] init];
-        self.view.window.rootViewController = tabBarVc;
-
-//        ChatViewController *vc = [[ChatViewController alloc] init];
-//        self.view.window.rootViewController = [[UINavigationController alloc] initWithRootViewController:vc];
+        @strongify(self)
+        if ([x boolValue]) {
+            UIViewController *tabBarVc = [[TabBarViewController alloc] init];
+            self.view.window.rootViewController = tabBarVc;
+        } else {
+            NSLog(@"连接socket服务器失败");
+            [[Store sharedStore] clearViewer];
+            [SVProgressHUD showErrorWithStatus:@"连接失败，请重试"];
+        }
     }];
     
     self.loginBtn.rac_command = self.viewModel.loginCommand;

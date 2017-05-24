@@ -13,6 +13,8 @@
 
 @interface ChatViewModel : NSObject
 
+@property (nonatomic, strong, readonly) User *user;
+
 - (instancetype)initWithUser:(User *)user;
 
 

@@ -9,5 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface UserInfoFooterView : UIView
+@property (weak, nonatomic) IBOutlet UIButton *comeToChatButton;
 
 @end

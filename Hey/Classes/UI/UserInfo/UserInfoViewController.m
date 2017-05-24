@@ -14,6 +14,7 @@
 #import "UserInfoFooterView.h"
 #import "UIColor+Help.h"
 #import "User.h"
+#import "ChatViewController.h"
 
 @interface UserInfoViewController () <UITableViewDelegate, UITableViewDataSource>
 
@@ -54,6 +55,21 @@
     [self.headerView.avatarImageView yy_setImageWithURL:[NSURL URLWithString: self.viewModel.imageURL] placeholder:[UIImage imageNamed:@"icon_placeholder"]];
     self.headerView.nameLabel.text = self.viewModel.name;
     self.headerView.IdLabel.text = self.viewModel.userId;
+    
+    [[RACObserve(self.footerView.comeToChatButton, highlighted) deliverOnMainThread] subscribeNext:^(id  _Nullable x) {
+        if ([x boolValue]) {
+            self.footerView.comeToChatButton.backgroundColor = [UIColor colorWithHex:0x4990E2 alpha:0.6f];
+        }
+        else {
+            self.footerView.comeToChatButton.backgroundColor = [UIColor colorWithHex:0x4990E2 alpha:1.0f];
+        }
+    }];
+    
+    [[[self.footerView.comeToChatButton rac_signalForControlEvents:UIControlEventTouchUpInside] deliverOnMainThread] subscribeNext:^(id  _Nullable x) {
+//        [self.navigationController popToRootViewControllerAnimated:NO];
+        ChatViewController *chatVC = [[ChatViewController alloc] initWithUser:self.viewModel.user];
+        [self.navigationController pushViewController:chatVC animated:YES];
+    }];
 }
 
 - (void)viewWillAppear:(BOOL)animated {

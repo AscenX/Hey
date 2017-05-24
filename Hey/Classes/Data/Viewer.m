@@ -50,4 +50,5 @@
     return [MTLJSONAdapter arrayTransformerWithModelClass:[ChatRecord class]];
 }
 
+
 @end

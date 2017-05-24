@@ -14,6 +14,8 @@
 #import "TabBarViewController.h"
 #import "LoginViewController.h"
 #import "Store.h"
+#import "SIMPConnection.h"
+#import "Constants.h"
 
 
 @interface AppDelegate ()
@@ -35,9 +37,12 @@
     
     //设置rootView，如果已经登录则直接跳转到主界面
     NSString *token = [[Store sharedStore].tokenSignal first];
-    if (token != nil && ![token isEqualToString:@""]) {
+    User *user = [[Store sharedStore].userSignal first];
+    if (token != nil && user != nil) {
+//        BOOL success = [[SIMPConnection sharedConnection] connectToRemoteHost:serverAddress port:socketPort forUser:user.Id.stringValue];
+        BOOL success = [[SIMPConnection sharedConnection] connectionToRemoteHost:serverHost port:socketPort forUser:user.Id.stringValue];
+        NSLog(@"connect to socket server %@", success ? @"YES" : @"NO");
         self.window = [self windowWithRootViewController:[[TabBarViewController alloc] init]];
-        
     } else {
         self.window = [self windowWithRootViewController:[[UIStoryboard storyboardWithName:@"LoginViewController" bundle:nil] instantiateInitialViewController]];
     }

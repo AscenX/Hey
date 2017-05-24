@@ -37,7 +37,7 @@ NSString * const RestClientErrorDomain = @"RestClientErrorDomain";
 
 - (instancetype)init {
     if (self = [super init]) {
-        NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@:%ld/%@", serverAddress, (long)httpPort, apiVersion]];
+        NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@:%ld/%@", httpPrefix, serverHost, (long)httpPort, apiVersion]];
         NSURLSessionConfiguration *config = [NSURLSessionConfiguration defaultSessionConfiguration];
         config.timeoutIntervalForResource = 15;
         _sessionManager = [[AFHTTPSessionManager alloc] initWithBaseURL:url sessionConfiguration:config];
