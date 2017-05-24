@@ -20,6 +20,7 @@
 - (instancetype)initWithUser:(User *)user {
     if (self = [super init]) {
         _user = user;
+        _chatRecords = [NSMutableArray array];
     }
     return self;
 }

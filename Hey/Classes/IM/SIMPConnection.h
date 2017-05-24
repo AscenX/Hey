@@ -18,10 +18,9 @@
 @optional
 - (void)connection:(SIMPConnection *)connection didConnectToAdress:(NSData *)adress bySocket:(id)sock;
 - (void)connection:(SIMPConnection *)connection didClosedWithError:(NSError *)error bySocket:(id)sock;
-- (void)connection:(SIMPConnection *)connection didSendData:(NSData *)data bySocket:(id)sock;
-//- (void)connection:(SIMPConnection *)connection didReceiveData:(NSData *)data bySocket:(id)sock;
-- (void)connection:(SIMPConnection *)connection didReceiveMessage:(SIMPMessage *)message bySocket:(id)sock;
-- (void)connection:(SIMPConnection *)connection didSendDataFailedDueToError:(NSError *)err bySocket:(id)sock;
+- (void)connection:(SIMPConnection *)connection didSendMessageBySocket:(id)sock;
+- (void)connection:(SIMPConnection *)connection didReceiveMessage:(SIMPMessage *)msg bySocket:(id)sock;
+- (void)connection:(SIMPConnection *)connection didSendMessageFailedDueToError:(NSError *)err bySocket:(id)sock;
 @end
 
 @interface SIMPConnection : NSObject

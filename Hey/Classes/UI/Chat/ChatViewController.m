@@ -19,6 +19,9 @@
 #import "ChatViewModel.h"
 #import "User.h"
 #import "Store.h"
+#import <YYWebImage/YYWebImage.h>
+#import <DateTools/NSDate+DateTools.h>
+
 
 @interface ChatViewController ()<UITableViewDelegate, UITableViewDataSource, UITextViewDelegate>
 
@@ -73,17 +76,14 @@
     CGRect keyboardRect = [value CGRectValue];
     int height = keyboardRect.size.height;
     CGSize size = self.view.bounds.size;
-    self.tableView.frame = CGRectMake(0, 0, size.width, size.height - height - 56);
     self.bottomView.frame = CGRectMake(0, size.height - 56 - height, size.width, 56);
-    
-//    [self scrollTableToFoot:YES];
-    self.tableView.transform = CGAF
+    self.tableView.transform = CGAffineTransformMakeTranslation(0, -height);
 }
 
 - (void)keyBoardHide:(NSNotification *)notification {
     CGSize size = self.view.bounds.size;
     self.bottomView.frame = CGRectMake(0, size.height - 56, size.width, 56);
-    self.tableView.frame = CGRectMake(0, 0, size.width, size.height - 56);
+    self.tableView.transform = CGAffineTransformMakeTranslation(0, 0);
 }
 
 - (void)scrollTableToFoot:(BOOL)animated
@@ -99,11 +99,11 @@
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 10;
+    return self.viewModel.chatRecords.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    ChatMyselfTableViewCell *cell = [ChatMyselfTableViewCell cellWithTableView:tableView];
+    
     
 //    cell.contentLabel.text      = @"安赛飞安赛飞安赛飞安赛飞安赛飞安赛飞很高123123123安赛飞看阿东嫩啊等是哦啊额捐款阿灿附着奥赛晶立方阿囧订了饭安赛飞";
 //    cell.contentLabel.font      = [UIFont systemFontOfSize:14];
@@ -116,8 +116,46 @@
     
 //    [cell.contentLabel appendImage:[UIImage imageNamed:@"stan"] maxSize:CGSizeMake(396, 396)];
 //        [cell.contentLabel appendImage:[UIImage imageNamed:@"heart"] maxSize:CGSizeMake(20, 20)];
+    User *user = [[Store sharedStore].userSignal first];
+    SIMPMessage *msg = self.viewModel.chatRecords[indexPath.row];
+    if ([msg.fromUser isEqualToString:user.Id.stringValue]) {
+        ChatMyselfTableViewCell *cell = [ChatMyselfTableViewCell cellWithTableView:tableView];
+        if (msg.type == SIMPMessageTypeText) {
+            cell.contentLabel.text = msg.content;
+            cell.contentLabel.font      = [UIFont systemFontOfSize:14];
+            cell.contentLabel.textColor = [UIColor colorWithHex:0x4E5973 alpha:0.80f];
+            cell.timeLabel.text = [msg.time formattedDateWithFormat:@"HH:mm:ss"];
+            cell.nameLabel.text = user.name;
+            cell.contentLabel.textAlignment = NSTextAlignmentLeft;
+        }
+        else if (msg.type == SIMPMessageTypeImage) {
+            UIImageView *imageView = [[UIImageView alloc] init];
+            [imageView yy_setImageWithURL:[NSURL URLWithString:msg.imageURL] placeholder:[UIImage imageNamed:@"icon_placeholder"]];
+            [cell.contentLabel appendView:imageView];
+        }
+        return cell;
+    } else {
+        ChatOthersTableViewCell *cell = [ChatOthersTableViewCell cellWithTableView:tableView];
+        if (msg.type == SIMPMessageTypeText) {
+            cell.contentLabel.text = msg.content;
+            cell.contentLabel.font      = [UIFont systemFontOfSize:14];
+            cell.contentLabel.textColor = [UIColor colorWithHex:0x4E5973 alpha:0.80f];
+            cell.timeLabel.text = [msg.time formattedDateWithFormat:@"HH:mm:ss"];
+            cell.nameLabel.text = user.name;
+            cell.contentLabel.textAlignment = NSTextAlignmentLeft;
+        }
+        else if (msg.type == SIMPMessageTypeImage) {
+            UIImageView *imageView = [[UIImageView alloc] init];
+            [imageView yy_setImageWithURL:[NSURL URLWithString:msg.imageURL] placeholder:[UIImage imageNamed:@"icon_placeholder"]];
+            [cell.contentLabel appendView:imageView];
+        }
+//        cell.attributedLabel.shadowColor = [UIColor grayColor];
+//        cell.attributedLabel.shadowOffset= CGSizeMake(1, 1);
+//        cell.attributedLabel.shadowBlur = 1;
+        return cell;
+    }
     
-    return cell;
+    
 }
 
 #pragma mark - UITextViewDelegate
@@ -132,6 +170,10 @@
 }
 
 - (void)send {
+    if (self.bottomView.textView.text == nil
+        || [self.bottomView.textView.text isEqualToString:@""]) {
+        return;
+    }
     
     User *fromUser = [[Store sharedStore].userSignal first];
     SIMPMessage *msg = [[SIMPMessage alloc] initWithType:SIMPMessageTypeText];
@@ -140,6 +182,9 @@
     msg.fromUser = fromUser.Id.stringValue;
     msg.toUser = self.viewModel.user.Id.stringValue;
     [self.connection sendMessage:msg];
+    [self.viewModel.chatRecords addObject:msg];
+    self.bottomView.textView.text = @"";
+    [self.tableView reloadData];
 }
 
 #pragma mark - lazy load
@@ -152,7 +197,7 @@
         _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         _tableView.dataSource = self;
         _tableView.delegate = self;
-        _tableView.backgroundColor = [UIColor colorWithHex:0xF2F6FA alpha:0.77f];
+        _tableView.backgroundColor = [UIColor colorWithHex:0xF2F6FA];
         _tableView.estimatedRowHeight = 100;
     }
     return _tableView;
@@ -181,11 +226,14 @@
 - (void)connection:(SIMPConnection *)connection didClosedWithError:(NSError *)error bySocket:(id)sock {
     NSLog(@"didClosedWithError");
 }
-- (void)connection:(SIMPConnection *)connection didSendData:(NSData *)data bySocket:(id)sock {
-    NSLog(@"didSendData");
+- (void)connection:(SIMPConnection *)connection didSendMessageBySocket:(id)sock {
+    NSLog(@"didSendMessage");
 }
-- (void)connection:(SIMPConnection *)connection didReceiveData:(NSData *)data bySocket:(id)sock {
-    NSLog(@"didReceiveData");
+
+- (void)connection:(SIMPConnection *)connection didReceiveMessage:(SIMPMessage *)msg bySocket:(id)sock {
+    [self.viewModel.chatRecords addObject:msg];
+    [self.tableView reloadData];
+    NSLog(@"-----didReceiveMessage \n %@ \n %@ \n %@ \n %@",msg.content, msg.fromUser, msg.toUser, [msg.time formattedDateWithFormat:@"hh:MM:ss"]);
 }
 - (void)connection:(SIMPConnection *)connection didSendDataFailedDueToError:(NSError *)err bySocket:(id)sock {
     NSLog(@"didSendDataFailedDueToError");

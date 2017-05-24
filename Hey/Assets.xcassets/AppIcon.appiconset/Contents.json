@@ -192,34 +192,6 @@
       "scale" : "2x",
       "role" : "quickLook",
       "subtype" : "42mm"
-    },
-    {
-      "size" : "29x29",
-      "idiom" : "iphone",
-      "filename" : "icon-29.png",
-      "unassigned" : true,
-      "scale" : "1x"
-    },
-    {
-      "size" : "20x20",
-      "idiom" : "ipad",
-      "filename" : "icon-20@2x.png",
-      "unassigned" : true,
-      "scale" : "2x"
-    },
-    {
-      "size" : "20x20",
-      "idiom" : "ipad",
-      "filename" : "icon-40.png",
-      "unassigned" : true,
-      "scale" : "2x"
-    },
-    {
-      "size" : "29x29",
-      "idiom" : "ipad",
-      "filename" : "icon-29@2x.png",
-      "unassigned" : true,
-      "scale" : "2x"
     }
   ],
   "info" : {

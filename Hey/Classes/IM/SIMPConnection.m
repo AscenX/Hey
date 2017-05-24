@@ -33,17 +33,6 @@
     
 }
 
-//+ (instancetype)connectionWithRemoteHost:(NSString *)host port:(NSInteger)port forUser:(NSString *)userID {
-////    SIMPConnection *connection = [[self alloc] initWithRemoteHost:host port:port forUser:userID];
-////    if (!connection) {
-////        NSLog(@"connection init error");
-////        return NO;
-////    } else {
-////        return YES;
-////    }
-//    
-//}
-
 - (BOOL)connectionToRemoteHost:(NSString *)host port:(NSInteger)port forUser:(NSString *)userID {
     self.host = host;
     self.port = port;
@@ -81,23 +70,25 @@
 }
 
 - (void)sendConnectData {
-    Message *connectData = [[Message alloc] init];
-    connectData.fromUser = self.userID;
-    connectData.version = SIMPVersion;
-    connectData.type = Message_MessageType_Connect;
+    Message *msg = [[Message alloc] init];
+    msg.fromUser = self.userID;
+    msg.version = SIMPVersion;
+    msg.type = Message_MessageType_Connect;
     NSLog(@"UDP地址是: %@:%hu", _udpSocket.localHost, _udpSocket.localPort);
-    connectData.content = [NSString stringWithFormat:@"%@:%hu", _udpSocket.localHost, _udpSocket.localPort];
-    [self.tcpSocket writeData:connectData.data withTimeout:5 tag:0];
+    msg.content = [NSString stringWithFormat:@"%@:%hu", _udpSocket.localHost, _udpSocket.localPort];
+    [self.tcpSocket writeData:[msg data] withTimeout:5 tag:0];
 }
 
-- (void)sendMessage:(SIMPMessage *)msg{
-    Message *message = msg.message;
+- (void)sendMessage:(SIMPMessage *)msg {
+//    Message *message = msg.message;
+//    NSData *data = [message delimitedData];
+    NSData *sendData = [msg.message data];
     if (msg.type == SIMPMessageTypeConnect) {
-        [self.tcpSocket writeData:message.data withTimeout:10 tag:1];
+        [self.tcpSocket writeData:sendData withTimeout:10 tag:1];
     } else if (msg.type == SIMPMessageTypeText ||
                msg.type == SIMPMessageTypeImage ||
                msg.type == SIMPMessageTypeAudio) {
-        [self.udpSocket sendData:message.data withTimeout:10 tag:2];
+        [self.udpSocket sendData:sendData withTimeout:10 tag:2];
     }
 }
 
@@ -127,21 +118,22 @@
 
 - (void)udpSocket:(GCDAsyncUdpSocket *)sock didSendDataWithTag:(long)tag {
     NSLog(@"socket--%@---didSendDataWithTag---%ld",sock, tag);
-    [self.delegate connection:self didSendData:nil bySocket:sock];
+    [self.delegate connection:self didSendMessageBySocket:sock];
 }
 
 - (void)udpSocket:(GCDAsyncUdpSocket *)sock didNotSendDataWithTag:(long)tag dueToError:(NSError * _Nullable)error {
 
     NSLog(@"socket---%@---didNotSendDataWithTag---tag--%ld",sock, tag);
-    [self.delegate connection:self didSendDataFailedDueToError:error bySocket:sock];
+    [self.delegate connection:self didSendMessageFailedDueToError:error bySocket:sock];
 }
 
 - (void)udpSocket:(GCDAsyncUdpSocket *)sock didReceiveData:(NSData *)data
       fromAddress:(NSData *)address
 withFilterContext:(nullable id)filterContext {
-    NSLog(@"didReceiveData----data--%@---adress---%@",data, address);
+    NSLog(@"didReceiveData----data--%@---adress---%@---filterContext---%@",data, address, filterContext);
     NSError *error;
     Message *message = [Message parseFromData:data error:&error];
+    CheckError(@"parseFromData", &error);
     SIMPMessage *simpMessage = [[SIMPMessage alloc] initWithMessage:message];
     [self.delegate connection:self didReceiveMessage:simpMessage bySocket:sock];
 }
@@ -187,7 +179,7 @@ withFilterContext:(nullable id)filterContext {
 
 - (void)socket:(GCDAsyncSocket *)sock didWriteDataWithTag:(long)tag {
     NSLog(@"socket--%@---didWriteDataWithTag----tag---%ld",sock, tag);
-    [self.delegate connection:self didSendData:nil bySocket:sock];
+    [self.delegate connection:self didSendMessageBySocket:sock];
 }
 
 - (void)socket:(GCDAsyncSocket *)sock didWritePartialDataOfLength:(NSUInteger)partialLength tag:(long)tag {

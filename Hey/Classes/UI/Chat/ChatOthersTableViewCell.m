@@ -23,4 +23,13 @@ NSString * const othersCellId = @"ChatOthersTableViewCellId";
     // Configure the view for the selected state
 }
 
++ (instancetype)cellWithTableView:(UITableView *)tableView
+{
+    ChatOthersTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:othersCellId];
+    if (!cell) {
+        cell = [[ChatOthersTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:othersCellId];
+    }
+    return cell;
+}
+
 @end
