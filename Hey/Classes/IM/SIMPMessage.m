@@ -20,6 +20,7 @@
         _messageId = message.messageId;
         _content = message.content;
         _imageURL = message.imageURL;
+        _time = [NSDate dateWithTimeIntervalSince1970:message.time];
         switch (message.type) {
             case Message_MessageType_Text:
                 _type = SIMPMessageTypeText;

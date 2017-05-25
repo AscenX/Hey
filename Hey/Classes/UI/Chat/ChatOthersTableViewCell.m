@@ -7,6 +7,7 @@
 //
 
 #import "ChatOthersTableViewCell.h"
+#import "UIColor+Help.h"
 
 NSString * const othersCellId = @"ChatOthersTableViewCellId";
 
@@ -14,7 +15,9 @@ NSString * const othersCellId = @"ChatOthersTableViewCellId";
 
 - (void)awakeFromNib {
     [super awakeFromNib];
-    
+    self.selectionStyle = UITableViewCellSelectionStyleNone;
+    self.backgroundColor = [UIColor colorWithHex:0xF2F6FA alpha:0.77f];
+    self.tipsView.hidden = YES;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

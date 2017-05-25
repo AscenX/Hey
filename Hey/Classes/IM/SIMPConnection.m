@@ -136,6 +136,7 @@ withFilterContext:(nullable id)filterContext {
     CheckError(@"parseFromData", &error);
     SIMPMessage *simpMessage = [[SIMPMessage alloc] initWithMessage:message];
     [self.delegate connection:self didReceiveMessage:simpMessage bySocket:sock];
+    
 }
 
 - (void)udpSocketDidClose:(GCDAsyncUdpSocket *)sock withError:(NSError  * _Nullable)error {

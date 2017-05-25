@@ -23,7 +23,7 @@
 #import <DateTools/NSDate+DateTools.h>
 
 
-@interface ChatViewController ()<UITableViewDelegate, UITableViewDataSource, UITextViewDelegate>
+@interface ChatViewController ()<UITableViewDelegate, UITableViewDataSource, UITextViewDelegate, SIMPConnectionDelegate>
 
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) ChatBottomView *bottomView;
@@ -40,6 +40,16 @@
         _viewModel = [[ChatViewModel alloc] initWithUser:user];
     }
     return self;
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    self.connection.delegate = self;
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    self.connection.delegate = nil;
 }
 
 - (void)viewDidLoad {
@@ -78,12 +88,14 @@
     CGSize size = self.view.bounds.size;
     self.bottomView.frame = CGRectMake(0, size.height - 56 - height, size.width, 56);
     self.tableView.transform = CGAffineTransformMakeTranslation(0, -height);
+    [self scrollTableToFoot:YES];
 }
 
 - (void)keyBoardHide:(NSNotification *)notification {
     CGSize size = self.view.bounds.size;
     self.bottomView.frame = CGRectMake(0, size.height - 56, size.width, 56);
     self.tableView.transform = CGAffineTransformMakeTranslation(0, 0);
+    [self scrollTableToFoot:YES];
 }
 
 - (void)scrollTableToFoot:(BOOL)animated
@@ -103,28 +115,18 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    
-//    cell.contentLabel.text      = @"安赛飞安赛飞安赛飞安赛飞安赛飞安赛飞很高123123123安赛飞看阿东嫩啊等是哦啊额捐款阿灿附着奥赛晶立方阿囧订了饭安赛飞";
-//    cell.contentLabel.font      = [UIFont systemFontOfSize:14];
-//    cell.contentLabel.textColor = [UIColor colorWithHex:0x4E5973 alpha:0.80f];
-//    cell.contentLabel.textAlignment = NSTextAlignmentLeft;
-    
-//    cell.attributedLabel.shadowColor = [UIColor grayColor];
-//    cell.attributedLabel.shadowOffset= CGSizeMake(1, 1);
-//    cell.attributedLabel.shadowBlur = 1;
-    
-//    [cell.contentLabel appendImage:[UIImage imageNamed:@"stan"] maxSize:CGSizeMake(396, 396)];
-//        [cell.contentLabel appendImage:[UIImage imageNamed:@"heart"] maxSize:CGSizeMake(20, 20)];
+
     User *user = [[Store sharedStore].userSignal first];
     SIMPMessage *msg = self.viewModel.chatRecords[indexPath.row];
     if ([msg.fromUser isEqualToString:user.Id.stringValue]) {
         ChatMyselfTableViewCell *cell = [ChatMyselfTableViewCell cellWithTableView:tableView];
+        [cell.iconButton yy_setBackgroundImageWithURL:[NSURL URLWithString:user.avatar] forState:UIControlStateNormal placeholder:[UIImage imageNamed:@"icon_placeholder"]];
+        
         if (msg.type == SIMPMessageTypeText) {
             cell.contentLabel.text = msg.content;
             cell.contentLabel.font      = [UIFont systemFontOfSize:14];
             cell.contentLabel.textColor = [UIColor colorWithHex:0x4E5973 alpha:0.80f];
-            cell.timeLabel.text = [msg.time formattedDateWithFormat:@"HH:mm:ss"];
+            cell.timeLabel.text = [msg.time formattedDateWithFormat:@"hh月dd日 HH:mm"];
             cell.nameLabel.text = user.name;
             cell.contentLabel.textAlignment = NSTextAlignmentLeft;
         }
@@ -136,12 +138,13 @@
         return cell;
     } else {
         ChatOthersTableViewCell *cell = [ChatOthersTableViewCell cellWithTableView:tableView];
+        [cell.iconButton yy_setBackgroundImageWithURL:[NSURL URLWithString:self.viewModel.user.avatar] forState:UIControlStateNormal placeholder:[UIImage imageNamed:@"icon_placeholder"]];
+        cell.nameLabel.text = self.viewModel.user.name;
         if (msg.type == SIMPMessageTypeText) {
             cell.contentLabel.text = msg.content;
             cell.contentLabel.font      = [UIFont systemFontOfSize:14];
             cell.contentLabel.textColor = [UIColor colorWithHex:0x4E5973 alpha:0.80f];
-            cell.timeLabel.text = [msg.time formattedDateWithFormat:@"HH:mm:ss"];
-            cell.nameLabel.text = user.name;
+            cell.timeLabel.text = [msg.time formattedDateWithFormat:@"hh月dd日 HH:mm"];
             cell.contentLabel.textAlignment = NSTextAlignmentLeft;
         }
         else if (msg.type == SIMPMessageTypeImage) {
@@ -177,10 +180,10 @@
     
     User *fromUser = [[Store sharedStore].userSignal first];
     SIMPMessage *msg = [[SIMPMessage alloc] initWithType:SIMPMessageTypeText];
-    msg.content = self.bottomView.textView.text;
-    msg.time = [NSDate date];
-    msg.fromUser = fromUser.Id.stringValue;
-    msg.toUser = self.viewModel.user.Id.stringValue;
+    [msg setContent:self.bottomView.textView.text];
+    [msg setTime:[NSDate date]];
+    [msg setFromUser:fromUser.Id.stringValue];
+    [msg setToUser:self.viewModel.user.Id.stringValue];
     [self.connection sendMessage:msg];
     [self.viewModel.chatRecords addObject:msg];
     self.bottomView.textView.text = @"";
@@ -214,6 +217,7 @@
 - (SIMPConnection *)connection {
     if (!_connection) {
         _connection = [SIMPConnection sharedConnection];
+        
     }
     return _connection;
 }
@@ -221,30 +225,31 @@
 #pragma mark - SIMPConnectionDelegate
 
 - (void)connection:(SIMPConnection *)connection didConnectToAdress:(NSData *)adress bySocket:(id)sock {
-    NSLog(@"didConnectToAdress");
+    NSLog(@"didConnectToAdressbySocket:%@", sock);
 }
 - (void)connection:(SIMPConnection *)connection didClosedWithError:(NSError *)error bySocket:(id)sock {
-    NSLog(@"didClosedWithError");
+    NSLog(@"didClosedWithErrorbySocket:%@", sock);
 }
 - (void)connection:(SIMPConnection *)connection didSendMessageBySocket:(id)sock {
-    NSLog(@"didSendMessage");
+    NSLog(@"didSendMessageBySocket:%@", sock);
 }
 
 - (void)connection:(SIMPConnection *)connection didReceiveMessage:(SIMPMessage *)msg bySocket:(id)sock {
     [self.viewModel.chatRecords addObject:msg];
     [self.tableView reloadData];
-    NSLog(@"-----didReceiveMessage \n %@ \n %@ \n %@ \n %@",msg.content, msg.fromUser, msg.toUser, [msg.time formattedDateWithFormat:@"hh:MM:ss"]);
-}
-- (void)connection:(SIMPConnection *)connection didSendDataFailedDueToError:(NSError *)err bySocket:(id)sock {
-    NSLog(@"didSendDataFailedDueToError");
+    [self scrollTableToFoot:YES];
 }
 
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    [self.view endEditing:YES];
+- (void)connection:(SIMPConnection *)connection didSendMessageFailedDueToError:(NSError *)err bySocket:(id)sock {
+    NSLog(@"didSendDataFailedDueToErrorbySocket:%@", sock);
 }
 
-//- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+//- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
 //    [self.view endEditing:YES];
 //}
+
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+    [self.view endEditing:YES];
+}
 
 @end

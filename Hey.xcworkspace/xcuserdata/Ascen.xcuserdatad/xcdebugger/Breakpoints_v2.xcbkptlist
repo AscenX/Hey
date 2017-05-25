@@ -19,29 +19,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Hey/Classes/UI/Chat/ChatViewController.m"
-            timestampString = "517333709.338141"
+            filePath = "Pods/CocoaAsyncSocket/Source/GCD/GCDAsyncUdpSocket.m"
+            timestampString = "517413106.428145"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "236"
-            endingLineNumber = "236"
-            landmarkName = "-connection:didReceiveMessage:bySocket:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Hey/Classes/IM/SIMPConnection.m"
-            timestampString = "517338038.470991"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "140"
-            endingLineNumber = "140"
-            landmarkName = "-udpSocket:didReceiveData:fromAddress:withFilterContext:"
+            startingLineNumber = "4420"
+            endingLineNumber = "4420"
+            landmarkName = "-doReceive"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
