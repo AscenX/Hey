@@ -39,6 +39,8 @@ typedef State*(^ReduceBlock)(State *state);
 
 - (void)updateChatRecords:(NSArray *)chatRecords;
 
+- (void)updateContacts:(NSArray *)contacts;
+
 - (void)clearViewer;
 
 @end

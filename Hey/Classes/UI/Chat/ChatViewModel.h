@@ -13,7 +13,7 @@
 
 @interface ChatViewModel : NSObject
 
-@property (nonatomic, strong) NSMutableArray *chatRecords;
+@property (nonatomic, copy) NSMutableArray *chatRecords;
 
 @property (nonatomic, strong, readonly) User *user;
 

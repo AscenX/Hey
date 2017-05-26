@@ -7,14 +7,55 @@
 //
 
 #import "ChatRecord.h"
+#import "SIMPMessage.h"
+#import <DateTools/NSDate+DateTools.h>
 
 @implementation ChatRecord
+
+- (instancetype)initWithSIMPMessage:(SIMPMessage *)message {
+    if (self = [super init]) {
+        switch (message.type) {
+            case SIMPMessageTypeText:
+                _type = @"text";
+                _chatRecordType = ChatRecordTypeText;
+                break;
+            case SIMPMessageTypeImage:
+                _type = @"image";
+                _chatRecordType = ChatRecordTypeImage;
+                break;
+            case SIMPMessageTypeAudio:
+                _type = @"audio";
+                _chatRecordType = ChatRecordTypeAudio;
+                break;
+            default:
+                break;
+        }
+        
+        _Id = [NSNumber numberWithUnsignedInteger:message.messageId];
+        _content = message.content;
+        _fromUserId = [NSNumber numberWithInteger:message.fromUser.integerValue];
+        _toUserId = [NSNumber numberWithInteger:message.toUser.integerValue];
+        if ([message.time formattedDateWithFormat:@"MM"].integerValue > 10) {
+            _time = [message.time formattedDateWithFormat:@"MM月dd日 HH:mm"];
+        }
+        else {
+            _time = [message.time formattedDateWithFormat:@"M月dd日 HH:mm"];
+        }
+        _imageURL = message.imageURL;
+        
+    }
+    return self;
+}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
     return @{
              @"Id" : @"identity",
-             @"userId" : @"user_id",
-             @"text" : @"text",
+             @"fromUserId" : @"from_user_id",
+             @"toUserId" : @"to_user_id",
+             @"time" : @"time",
+             @"type" : @"type",
+             @"chatRecordType" : @"type",
+             @"content" : @"content",
              @"imageURL" : @"image_url",
              };
 }
@@ -22,10 +63,22 @@
 + (NSDictionary *)FMDBColumnsByPropertyKey {
     return @{
              @"Id" : @"identity",
-             @"userId" : @"user_id",
-             @"text" : @"text",
+             @"fromUserId" : @"from_user_id",
+             @"toUserId" : @"to_user_id",
+             @"time" : @"time",
+             @"type" : @"type",
+             @"content" : @"content",
              @"imageURL" : @"image_url",
              };
+}
+
++ (NSValueTransformer *)chatRecordTypeJSONTransformer {
+    return [NSValueTransformer mtl_valueMappingTransformerWithDictionary:
+            @{
+              @"text" :  @(ChatRecordTypeText),
+              @"image" : @(ChatRecordTypeImage),
+              @"audio" : @(ChatRecordTypeAudio),
+              }];
 }
 
 + (NSString *)FMDBTableName {

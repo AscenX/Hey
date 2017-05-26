@@ -36,7 +36,9 @@
 }
 
 - (RACSignal *)fetchContactsWithUserId:(NSString *)userId {
-    return [[RestClient sharedClient] contactsWithUserId:userId];
+    return [[[RestClient sharedClient] contactsWithUserId:userId] doNext:^(id  _Nullable x) {
+        [[Store sharedStore] updateContacts:x];
+    }];
 }
 
 @end

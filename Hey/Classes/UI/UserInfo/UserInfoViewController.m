@@ -40,7 +40,7 @@
     
     self.title = @"详细资料";
     self.view.backgroundColor = [UIColor colorWithHex:0xCCC9CD];
-    self.hidesBottomBarWhenPushed = YES;
+    
     
     [self addView];
     [self bindViewModel];
@@ -68,13 +68,13 @@
     [[[self.footerView.comeToChatButton rac_signalForControlEvents:UIControlEventTouchUpInside] deliverOnMainThread] subscribeNext:^(id  _Nullable x) {
 //        [self.navigationController popToRootViewControllerAnimated:NO];
         ChatViewController *chatVC = [[ChatViewController alloc] initWithUser:self.viewModel.user];
+        self.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:chatVC animated:YES];
     }];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    
     
 }
 

@@ -10,7 +10,7 @@
 #import "User.h"
 #import "ChatRecord.h"
 #import "ChatSession.h"
-#import "SIMPConnection.h"
+#import "Contact.h"
 
 @interface Viewer : MTLModel <MTLJSONSerializing>
 
@@ -20,6 +20,7 @@
 @property (nonatomic, copy, readonly) NSString *token;
 @property (nonatomic, copy, readonly) NSArray *chatSessions;
 @property (nonatomic, copy, readonly) NSArray *chatRecords;
+@property (nonatomic, copy, readonly) NSArray *contacts;
 
 
 @end

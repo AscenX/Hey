@@ -59,7 +59,6 @@
 		98D2900C1EA67CF400DD677C /* RestClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 98D2900B1EA67CF400DD677C /* RestClient.m */; };
 		98E4272D1EBA5037009A38D7 /* HomeViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 98E4272C1EBA5037009A38D7 /* HomeViewModel.m */; };
 		98E894321EA9FB9C0012851A /* RestClient+User.m in Sources */ = {isa = PBXBuildFile; fileRef = 98E894311EA9FB9C0012851A /* RestClient+User.m */; };
-		98E894641EAB97530012851A /* BaseNavViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 98E894361EAB97530012851A /* BaseNavViewController.m */; };
 		98E894651EAB97530012851A /* BaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 98E894381EAB97530012851A /* BaseViewController.m */; };
 		98E8946D1EAB97530012851A /* ContactsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 98E894481EAB97530012851A /* ContactsViewController.m */; };
 		98E894701EAB97530012851A /* HomeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 98E8944F1EAB97530012851A /* HomeTableViewCell.m */; };
@@ -207,8 +206,6 @@
 		98E4272C1EBA5037009A38D7 /* HomeViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeViewModel.m; sourceTree = "<group>"; };
 		98E894301EA9FB9C0012851A /* RestClient+User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "RestClient+User.h"; path = "Data/RestClient+User.h"; sourceTree = "<group>"; };
 		98E894311EA9FB9C0012851A /* RestClient+User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "RestClient+User.m"; path = "Data/RestClient+User.m"; sourceTree = "<group>"; };
-		98E894351EAB97530012851A /* BaseNavViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseNavViewController.h; sourceTree = "<group>"; };
-		98E894361EAB97530012851A /* BaseNavViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseNavViewController.m; sourceTree = "<group>"; };
 		98E894371EAB97530012851A /* BaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseViewController.h; sourceTree = "<group>"; };
 		98E894381EAB97530012851A /* BaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseViewController.m; sourceTree = "<group>"; };
 		98E894471EAB97530012851A /* ContactsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactsViewController.h; sourceTree = "<group>"; };
@@ -509,8 +506,6 @@
 		98E894341EAB97530012851A /* Base */ = {
 			isa = PBXGroup;
 			children = (
-				98E894351EAB97530012851A /* BaseNavViewController.h */,
-				98E894361EAB97530012851A /* BaseNavViewController.m */,
 				98E894371EAB97530012851A /* BaseViewController.h */,
 				98E894381EAB97530012851A /* BaseViewController.m */,
 			);
@@ -869,7 +864,6 @@
 				98C682BE1ED3F18700B4170A /* ProfileViewModel.m in Sources */,
 				98C682D71ED422FF00B4170A /* UserInfoFooterView.m in Sources */,
 				9885B4841ED1A04600E3DC43 /* Contact.m in Sources */,
-				98E894641EAB97530012851A /* BaseNavViewController.m in Sources */,
 				9885B47B1ECF619900E3DC43 /* User.m in Sources */,
 				983A0D1E1EB776F4001337B8 /* ChatBottomView.m in Sources */,
 				98C682CF1ED4166800B4170A /* UserInfoViewModel.m in Sources */,

@@ -14,6 +14,8 @@
 
 - (instancetype)init {
     if (self = [super init]) {
+        Viewer *viewer = [[Store sharedStore].viewerSignal first];
+        self.contacts = viewer.contacts;
     }
     return self;
 }

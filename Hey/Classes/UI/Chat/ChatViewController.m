@@ -31,6 +31,8 @@
 
 @property (nonatomic, strong) ChatViewModel *viewModel;
 
+@property (nonatomic, assign) BOOL keyboardShowed;
+
 @end
 
 @implementation ChatViewController
@@ -81,6 +83,7 @@
 }
 
 - (void)keyBoardShow:(NSNotification *)notification{
+    self.keyboardShowed = YES;
     NSDictionary *userInfo = [notification userInfo];
     NSValue *value = [userInfo objectForKey:UIKeyboardFrameEndUserInfoKey];
     CGRect keyboardRect = [value CGRectValue];
@@ -92,20 +95,20 @@
 }
 
 - (void)keyBoardHide:(NSNotification *)notification {
+    self.keyboardShowed = NO;
     CGSize size = self.view.bounds.size;
     self.bottomView.frame = CGRectMake(0, size.height - 56, size.width, 56);
     self.tableView.transform = CGAffineTransformMakeTranslation(0, 0);
     [self scrollTableToFoot:YES];
 }
 
-- (void)scrollTableToFoot:(BOOL)animated
-{
-    NSInteger s = [self.tableView numberOfSections];  //有多少组
-    if (s<1) return;  //无数据时不执行 要不会crash
-    NSInteger r = [self.tableView numberOfRowsInSection:s-1]; //最后一组有多少行
+- (void)scrollTableToFoot:(BOOL)animated {
+    NSInteger s = [self.tableView numberOfSections];
+    if (s<1) return;
+    NSInteger r = [self.tableView numberOfRowsInSection:s-1];
     if (r<1) return;
-    NSIndexPath *ip = [NSIndexPath indexPathForRow:r-1 inSection:s-1];  //取最后一行数据
-    [self.tableView scrollToRowAtIndexPath:ip atScrollPosition:UITableViewScrollPositionBottom animated:animated]; //滚动到最后一行
+    NSIndexPath *ip = [NSIndexPath indexPathForRow:r-1 inSection:s-1];
+    [self.tableView scrollToRowAtIndexPath:ip atScrollPosition:UITableViewScrollPositionBottom animated:animated];
 }
 
 #pragma mark - UITableViewDataSource
@@ -117,22 +120,22 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 
     User *user = [[Store sharedStore].userSignal first];
-    SIMPMessage *msg = self.viewModel.chatRecords[indexPath.row];
-    if ([msg.fromUser isEqualToString:user.Id.stringValue]) {
+    ChatRecord *chatRecord = self.viewModel.chatRecords[indexPath.row];
+    if (chatRecord.fromUserId.integerValue == user.Id.integerValue) {
         ChatMyselfTableViewCell *cell = [ChatMyselfTableViewCell cellWithTableView:tableView];
         [cell.iconButton yy_setBackgroundImageWithURL:[NSURL URLWithString:user.avatar] forState:UIControlStateNormal placeholder:[UIImage imageNamed:@"icon_placeholder"]];
         
-        if (msg.type == SIMPMessageTypeText) {
-            cell.contentLabel.text = msg.content;
+        if (chatRecord.chatRecordType == ChatRecordTypeText) {
+            cell.contentLabel.text = chatRecord.content;
             cell.contentLabel.font      = [UIFont systemFontOfSize:14];
             cell.contentLabel.textColor = [UIColor colorWithHex:0x4E5973 alpha:0.80f];
-            cell.timeLabel.text = [msg.time formattedDateWithFormat:@"hh月dd日 HH:mm"];
+            cell.timeLabel.text = chatRecord.time;
             cell.nameLabel.text = user.name;
             cell.contentLabel.textAlignment = NSTextAlignmentLeft;
         }
-        else if (msg.type == SIMPMessageTypeImage) {
+        else if (chatRecord.chatRecordType == ChatRecordTypeImage) {
             UIImageView *imageView = [[UIImageView alloc] init];
-            [imageView yy_setImageWithURL:[NSURL URLWithString:msg.imageURL] placeholder:[UIImage imageNamed:@"icon_placeholder"]];
+            [imageView yy_setImageWithURL:[NSURL URLWithString:chatRecord.imageURL] placeholder:[UIImage imageNamed:@"icon_placeholder"]];
             [cell.contentLabel appendView:imageView];
         }
         return cell;
@@ -140,16 +143,16 @@
         ChatOthersTableViewCell *cell = [ChatOthersTableViewCell cellWithTableView:tableView];
         [cell.iconButton yy_setBackgroundImageWithURL:[NSURL URLWithString:self.viewModel.user.avatar] forState:UIControlStateNormal placeholder:[UIImage imageNamed:@"icon_placeholder"]];
         cell.nameLabel.text = self.viewModel.user.name;
-        if (msg.type == SIMPMessageTypeText) {
-            cell.contentLabel.text = msg.content;
+        if (chatRecord.chatRecordType == ChatRecordTypeText) {
+            cell.contentLabel.text = chatRecord.content;
             cell.contentLabel.font      = [UIFont systemFontOfSize:14];
             cell.contentLabel.textColor = [UIColor colorWithHex:0x4E5973 alpha:0.80f];
-            cell.timeLabel.text = [msg.time formattedDateWithFormat:@"hh月dd日 HH:mm"];
+            cell.timeLabel.text = chatRecord.time;
             cell.contentLabel.textAlignment = NSTextAlignmentLeft;
         }
-        else if (msg.type == SIMPMessageTypeImage) {
+        else if (chatRecord.chatRecordType == ChatRecordTypeImage) {
             UIImageView *imageView = [[UIImageView alloc] init];
-            [imageView yy_setImageWithURL:[NSURL URLWithString:msg.imageURL] placeholder:[UIImage imageNamed:@"icon_placeholder"]];
+            [imageView yy_setImageWithURL:[NSURL URLWithString:chatRecord.imageURL] placeholder:[UIImage imageNamed:@"icon_placeholder"]];
             [cell.contentLabel appendView:imageView];
         }
 //        cell.attributedLabel.shadowColor = [UIColor grayColor];
@@ -180,13 +183,17 @@
     
     User *fromUser = [[Store sharedStore].userSignal first];
     SIMPMessage *msg = [[SIMPMessage alloc] initWithType:SIMPMessageTypeText];
+    uint64_t messageId = [[NSDate date] timeIntervalSince1970] - [[NSDate dateWithYear:2000 month:1 day:1] timeIntervalSince1970];
+    [msg setMessageId:messageId];
     [msg setContent:self.bottomView.textView.text];
     [msg setTime:[NSDate date]];
     [msg setFromUser:fromUser.Id.stringValue];
     [msg setToUser:self.viewModel.user.Id.stringValue];
     [self.connection sendMessage:msg];
-    [self.viewModel.chatRecords addObject:msg];
     self.bottomView.textView.text = @"";
+    ChatRecord *chatRecord = [[ChatRecord alloc] initWithSIMPMessage:msg];
+    [self.viewModel.chatRecords addObject:chatRecord];
+    [[Store sharedStore] updateChatRecords:self.viewModel.chatRecords];
     [self.tableView reloadData];
 }
 
@@ -235,21 +242,22 @@
 }
 
 - (void)connection:(SIMPConnection *)connection didReceiveMessage:(SIMPMessage *)msg bySocket:(id)sock {
-    [self.viewModel.chatRecords addObject:msg];
+    
+    ChatRecord *chatRecord = [[ChatRecord alloc] initWithSIMPMessage:msg];
+    [self.viewModel.chatRecords addObject:chatRecord];
     [self.tableView reloadData];
     [self scrollTableToFoot:YES];
+    [[Store sharedStore] updateChatRecords:self.viewModel.chatRecords];
 }
 
 - (void)connection:(SIMPConnection *)connection didSendMessageFailedDueToError:(NSError *)err bySocket:(id)sock {
     NSLog(@"didSendDataFailedDueToErrorbySocket:%@", sock);
 }
 
-//- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-//    [self.view endEditing:YES];
-//}
-
-- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     [self.view endEditing:YES];
 }
+
+
 
 @end

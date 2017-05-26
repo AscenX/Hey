@@ -9,10 +9,25 @@
 #import <Mantle/Mantle.h>
 #import <MTLFMDBAdapter/MTLFMDBAdapter.h>
 
+@class SIMPMessage;
+
+typedef NS_ENUM(NSUInteger, ChatRecordType) {
+    ChatRecordTypeText,
+    ChatRecordTypeImage,
+    ChatRecordTypeAudio,
+};
+
 @interface ChatRecord : MTLModel <MTLJSONSerializing, MTLFMDBSerializing>
 
+- (instancetype)initWithSIMPMessage:(SIMPMessage *)message;
+
 @property (nonatomic, strong) NSNumber *Id;
-@property (nonatomic, strong) NSNumber *userId;
-@property (nonatomic, copy) NSString *text;
+@property (nonatomic, copy) NSString *type;
+@property (nonatomic, assign) ChatRecordType chatRecordType;
+@property (nonatomic, copy) NSString *time;
+@property (nonatomic, strong) NSNumber *fromUserId;
+@property (nonatomic, strong) NSNumber *toUserId;
+@property (nonatomic, copy) NSString *content;
 @property (nonatomic, copy) NSString *imageURL;
+
 @end

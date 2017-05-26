@@ -33,6 +33,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    [self.viewModel.fetchContactsCommand execute:nil];
+    
     [self addView];
     [self bindViewModel];
     
@@ -40,8 +42,6 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    NSLog(@"%s", __func__);
-    [self.viewModel.fetchContactsCommand execute:nil];
 }
 
 - (void)addView {
@@ -63,7 +63,9 @@
     
     User *user = self.viewModel.contacts[indexPath.row];
     UserInfoViewController *userInfoVC = [[UserInfoViewController alloc] initWithUser:user];
+    self.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:userInfoVC animated:YES];
+    self.hidesBottomBarWhenPushed = NO;
 }
 
 #pragma mark - UITableViewDataSource

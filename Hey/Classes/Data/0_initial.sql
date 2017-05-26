@@ -13,8 +13,11 @@ CREATE TABLE t_contacts (
 
 CREATE TABLE t_chat_records (
     identity          NUMBER PRIMARY KEY ON CONFLICT REPLACE,
-    user_id     NUMBER,
-    text         TEXT,
+    type              TEXT,
+    time            TEXT,
+    from_user_id     NUMBER,
+    to_user_id     NUMBER,
+    content         TEXT,
     image_url   TEXT
 );
 

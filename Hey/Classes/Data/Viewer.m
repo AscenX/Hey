@@ -35,6 +35,7 @@
              @"user" :          @"user",
              @"chatSessions" : @"chatSessions",
              @"chatRecords" : @"chatRecords",
+             @"contacts" : @"contacts",
              };
 }
 
@@ -50,5 +51,8 @@
     return [MTLJSONAdapter arrayTransformerWithModelClass:[ChatRecord class]];
 }
 
++ (NSValueTransformer *)contactsJSONTransformer {
+    return [MTLJSONAdapter arrayTransformerWithModelClass:[Contact class]];
+}
 
 @end

@@ -120,6 +120,14 @@
     }];
 }
 
+- (void)updateContacts:(NSArray *)contacts {
+    [self updateState:^State *(State *state) {
+        Viewer *viewer = [Viewer createWithViewer:state.viewer key:@"contacts" value:contacts];
+        [self persistViewer:viewer];
+        return [State createWithState:state key:@"viewer" value:viewer];
+    }];
+}
+
 - (void)clearViewer {
     [self updateState:^State *(State *state) {
         [self persistViewer:nil];
@@ -132,6 +140,7 @@
 - (void)persistViewer:(Viewer *)viewer {
     
     [self.db executeUpdate:@"DELETE FROM t_users"];
+    [self.db executeUpdate:@"DELETE FROM t_contacts"];
     [[AccessTokenStore sharedStore] clearToken];
     
     if (viewer.user) {
@@ -139,6 +148,24 @@
 //        [self.db executeUpdate:insertUser];
         NSString *insertUser = @"insert into t_users (identity, avatar, name) values (?, ?, ?)";
         [self.db executeUpdate:insertUser, viewer.user.Id, viewer.user.avatar, viewer.user.name];
+    }
+    
+    if (viewer.contacts) {
+        NSString *insertContacts = @"insert into t_contacts (identity, name, avatar) values (?, ?, ?)";
+        
+        for (int i = 0; i < viewer.contacts.count; ++i) {
+            Contact *contact = viewer.contacts[i];
+            [self.db executeUpdate:insertContacts, contact.Id, contact.name, contact.avatar];
+        }
+    }
+    
+    if (viewer.chatRecords) {
+        NSString *insertChatRecords = @"insert into t_chat_records (identity, type, time, from_user_id, to_user_id, content, image_url) values (?, ?, ?, ?, ?, ?, ?)";
+        
+        for (int i = 0; i < viewer.chatRecords.count; ++i) {
+            ChatRecord *chatRecord = viewer.chatRecords[i];
+            [self.db executeUpdate:insertChatRecords, chatRecord.Id, chatRecord.type, chatRecord.time, chatRecord.fromUserId, chatRecord.toUserId, chatRecord.content, chatRecord.imageURL];
+        }
     }
     
     if (viewer.chatSessions) {
@@ -179,22 +206,61 @@
     }
     
     NSError *error;
-    FMResultSet *resultSet = [self.db executeQuery:@"SELECT * FROM t_users LIMIT 1"];
+    FMResultSet *userResultSet = [self.db executeQuery:@"SELECT * FROM t_users LIMIT 1"];
     User *user;
-    if ([resultSet next]) {
-        user = [MTLFMDBAdapter modelOfClass:[User class] fromFMResultSet:resultSet error:&error];
+    if ([userResultSet next]) {
+        user = [MTLFMDBAdapter modelOfClass:[User class] fromFMResultSet:userResultSet error:&error];
     }
     
     if (!user) {
         if (error) {
-            NSLog(@"%@", error);
+            NSLog(@"user--%@", error);
         }
         return nil;
     }
     
+    FMResultSet *contactsResultSet = [self.db executeQuery:@"SELECT * FROM t_contacts"];
+    NSMutableArray *contacts = [NSMutableArray array];
+    while ([contactsResultSet next]) {
+        
+        Contact *contact = [MTLFMDBAdapter modelOfClass:[Contact class] fromFMResultSet:contactsResultSet error:&error];
+        [contacts addObject:contact];
+    }
+    
+    FMResultSet *chatRecordsResultSet = [self.db executeQuery:@"SELECT * FROM t_chat_records"];
+    NSMutableArray *chatRecords = [NSMutableArray array];
+    while ([chatRecordsResultSet next]) {
+        ChatRecord *chatRecord = [MTLFMDBAdapter modelOfClass:[ChatRecord class] fromFMResultSet:chatRecordsResultSet error:&error];
+        [chatRecords addObject:chatRecord];
+    }
+    
+    if (!contacts) {
+        if (error) {
+            NSLog(@"contacts--%@", error);
+        }
+        return nil;
+    }
+    
+//    FMResultSet *contactsResultSet = [self.db executeQuery:@"SELECT * FROM t_contacts"];
+//    NSMutableArray *contacts = [NSMutableArray array];
+//    while ([contactsResultSet next]) {
+//        
+//        Contact *contact = [MTLFMDBAdapter modelOfClass:[Contact class] fromFMResultSet:contactsResultSet error:&error];
+//        [contacts addObject:contact];
+//    }
+//    
+//    if (!contacts) {
+//        if (error) {
+//            NSLog(@"contacts--%@", error);
+//        }
+//        return nil;
+//    }
+    
     Viewer *viewer = [[Viewer alloc] initWithDictionary:@{
                                                           @"token" : token,
                                                           @"user" : user,
+                                                          @"contacts" : contacts,
+                                                          @"chatRecords" : chatRecords,
                                                           } error:&error];
     if (error) {
         NSLog(@"%@", error);
