@@ -14,8 +14,8 @@ target 'Hey' do
     pod 'UICKeyChainStore', '~> 2.1.1'
     pod 'TZImagePickerController'
     pod 'SVProgressHUD'
-    pod 'M80AttributedLabel'
     pod 'DateTools', '~> 2.0.0'
+    pod 'MLEmojiLabel', '~> 1.0.2'
     
     #data
     pod 'Mantle', '~> 2.1.0'

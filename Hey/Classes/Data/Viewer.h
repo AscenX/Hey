@@ -17,7 +17,8 @@
 + (instancetype)createWithViewer:(Viewer *)old key:(NSString *)key value:(id)value;
 
 @property (nonatomic, strong, readonly) User *user;
-@property (nonatomic, copy, readonly) NSString *token;
+@property (nonatomic, copy, readonly) NSString *accessToken;
+@property (nonatomic, copy, readonly) NSString *qiniuToken;
 @property (nonatomic, copy, readonly) NSArray *chatSessions;
 @property (nonatomic, copy, readonly) NSArray *chatRecords;
 @property (nonatomic, copy, readonly) NSArray *contacts;

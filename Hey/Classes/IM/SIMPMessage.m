@@ -20,6 +20,7 @@
         _messageId = message.messageId;
         _content = message.content;
         _imageURL = message.imageURL;
+        _imageScale = message.imageScale;
         _time = [NSDate dateWithTimeIntervalSince1970:message.time];
         switch (message.type) {
             case Message_MessageType_Text:
@@ -33,6 +34,10 @@
                 break;
             case Message_MessageType_Connect:
                 _type = SIMPMessageTypeConnect;
+                break;
+            case Message_MessageType_Receipt:
+                _type = SIMPMessageTypeReceipt;
+                break;
             default:
                 break;
         }
@@ -60,6 +65,11 @@
             case SIMPMessageTypeConnect:
                 _message.type = Message_MessageType_Connect;
                 _type = SIMPMessageTypeConnect;
+                break;
+            case SIMPMessageTypeReceipt:
+                _message.type = Message_MessageType_Receipt;
+                _type = SIMPMessageTypeReceipt;
+                break;
             default:
                 break;
         }
@@ -99,6 +109,11 @@
 - (void)setImageURL:(NSString *)imageURL {
     _imageURL = imageURL;
     _message.imageURL = imageURL;
+}
+
+- (void)setImageScale:(float)imageScale {
+    _imageScale = imageScale;
+    _message.imageScale = imageScale;
 }
 
 @end

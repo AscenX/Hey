@@ -25,7 +25,7 @@
 {
     UserInfoTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"UserInfoTableViewCellID"];
     if (!cell) {
-        cell = [[UserInfoTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"UserInfoTableViewCellID"];
+        cell = [[UserInfoTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"UserInfoTableViewCellID"];
     }
     return cell;
 }

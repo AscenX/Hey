@@ -25,7 +25,7 @@
 {
     ProfileTitleTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ProfileTitleTableViewCellID"];
     if (!cell) {
-        cell = [[ProfileTitleTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"ProfileTitleTableViewCellID"];
+        cell = [[ProfileTitleTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"ProfileTitleTableViewCellID"];
     }
     return cell;
 }

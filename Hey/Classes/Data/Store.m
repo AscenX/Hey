@@ -24,7 +24,7 @@
 
 + (instancetype)sharedStore {
     static dispatch_once_t onceToken;
-    static Store *store;
+    static Store *store = nil;
     dispatch_once(&onceToken, ^{
         store = [[Store alloc] init];
     });
@@ -46,7 +46,7 @@
         }] distinctUntilChanged];
         
         _tokenSignal = [[_viewerSignal map:^id(Viewer *viewer) {
-            return viewer.token;
+            return viewer.accessToken;
         }] distinctUntilChanged];
         
         _userSignal = [[_viewerSignal map:^id(Viewer *viewer) {
@@ -78,9 +78,17 @@
 
 #pragma mark - Update
 
-- (void)updateToken:(NSString *)token {
+- (void)updateAccessToken:(NSString *)accessToken {
     [self updateState:^State *(State *state) {
-        Viewer *viewer = [Viewer createWithViewer:state.viewer key:@"token" value:token];
+        Viewer *viewer = [Viewer createWithViewer:state.viewer key:@"accessToken" value:accessToken];
+        [self persistViewer:viewer];
+        return [State createWithState:state key:@"viewer" value:viewer];
+    }];
+}
+
+- (void)updateQiniuToken:(NSString *)qiniuToken {
+    [self updateState:^State *(State *state) {
+        Viewer *viewer = [Viewer createWithViewer:state.viewer key:@"qiniuToken" value:qiniuToken];
         [self persistViewer:viewer];
         return [State createWithState:state key:@"viewer" value:viewer];
     }];
@@ -141,18 +149,16 @@
     
     [self.db executeUpdate:@"DELETE FROM t_users"];
     [self.db executeUpdate:@"DELETE FROM t_contacts"];
+    [self.db executeUpdate:@"DELETE FROM t_chat_records"];
     [[AccessTokenStore sharedStore] clearToken];
     
     if (viewer.user) {
-//        NSString *insertUser = [MTLFMDBAdapter insertStatementForModel:viewer.user];
-//        [self.db executeUpdate:insertUser];
         NSString *insertUser = @"insert into t_users (identity, avatar, name) values (?, ?, ?)";
         [self.db executeUpdate:insertUser, viewer.user.Id, viewer.user.avatar, viewer.user.name];
     }
     
     if (viewer.contacts) {
         NSString *insertContacts = @"insert into t_contacts (identity, name, avatar) values (?, ?, ?)";
-        
         for (int i = 0; i < viewer.contacts.count; ++i) {
             Contact *contact = viewer.contacts[i];
             [self.db executeUpdate:insertContacts, contact.Id, contact.name, contact.avatar];
@@ -160,11 +166,10 @@
     }
     
     if (viewer.chatRecords) {
-        NSString *insertChatRecords = @"insert into t_chat_records (identity, type, time, from_user_id, to_user_id, content, image_url) values (?, ?, ?, ?, ?, ?, ?)";
-        
+        NSString *insertChatRecords = @"insert into t_chat_records (identity, type, time, from_user_id, to_user_id, content, image_url, image_scale) values (?, ?, ?, ?, ?, ?, ?, ?)";
         for (int i = 0; i < viewer.chatRecords.count; ++i) {
             ChatRecord *chatRecord = viewer.chatRecords[i];
-            [self.db executeUpdate:insertChatRecords, chatRecord.Id, chatRecord.type, chatRecord.time, chatRecord.fromUserId, chatRecord.toUserId, chatRecord.content, chatRecord.imageURL];
+            [self.db executeUpdate:insertChatRecords, chatRecord.Id, chatRecord.type, chatRecord.time, chatRecord.fromUserId, chatRecord.toUserId, chatRecord.content, chatRecord.imageURL, @(chatRecord.imageScale)];
         }
     }
     
@@ -186,8 +191,11 @@
 //        }
     }
     
-    if (viewer.token) {
-        [[AccessTokenStore sharedStore] updateToken:viewer.token];
+    if (viewer.accessToken) {
+        [[AccessTokenStore sharedStore] updateAccessToken:viewer.accessToken];
+    }
+    if (viewer.qiniuToken) {
+        [[AccessTokenStore sharedStore] updateQiniuToken:viewer.qiniuToken];
     }
 }
 
@@ -200,10 +208,12 @@
 }
 
 - (Viewer *)viewerFromDB {
-    NSString *token = [[AccessTokenStore sharedStore] getToken];
-    if (!token) {
+    NSString *accessToken = [[AccessTokenStore sharedStore] getAccessToken];
+    if (!accessToken) {
         return nil;
     }
+    
+    NSString *qiniuToken = [[AccessTokenStore sharedStore] getQiniuToken];
     
     NSError *error;
     FMResultSet *userResultSet = [self.db executeQuery:@"SELECT * FROM t_users LIMIT 1"];
@@ -257,10 +267,11 @@
 //    }
     
     Viewer *viewer = [[Viewer alloc] initWithDictionary:@{
-                                                          @"token" : token,
-                                                          @"user" : user,
-                                                          @"contacts" : contacts,
-                                                          @"chatRecords" : chatRecords,
+                                                          @"accessToken" : accessToken ?:NSNull.null,
+                                                          @"qiniuToken" : qiniuToken ?:NSNull.null,
+                                                          @"user" : user ?:NSNull.null,
+                                                          @"contacts" : contacts ?:NSNull.null,
+                                                          @"chatRecords" : chatRecords ?:NSNull.null,
                                                           } error:&error];
     if (error) {
         NSLog(@"%@", error);

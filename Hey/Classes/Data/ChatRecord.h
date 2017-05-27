@@ -29,5 +29,6 @@ typedef NS_ENUM(NSUInteger, ChatRecordType) {
 @property (nonatomic, strong) NSNumber *toUserId;
 @property (nonatomic, copy) NSString *content;
 @property (nonatomic, copy) NSString *imageURL;
+@property (nonatomic, assign) float imageScale;
 
 @end

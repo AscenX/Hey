@@ -16,6 +16,7 @@
 #import "Store.h"
 #import "SIMPConnection.h"
 #import "Constants.h"
+#import "RestClient.h"
 
 
 @interface AppDelegate ()
@@ -34,6 +35,12 @@
     //监听网络状况
     [[AFNetworkReachabilityManager sharedManager] startMonitoring];
     [[AFNetworkActivityIndicatorManager sharedManager] setEnabled:YES];
+    
+////    //从服务端获取七牛云token
+//    [[[RestClient sharedClient] get:@"qiniu_token" param:nil] subscribeNext:^(id  _Nullable x) {
+//        NSString *qiniuToken = [x objectForKey:@"qiniuToken"];
+//        [[Store sharedStore] updateQiniuToken:qiniuToken];
+//    }];
     
     //设置rootView，如果已经登录则直接跳转到主界面
     NSString *token = [[Store sharedStore].tokenSignal first];

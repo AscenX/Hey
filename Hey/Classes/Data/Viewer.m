@@ -31,7 +31,8 @@
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
     return @{
-             @"token" :         @"token",
+             @"accessToken" :         @"accessToken",
+             @"qiniuToken" :         @"qiniuToken",
              @"user" :          @"user",
              @"chatSessions" : @"chatSessions",
              @"chatRecords" : @"chatRecords",

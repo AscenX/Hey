@@ -12,9 +12,13 @@
 
 + (instancetype)sharedStore;
 
-- (NSString *)getToken;
+- (NSString *)getAccessToken;
 
-- (void)updateToken:(NSString *)token;
+- (NSString *)getQiniuToken;
+
+- (void)updateAccessToken:(NSString *)accessToken;
+
+- (void)updateQiniuToken:(NSString *)qiniuToken;
 
 - (void)clearToken;
 

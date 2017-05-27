@@ -33,7 +33,9 @@ typedef State*(^ReduceBlock)(State *state);
 
 - (void)updateUser:(User *)user;
 
-- (void)updateToken:(NSString *)token;
+- (void)updateAccessToken:(NSString *)accessToken;
+
+- (void)updateQiniuToken:(NSString *)qiniuToken;
 
 - (void)updateSessions:(NSArray *)sessions;
 

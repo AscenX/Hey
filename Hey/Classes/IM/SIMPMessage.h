@@ -6,9 +6,6 @@
 //  Copyright © 2017年 Ascen. All rights reserved.
 //
 
-@class SIMPUser;
-
-
 #import <Foundation/Foundation.h>
 #import "Message.pbobjc.h"
 
@@ -17,6 +14,7 @@ typedef NS_ENUM(NSUInteger, SIMPMessageType) {
     SIMPMessageTypeImage,
     SIMPMessageTypeAudio,
     SIMPMessageTypeConnect,
+    SIMPMessageTypeReceipt,
 };
 
 @interface SIMPMessage : NSObject
@@ -29,6 +27,7 @@ typedef NS_ENUM(NSUInteger, SIMPMessageType) {
 @property (nonatomic, copy) NSString *toUser;
 @property (nonatomic, strong) NSDate *time;
 @property (nonatomic, copy) NSString *imageURL;
+@property (nonatomic, assign) float imageScale;
 @property (nonatomic, strong, readonly) Message *message;
 
 - (instancetype)initWithType:(SIMPMessageType)type;

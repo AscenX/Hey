@@ -13,7 +13,7 @@
 + (instancetype)cellWithTableView:(UITableView *)tableView {
     HomeTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"HomeTableViewCellID"];
     if (!cell) {
-        cell = [[HomeTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"HomeTableViewCellID"];
+        cell = [[HomeTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"HomeTableViewCellID"];
     }
     return cell;
 }

@@ -7,9 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		981EE5B61EADEA7500EC329F /* ChatMyselfTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 981EE5B51EADEA7500EC329F /* ChatMyselfTableViewCell.xib */; };
-		981EE5BA1EADF55200EC329F /* ChatOthersTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 981EE5B81EADF55200EC329F /* ChatOthersTableViewCell.m */; };
-		981EE5BB1EADF55200EC329F /* ChatOthersTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 981EE5B91EADF55200EC329F /* ChatOthersTableViewCell.xib */; };
 		981EE5C01EAE6D7900EC329F /* UIColor+Help.m in Sources */ = {isa = PBXBuildFile; fileRef = 981EE5BF1EAE6D7900EC329F /* UIColor+Help.m */; };
 		982B4EC01E28216B00B6FAFF /* YYCache.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 982B4EB71E28216B00B6FAFF /* YYCache.framework */; };
 		982B4EC41E28217900B6FAFF /* CocoaAsyncSocket.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 982B4EB21E28216B00B6FAFF /* CocoaAsyncSocket.framework */; };
@@ -19,7 +16,6 @@
 		983661921EA6FE29004DCD07 /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = 983661911EA6FE29004DCD07 /* Constants.m */; };
 		983661A71EA73BF0004DCD07 /* AccessTokenStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 9836619E1EA73BF0004DCD07 /* AccessTokenStore.m */; };
 		983661A81EA73BF0004DCD07 /* ChatRecord.m in Sources */ = {isa = PBXBuildFile; fileRef = 983661A01EA73BF0004DCD07 /* ChatRecord.m */; };
-		983661A91EA73BF0004DCD07 /* Message.pbobjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 983661A21EA73BF0004DCD07 /* Message.pbobjc.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		983661AA1EA73BF0004DCD07 /* Store.m in Sources */ = {isa = PBXBuildFile; fileRef = 983661A41EA73BF0004DCD07 /* Store.m */; };
 		983661AB1EA73BF0004DCD07 /* Viewer.m in Sources */ = {isa = PBXBuildFile; fileRef = 983661A61EA73BF0004DCD07 /* Viewer.m */; };
 		983661B11EA73E28004DCD07 /* State.m in Sources */ = {isa = PBXBuildFile; fileRef = 983661B01EA73E28004DCD07 /* State.m */; };
@@ -56,6 +52,8 @@
 		98C682D41ED41A0800B4170A /* UserInfoTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98C682D21ED41A0800B4170A /* UserInfoTableViewCell.xib */; };
 		98C682D71ED422FF00B4170A /* UserInfoFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 98C682D61ED422FF00B4170A /* UserInfoFooterView.m */; };
 		98C682D91ED4231100B4170A /* UserInfoFooterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98C682D81ED4231100B4170A /* UserInfoFooterView.xib */; };
+		98C682EC1ED940BF00B4170A /* ChatTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 98C682EB1ED940BF00B4170A /* ChatTableViewCell.m */; };
+		98C682F21ED9B62700B4170A /* Message.pbobjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 98C682F11ED9B62700B4170A /* Message.pbobjc.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		98D2900C1EA67CF400DD677C /* RestClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 98D2900B1EA67CF400DD677C /* RestClient.m */; };
 		98E4272D1EBA5037009A38D7 /* HomeViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 98E4272C1EBA5037009A38D7 /* HomeViewModel.m */; };
 		98E894321EA9FB9C0012851A /* RestClient+User.m in Sources */ = {isa = PBXBuildFile; fileRef = 98E894311EA9FB9C0012851A /* RestClient+User.m */; };
@@ -70,7 +68,6 @@
 		98E8947C1EAB977A0012851A /* LoginViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 98E8947B1EAB977A0012851A /* LoginViewModel.m */; };
 		98E894801EABD0EB0012851A /* ChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 98E8947F1EABD0EB0012851A /* ChatViewController.m */; };
 		98E894831EABD1030012851A /* ChatViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 98E894821EABD1030012851A /* ChatViewModel.m */; };
-		98E894861EABD2C80012851A /* ChatMyselfTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 98E894851EABD2C80012851A /* ChatMyselfTableViewCell.m */; };
 		98FAB0B41EA7A08200A3FC19 /* SIMPConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 98FAB0A71EA7A08200A3FC19 /* SIMPConnection.m */; };
 		98FAB0B51EA7A08200A3FC19 /* SIMPConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 98FAB0A91EA7A08200A3FC19 /* SIMPConstants.m */; };
 		98FAB0B61EA7A08200A3FC19 /* SIMPGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = 98FAB0AB1EA7A08200A3FC19 /* SIMPGroup.m */; };
@@ -113,10 +110,6 @@
 /* Begin PBXFileReference section */
 		4686CDDC22CAAAEC2D836437 /* Pods-Hey.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Hey.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Hey/Pods-Hey.debug.xcconfig"; sourceTree = "<group>"; };
 		65A96F3C1B8BA3A30C5E5EE0 /* Pods-Hey.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Hey.release.xcconfig"; path = "Pods/Target Support Files/Pods-Hey/Pods-Hey.release.xcconfig"; sourceTree = "<group>"; };
-		981EE5B51EADEA7500EC329F /* ChatMyselfTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ChatMyselfTableViewCell.xib; path = Chat/ChatMyselfTableViewCell.xib; sourceTree = "<group>"; };
-		981EE5B71EADF55200EC329F /* ChatOthersTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ChatOthersTableViewCell.h; path = Chat/ChatOthersTableViewCell.h; sourceTree = "<group>"; };
-		981EE5B81EADF55200EC329F /* ChatOthersTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ChatOthersTableViewCell.m; path = Chat/ChatOthersTableViewCell.m; sourceTree = "<group>"; };
-		981EE5B91EADF55200EC329F /* ChatOthersTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ChatOthersTableViewCell.xib; path = Chat/ChatOthersTableViewCell.xib; sourceTree = "<group>"; };
 		981EE5BE1EAE6D7900EC329F /* UIColor+Help.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+Help.h"; sourceTree = "<group>"; };
 		981EE5BF1EAE6D7900EC329F /* UIColor+Help.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+Help.m"; sourceTree = "<group>"; };
 		982B4EAB1E28211700B6FAFF /* ReactiveObjC.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ReactiveObjC.framework; path = "../../../Library/Developer/Xcode/DerivedData/Hey-addxyvznbcmvzebkvbwsxgsmmbgm/Build/Products/Debug-iphonesimulator/ReactiveObjC/ReactiveObjC.framework"; sourceTree = "<group>"; };
@@ -135,8 +128,6 @@
 		9836619E1EA73BF0004DCD07 /* AccessTokenStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AccessTokenStore.m; sourceTree = "<group>"; };
 		9836619F1EA73BF0004DCD07 /* ChatRecord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatRecord.h; sourceTree = "<group>"; };
 		983661A01EA73BF0004DCD07 /* ChatRecord.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatRecord.m; sourceTree = "<group>"; };
-		983661A11EA73BF0004DCD07 /* Message.pbobjc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Message.pbobjc.h; sourceTree = "<group>"; };
-		983661A21EA73BF0004DCD07 /* Message.pbobjc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Message.pbobjc.m; sourceTree = "<group>"; };
 		983661A31EA73BF0004DCD07 /* Store.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Store.h; sourceTree = "<group>"; };
 		983661A41EA73BF0004DCD07 /* Store.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Store.m; sourceTree = "<group>"; };
 		983661A51EA73BF0004DCD07 /* Viewer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Viewer.h; sourceTree = "<group>"; };
@@ -200,6 +191,10 @@
 		98C682D51ED422FF00B4170A /* UserInfoFooterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserInfoFooterView.h; path = UserInfo/UserInfoFooterView.h; sourceTree = "<group>"; };
 		98C682D61ED422FF00B4170A /* UserInfoFooterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserInfoFooterView.m; path = UserInfo/UserInfoFooterView.m; sourceTree = "<group>"; };
 		98C682D81ED4231100B4170A /* UserInfoFooterView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = UserInfoFooterView.xib; path = UserInfo/UserInfoFooterView.xib; sourceTree = "<group>"; };
+		98C682EA1ED940BF00B4170A /* ChatTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatTableViewCell.h; sourceTree = "<group>"; };
+		98C682EB1ED940BF00B4170A /* ChatTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatTableViewCell.m; sourceTree = "<group>"; };
+		98C682F01ED9B62700B4170A /* Message.pbobjc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Message.pbobjc.h; sourceTree = "<group>"; };
+		98C682F11ED9B62700B4170A /* Message.pbobjc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Message.pbobjc.m; sourceTree = "<group>"; };
 		98D2900A1EA67CF400DD677C /* RestClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RestClient.h; path = RestClient/RestClient.h; sourceTree = "<group>"; };
 		98D2900B1EA67CF400DD677C /* RestClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RestClient.m; path = RestClient/RestClient.m; sourceTree = "<group>"; };
 		98E4272B1EBA5037009A38D7 /* HomeViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeViewModel.h; sourceTree = "<group>"; };
@@ -227,8 +222,6 @@
 		98E8947F1EABD0EB0012851A /* ChatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ChatViewController.m; path = Chat/ChatViewController.m; sourceTree = "<group>"; };
 		98E894811EABD1030012851A /* ChatViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ChatViewModel.h; path = Chat/ChatViewModel.h; sourceTree = "<group>"; };
 		98E894821EABD1030012851A /* ChatViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ChatViewModel.m; path = Chat/ChatViewModel.m; sourceTree = "<group>"; };
-		98E894841EABD2C80012851A /* ChatMyselfTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ChatMyselfTableViewCell.h; path = Chat/ChatMyselfTableViewCell.h; sourceTree = "<group>"; };
-		98E894851EABD2C80012851A /* ChatMyselfTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ChatMyselfTableViewCell.m; path = Chat/ChatMyselfTableViewCell.m; sourceTree = "<group>"; };
 		98FAB0A61EA7A08200A3FC19 /* SIMPConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SIMPConnection.h; sourceTree = "<group>"; };
 		98FAB0A71EA7A08200A3FC19 /* SIMPConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SIMPConnection.m; sourceTree = "<group>"; };
 		98FAB0A81EA7A08200A3FC19 /* SIMPConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SIMPConstants.h; sourceTree = "<group>"; };
@@ -334,8 +327,8 @@
 		983661AC1EA73BF6004DCD07 /* Protobuf */ = {
 			isa = PBXGroup;
 			children = (
-				983661A11EA73BF0004DCD07 /* Message.pbobjc.h */,
-				983661A21EA73BF0004DCD07 /* Message.pbobjc.m */,
+				98C682F01ED9B62700B4170A /* Message.pbobjc.h */,
+				98C682F11ED9B62700B4170A /* Message.pbobjc.m */,
 			);
 			name = Protobuf;
 			sourceTree = "<group>";
@@ -595,14 +588,10 @@
 			children = (
 				98E8947E1EABD0EB0012851A /* ChatViewController.h */,
 				98E8947F1EABD0EB0012851A /* ChatViewController.m */,
+				98C682EA1ED940BF00B4170A /* ChatTableViewCell.h */,
+				98C682EB1ED940BF00B4170A /* ChatTableViewCell.m */,
 				98E894811EABD1030012851A /* ChatViewModel.h */,
 				98E894821EABD1030012851A /* ChatViewModel.m */,
-				98E894841EABD2C80012851A /* ChatMyselfTableViewCell.h */,
-				98E894851EABD2C80012851A /* ChatMyselfTableViewCell.m */,
-				981EE5B51EADEA7500EC329F /* ChatMyselfTableViewCell.xib */,
-				981EE5B71EADF55200EC329F /* ChatOthersTableViewCell.h */,
-				981EE5B81EADF55200EC329F /* ChatOthersTableViewCell.m */,
-				981EE5B91EADF55200EC329F /* ChatOthersTableViewCell.xib */,
 				983A0D1C1EB776F4001337B8 /* ChatBottomView.h */,
 				983A0D1D1EB776F4001337B8 /* ChatBottomView.m */,
 				983A0D211EB7771B001337B8 /* ChatBottomView.xib */,
@@ -772,12 +761,10 @@
 				983A0D221EB7771B001337B8 /* ChatBottomView.xib in Resources */,
 				98C682BB1ED3F03500B4170A /* ProfileHeaderView.xib in Resources */,
 				98C682C81ED40BAF00B4170A /* ProfileTitleTableViewCell.xib in Resources */,
-				981EE5BB1EADF55200EC329F /* ChatOthersTableViewCell.xib in Resources */,
 				98C682D91ED4231100B4170A /* UserInfoFooterView.xib in Resources */,
 				98C682C31ED3F43B00B4170A /* ProfileTableViewCell.xib in Resources */,
 				98C682AD1ED33BD300B4170A /* ContactsTableViewCell.xib in Resources */,
 				986E6ABD1E26A2DA00CF1707 /* Assets.xcassets in Resources */,
-				981EE5B61EADEA7500EC329F /* ChatMyselfTableViewCell.xib in Resources */,
 				9885B4891ED2F57000E3DC43 /* 0_initial.sql in Resources */,
 				983A0D2A1EB90616001337B8 /* HomeTableViewCell.xib in Resources */,
 				986E6ABB1E26A2DA00CF1707 /* Main.storyboard in Resources */,
@@ -854,7 +841,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				983661B11EA73E28004DCD07 /* State.m in Sources */,
-				983661A91EA73BF0004DCD07 /* Message.pbobjc.m in Sources */,
 				983A0D281EB902C2001337B8 /* TabBarViewController.m in Sources */,
 				983661921EA6FE29004DCD07 /* Constants.m in Sources */,
 				98C682B91ED3F02B00B4170A /* ProfileHeaderView.m in Sources */,
@@ -872,6 +858,7 @@
 				98E4272D1EBA5037009A38D7 /* HomeViewModel.m in Sources */,
 				983661A71EA73BF0004DCD07 /* AccessTokenStore.m in Sources */,
 				98E8947C1EAB977A0012851A /* LoginViewModel.m in Sources */,
+				98C682F21ED9B62700B4170A /* Message.pbobjc.m in Sources */,
 				983661AA1EA73BF0004DCD07 /* Store.m in Sources */,
 				981EE5C01EAE6D7900EC329F /* UIColor+Help.m in Sources */,
 				98C682C71ED40BAF00B4170A /* ProfileTitleTableViewCell.m in Sources */,
@@ -887,12 +874,11 @@
 				98E894801EABD0EB0012851A /* ChatViewController.m in Sources */,
 				983661AB1EA73BF0004DCD07 /* Viewer.m in Sources */,
 				98E8946D1EAB97530012851A /* ContactsViewController.m in Sources */,
-				981EE5BA1EADF55200EC329F /* ChatOthersTableViewCell.m in Sources */,
 				986E6AB51E26A2DA00CF1707 /* AppDelegate.m in Sources */,
+				98C682EC1ED940BF00B4170A /* ChatTableViewCell.m in Sources */,
 				98E894321EA9FB9C0012851A /* RestClient+User.m in Sources */,
 				9885B47E1ED07D6000E3DC43 /* ContactsViewModel.m in Sources */,
 				98E894831EABD1030012851A /* ChatViewModel.m in Sources */,
-				98E894861EABD2C80012851A /* ChatMyselfTableViewCell.m in Sources */,
 				98E894701EAB97530012851A /* HomeTableViewCell.m in Sources */,
 				986E6AB21E26A2DA00CF1707 /* main.m in Sources */,
 				98FAB0B41EA7A08200A3FC19 /* SIMPConnection.m in Sources */,

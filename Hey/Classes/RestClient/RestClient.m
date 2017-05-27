@@ -79,7 +79,7 @@ NSString * const RestClientErrorDomain = @"RestClientErrorDomain";
 
 - (NSURLRequest *)authorisedRequestWithReqeust:(NSURLRequest *)request {
     NSMutableURLRequest *mutableRequest = [request mutableCopy];
-    NSString *token = [[AccessTokenStore sharedStore] getToken];
+    NSString *token = [[AccessTokenStore sharedStore] getAccessToken];
     [mutableRequest setValue:token forHTTPHeaderField:@"accesstoken"];
     return [mutableRequest copy];
 }

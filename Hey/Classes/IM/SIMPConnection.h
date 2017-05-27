@@ -16,7 +16,7 @@
 @protocol SIMPConnectionDelegate <NSObject>
 
 @optional
-- (void)connection:(SIMPConnection *)connection didConnectToAdress:(NSData *)adress bySocket:(id)sock;
+- (void)connection:(SIMPConnection *)connection didConnectToAddress:(NSData *)adress bySocket:(id)sock;
 - (void)connection:(SIMPConnection *)connection didClosedWithError:(NSError *)error bySocket:(id)sock;
 - (void)connection:(SIMPConnection *)connection didSendMessageBySocket:(id)sock;
 - (void)connection:(SIMPConnection *)connection didReceiveMessage:(SIMPMessage *)msg bySocket:(id)sock;
@@ -33,9 +33,7 @@
 @property (nonatomic, copy) NSString *host;
 
 + (instancetype)sharedConnection;
-//+ (BOOL)connectToHost:(NSString *)host port:(NSInteger)port forUser:(NSString *)userID;
 - (BOOL)connectionToRemoteHost:(NSString *)host port:(NSInteger)port forUser:(NSString *)userID;
-//- (void)sendData:(NSData *)data tag:(long)tag;
 - (void)sendMessage:(SIMPMessage *)message;
 - (NSData *)getCurrentAddress;
 

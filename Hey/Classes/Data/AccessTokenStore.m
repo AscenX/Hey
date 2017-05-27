@@ -9,7 +9,8 @@
 #import "AccessTokenStore.h"
 #import <UICKeyChainStore/UICKeyChainStore.h>
 
-static NSString * const kTokenKey = @"accessTokenHey";
+static NSString * const kAccessTokenKey = @"accessTokenHey";
+static NSString * const kQiniuTokenKey = @"qiniuTokenHey";
 
 @interface AccessTokenStore ()
 
@@ -38,23 +39,38 @@ static NSString * const kTokenKey = @"accessTokenHey";
     return self;
 }
 
-- (NSString *)getToken {
-    NSString *token =  [self.keyChainStore stringForKey:kTokenKey];
+- (NSString *)getAccessToken {
+    NSString *token =  [self.keyChainStore stringForKey:kAccessTokenKey];
     if (!token) {
-        token = [[self.userDefaults objectForKey:kTokenKey] stringValue];
-        
+        token = [self.userDefaults objectForKey:kAccessTokenKey];
     }
     return token;
 }
 
-- (void)updateToken:(NSString *)token {
-    [self.keyChainStore setString:token forKey:kTokenKey];
-    [self.userDefaults setObject:token forKey:kTokenKey];
+- (NSString *)getQiniuToken {
+    NSString *token =  [self.keyChainStore stringForKey:kQiniuTokenKey];
+    if (!token) {
+        token = [self.userDefaults objectForKey:kQiniuTokenKey];
+    }
+    return token;
+}
+
+- (void)updateAccessToken:(NSString *)accessToken {
+    [self.keyChainStore setString:accessToken forKey:kAccessTokenKey];
+    [self.userDefaults setObject:accessToken forKey:kAccessTokenKey];
+}
+
+- (void)updateQiniuToken:(NSString *)qiniuToken {
+    [self.keyChainStore setString:qiniuToken forKey:kAccessTokenKey];
+    [self.userDefaults setObject:qiniuToken forKey:kAccessTokenKey];
 }
 
 - (void)clearToken {
-    [self.keyChainStore removeItemForKey:kTokenKey];
-    [self.userDefaults removeObjectForKey:kTokenKey];
+    [self.keyChainStore removeItemForKey:kAccessTokenKey];
+    [self.userDefaults removeObjectForKey:kAccessTokenKey];
+    
+    [self.keyChainStore removeItemForKey:kQiniuTokenKey];
+    [self.userDefaults removeObjectForKey:kQiniuTokenKey];
 }
 
 @end

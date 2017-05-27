@@ -24,7 +24,7 @@
 {
     ContactsTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ContactsTableViewCellID"];
     if (!cell) {
-        cell = [[ContactsTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"ContactsTableViewCellID"];
+        cell = [[ContactsTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"ContactsTableViewCellID"];
     }
     return cell;
 }

@@ -4,13 +4,13 @@
 // This CPP symbol can be defined to use imports that match up to the framework
 // imports needed when using CocoaPods.
 #if !defined(GPB_USE_PROTOBUF_FRAMEWORK_IMPORTS)
- #define GPB_USE_PROTOBUF_FRAMEWORK_IMPORTS 0
+#define GPB_USE_PROTOBUF_FRAMEWORK_IMPORTS 0
 #endif
 
 #if GPB_USE_PROTOBUF_FRAMEWORK_IMPORTS
- #import <Protobuf/GPBProtocolBuffers.h>
+#import <Protobuf/GPBProtocolBuffers.h>
 #else
- #import "GPBProtocolBuffers.h"
+#import "GPBProtocolBuffers.h"
 #endif
 
 #if GOOGLE_PROTOBUF_OBJC_VERSION < 30002
@@ -32,16 +32,17 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark - Enum Message_MessageType
 
 typedef GPB_ENUM(Message_MessageType) {
-  /**
-   * Value used if any message's field encounters a value that is not defined
-   * by this enum. The message will also have C functions to get/set the rawValue
-   * of the field.
-   **/
-  Message_MessageType_GPBUnrecognizedEnumeratorValue = kGPBUnrecognizedEnumeratorValue,
-  Message_MessageType_Text = 0,
-  Message_MessageType_Image = 1,
-  Message_MessageType_Audio = 2,
-  Message_MessageType_Connect = 3,
+    /**
+     * Value used if any message's field encounters a value that is not defined
+     * by this enum. The message will also have C functions to get/set the rawValue
+     * of the field.
+     **/
+    Message_MessageType_GPBUnrecognizedEnumeratorValue = kGPBUnrecognizedEnumeratorValue,
+    Message_MessageType_Text = 0,
+    Message_MessageType_Image = 1,
+    Message_MessageType_Audio = 2,
+    Message_MessageType_Connect = 3,
+    Message_MessageType_Receipt = 4,
 };
 
 GPBEnumDescriptor *Message_MessageType_EnumDescriptor(void);
@@ -70,14 +71,15 @@ BOOL Message_MessageType_IsValidValue(int32_t value);
 #pragma mark - Message
 
 typedef GPB_ENUM(Message_FieldNumber) {
-  Message_FieldNumber_Version = 1,
-  Message_FieldNumber_MessageId = 2,
-  Message_FieldNumber_Time = 3,
-  Message_FieldNumber_Content = 4,
-  Message_FieldNumber_ImageURL = 5,
-  Message_FieldNumber_FromUser = 6,
-  Message_FieldNumber_ToUser = 7,
-  Message_FieldNumber_Type = 8,
+    Message_FieldNumber_Version = 1,
+    Message_FieldNumber_MessageId = 2,
+    Message_FieldNumber_Time = 3,
+    Message_FieldNumber_Content = 4,
+    Message_FieldNumber_ImageURL = 5,
+    Message_FieldNumber_FromUser = 6,
+    Message_FieldNumber_ToUser = 7,
+    Message_FieldNumber_Type = 8,
+    Message_FieldNumber_ImageScale = 9,
 };
 
 @interface Message : GPBMessage
@@ -97,6 +99,8 @@ typedef GPB_ENUM(Message_FieldNumber) {
 @property(nonatomic, readwrite, copy, null_resettable) NSString *toUser;
 
 @property(nonatomic, readwrite) Message_MessageType type;
+
+@property(nonatomic, readwrite) float imageScale;
 
 @end
 

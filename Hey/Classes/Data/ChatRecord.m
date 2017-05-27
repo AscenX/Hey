@@ -42,7 +42,7 @@
             _time = [message.time formattedDateWithFormat:@"M月dd日 HH:mm"];
         }
         _imageURL = message.imageURL;
-        
+        _imageScale = message.imageScale;
     }
     return self;
 }
@@ -57,6 +57,7 @@
              @"chatRecordType" : @"type",
              @"content" : @"content",
              @"imageURL" : @"image_url",
+             @"imageScale" : @"image_scale",
              };
 }
 
@@ -69,6 +70,7 @@
              @"type" : @"type",
              @"content" : @"content",
              @"imageURL" : @"image_url",
+             @"imageScale" : @"image_scale",
              };
 }
 

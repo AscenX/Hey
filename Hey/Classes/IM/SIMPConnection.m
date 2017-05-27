@@ -22,7 +22,6 @@
 
 @implementation SIMPConnection
 
-//singleton
 + (instancetype)sharedConnection {
     static SIMPConnection *sharedConnection = nil;
     static dispatch_once_t onceToken;
@@ -46,19 +45,14 @@
 //    if (![self.tcpSocket isConnected] && ![self.udpSocket isConnected]) {
         NSError *error;
         BOOL tcpSuccess = [self.tcpSocket connectToHost:self.host onPort:self.port error:&error];
-        NSLog(@"tcp conntect --%@", tcpSuccess ? @"YES" : @"NO");
         CheckError(@"TCPSocketConnectToHost", &error);
         
         
         BOOL udpSuccess = [self.udpSocket connectToHost:self.host onPort:self.port + 1 error:&error];
         
         CheckError(@"UDPSocketConnectToHost", &error);
-        NSLog(@"udp conntect --%@", udpSuccess ? @"YES" : @"NO");
         [self.udpSocket beginReceiving:&error];
         CheckError(@"beginReceiving", &error);
-        
-        NSLog(@"----%@---%hu",self.tcpSocket.localHost, self.tcpSocket.localPort);
-        NSLog(@"----%@---%hu",self.udpSocket.localHost, self.udpSocket.localPort);
         
         [self sendConnectData];
 //    }
@@ -106,31 +100,25 @@
 #pragma mark - GCDAsyncUdpSocketDelegate
 
 - (void)udpSocket:(GCDAsyncUdpSocket *)sock didConnectToAddress:(NSData *)address {
-    NSLog(@"socket--%@---didConnectToAddress----adress---%@",sock, address);
-    [self.delegate connection:self didConnectToAdress:address bySocket:sock];
+    [self.delegate connection:self didConnectToAddress:address bySocket:sock];
 }
 
 
 - (void)udpSocket:(GCDAsyncUdpSocket *)sock didNotConnect:(NSError * _Nullable)error {
-    NSLog(@"socket--%@--didNotConnect----adress---%@",sock, error);
     [self.delegate connection:self didClosedWithError:error bySocket:sock];
 }
 
 - (void)udpSocket:(GCDAsyncUdpSocket *)sock didSendDataWithTag:(long)tag {
-    NSLog(@"socket--%@---didSendDataWithTag---%ld",sock, tag);
     [self.delegate connection:self didSendMessageBySocket:sock];
 }
 
 - (void)udpSocket:(GCDAsyncUdpSocket *)sock didNotSendDataWithTag:(long)tag dueToError:(NSError * _Nullable)error {
-
-    NSLog(@"socket---%@---didNotSendDataWithTag---tag--%ld",sock, tag);
     [self.delegate connection:self didSendMessageFailedDueToError:error bySocket:sock];
 }
 
 - (void)udpSocket:(GCDAsyncUdpSocket *)sock didReceiveData:(NSData *)data
       fromAddress:(NSData *)address
 withFilterContext:(nullable id)filterContext {
-    NSLog(@"didReceiveData----data--%@---adress---%@---filterContext---%@",data, address, filterContext);
     NSError *error;
     Message *message = [Message parseFromData:data error:&error];
     CheckError(@"parseFromData", &error);
@@ -140,7 +128,6 @@ withFilterContext:(nullable id)filterContext {
 }
 
 - (void)udpSocketDidClose:(GCDAsyncUdpSocket *)sock withError:(NSError  * _Nullable)error {
-    NSLog(@"udpSocketDidClose----socket--%@---adress---%@",sock, error);
     [self.delegate connection:self didClosedWithError:error bySocket:sock];
 }
 
@@ -156,18 +143,15 @@ withFilterContext:(nullable id)filterContext {
 }
 
 - (void)socket:(GCDAsyncSocket *)sock didConnectToHost:(NSString *)host port:(uint16_t)port {
-    NSLog(@"socket--%@---didConnectToHost---%@---port--%hu",sock, host, port);
     NSString *adress =  [host stringByAppendingString:[NSString stringWithFormat:@":%hu", port]];
-    [self.delegate connection:self didConnectToAdress:[adress dataUsingEncoding:NSUTF8StringEncoding] bySocket:sock];
+    [self.delegate connection:self didConnectToAddress:[adress dataUsingEncoding:NSUTF8StringEncoding] bySocket:sock];
 }
 
 - (void)socket:(GCDAsyncSocket *)sock didConnectToUrl:(NSURL *)url {
-    NSLog(@"socket--%@---didConnectToUrl----url---%@",sock, url);
-    [self.delegate connection:self didConnectToAdress:[[url absoluteString] dataUsingEncoding:NSUTF8StringEncoding] bySocket:sock];
+    [self.delegate connection:self didConnectToAddress:[[url absoluteString] dataUsingEncoding:NSUTF8StringEncoding] bySocket:sock];
 }
 
 - (void)socket:(GCDAsyncSocket *)sock didReadData:(NSData *)data withTag:(long)tag {
-    NSLog(@"socket--%@---didReadData----data---%@---tag---%ld",sock, data, tag);
     NSError *error;
     Message *message = [Message parseFromData:data error:&error];
     SIMPMessage *simpMessage = [[SIMPMessage alloc] initWithMessage:message];
@@ -179,7 +163,6 @@ withFilterContext:(nullable id)filterContext {
 }
 
 - (void)socket:(GCDAsyncSocket *)sock didWriteDataWithTag:(long)tag {
-    NSLog(@"socket--%@---didWriteDataWithTag----tag---%ld",sock, tag);
     [self.delegate connection:self didSendMessageBySocket:sock];
 }
 
@@ -190,24 +173,20 @@ withFilterContext:(nullable id)filterContext {
 - (NSTimeInterval)socket:(GCDAsyncSocket *)sock shouldTimeoutReadWithTag:(long)tag
                  elapsed:(NSTimeInterval)elapsed
                bytesDone:(NSUInteger)length {
-    NSLog(@"%s",__func__);
-    return 0;
+    return 10;
 }
 
 - (NSTimeInterval)socket:(GCDAsyncSocket *)sock shouldTimeoutWriteWithTag:(long)tag
                  elapsed:(NSTimeInterval)elapsed
                bytesDone:(NSUInteger)length {
-    NSLog(@"%s",__func__);
-    return 0;
+    return 10;
 }
 
 - (void)socketDidCloseReadStream:(GCDAsyncSocket *)sock {
-    NSLog(@"socket--%@---socketDidCloseReadStream", sock);
     [self.delegate connection:self didClosedWithError:nil bySocket:sock];
 }
 
 - (void)socketDidDisconnect:(GCDAsyncSocket *)sock withError:(nullable NSError *)err {
-    NSLog(@"socket--%@---socketDidDisconnectWithError----%@", sock, err);
     [self.delegate connection:self didClosedWithError:err bySocket:sock];
 }
 

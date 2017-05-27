@@ -7,10 +7,7 @@
 //
 
 #import "ChatViewController.h"
-#import "ChatMyselfTableViewCell.h"
-#import "ChatOthersTableViewCell.h"
 #import "UIColor+Help.h"
-#import <M80AttributedLabel/M80AttributedLabel.h>
 #import <SDAutoLayout/SDAutoLayout.h>
 #import "SIMPConnection.h"
 #import "SIMPMessage.h"
@@ -21,9 +18,11 @@
 #import "Store.h"
 #import <YYWebImage/YYWebImage.h>
 #import <DateTools/NSDate+DateTools.h>
+#import <Qiniu/QiniuSDK.h>
+#import "ChatTableViewCell.h"
 
 
-@interface ChatViewController ()<UITableViewDelegate, UITableViewDataSource, UITextViewDelegate, SIMPConnectionDelegate>
+@interface ChatViewController ()<UITableViewDelegate, UITableViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextViewDelegate, SIMPConnectionDelegate>
 
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) ChatBottomView *bottomView;
@@ -56,11 +55,14 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.title = self.viewModel.user.name;
     self.view.backgroundColor = [UIColor colorWithHex:0xF2F6FA alpha:0.77f];
     
     [self addView];
     [self defineLayout];
     [self bindData];
+    
+    [self scrollTableToFoot:NO];
 }
 
 - (void)addView {
@@ -77,9 +79,22 @@
 }
 
 - (void)bindData {
-    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyBoardShow:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyBoardHide:) name:UIKeyboardWillHideNotification object:nil];
+    
+    [[[self.bottomView.addButton rac_signalForControlEvents:UIControlEventTouchUpInside] deliverOnMainThread] subscribeNext:^(id  _Nullable x) {
+        UIImagePickerController *imagePickerVC = [[UIImagePickerController alloc] init];
+        imagePickerVC.delegate = self;
+        imagePickerVC.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+        imagePickerVC.allowsEditing = NO;
+        [self presentViewController:imagePickerVC animated:YES completion:nil];
+    }];
+}
+
+#pragma mark - operating methods
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    [self.view endEditing:YES];
 }
 
 - (void)keyBoardShow:(NSNotification *)notification{
@@ -111,69 +126,6 @@
     [self.tableView scrollToRowAtIndexPath:ip atScrollPosition:UITableViewScrollPositionBottom animated:animated];
 }
 
-#pragma mark - UITableViewDataSource
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return self.viewModel.chatRecords.count;
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-
-    User *user = [[Store sharedStore].userSignal first];
-    ChatRecord *chatRecord = self.viewModel.chatRecords[indexPath.row];
-    if (chatRecord.fromUserId.integerValue == user.Id.integerValue) {
-        ChatMyselfTableViewCell *cell = [ChatMyselfTableViewCell cellWithTableView:tableView];
-        [cell.iconButton yy_setBackgroundImageWithURL:[NSURL URLWithString:user.avatar] forState:UIControlStateNormal placeholder:[UIImage imageNamed:@"icon_placeholder"]];
-        
-        if (chatRecord.chatRecordType == ChatRecordTypeText) {
-            cell.contentLabel.text = chatRecord.content;
-            cell.contentLabel.font      = [UIFont systemFontOfSize:14];
-            cell.contentLabel.textColor = [UIColor colorWithHex:0x4E5973 alpha:0.80f];
-            cell.timeLabel.text = chatRecord.time;
-            cell.nameLabel.text = user.name;
-            cell.contentLabel.textAlignment = NSTextAlignmentLeft;
-        }
-        else if (chatRecord.chatRecordType == ChatRecordTypeImage) {
-            UIImageView *imageView = [[UIImageView alloc] init];
-            [imageView yy_setImageWithURL:[NSURL URLWithString:chatRecord.imageURL] placeholder:[UIImage imageNamed:@"icon_placeholder"]];
-            [cell.contentLabel appendView:imageView];
-        }
-        return cell;
-    } else {
-        ChatOthersTableViewCell *cell = [ChatOthersTableViewCell cellWithTableView:tableView];
-        [cell.iconButton yy_setBackgroundImageWithURL:[NSURL URLWithString:self.viewModel.user.avatar] forState:UIControlStateNormal placeholder:[UIImage imageNamed:@"icon_placeholder"]];
-        cell.nameLabel.text = self.viewModel.user.name;
-        if (chatRecord.chatRecordType == ChatRecordTypeText) {
-            cell.contentLabel.text = chatRecord.content;
-            cell.contentLabel.font      = [UIFont systemFontOfSize:14];
-            cell.contentLabel.textColor = [UIColor colorWithHex:0x4E5973 alpha:0.80f];
-            cell.timeLabel.text = chatRecord.time;
-            cell.contentLabel.textAlignment = NSTextAlignmentLeft;
-        }
-        else if (chatRecord.chatRecordType == ChatRecordTypeImage) {
-            UIImageView *imageView = [[UIImageView alloc] init];
-            [imageView yy_setImageWithURL:[NSURL URLWithString:chatRecord.imageURL] placeholder:[UIImage imageNamed:@"icon_placeholder"]];
-            [cell.contentLabel appendView:imageView];
-        }
-//        cell.attributedLabel.shadowColor = [UIColor grayColor];
-//        cell.attributedLabel.shadowOffset= CGSizeMake(1, 1);
-//        cell.attributedLabel.shadowBlur = 1;
-        return cell;
-    }
-    
-    
-}
-
-#pragma mark - UITextViewDelegate
-
-- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
-    if([text isEqualToString:@"\n"]) {
-        [self send];
-        return NO;
-    }
-    
-    return YES;
-}
 
 - (void)send {
     if (self.bottomView.textView.text == nil
@@ -197,18 +149,140 @@
     [self.tableView reloadData];
 }
 
+- (void)sendImage:(UIImage *)image {
+//    Viewer *viewer = [[Store sharedStore].viewerSignal first];
+    NSString *qiniuToken = @"tDr4Ga9QlnMTI5b7Mq30SApbRvmbJtieEgDTSS6t:dr25PzRVBmX7kotCTapvpvS4-HU=:eyJzY29wZSI6InRlc3QtY29udGVudCIsImRlYWRsaW5lIjoxNTk1OTEzMDg4fQ==";
+    NSData *data = UIImageJPEGRepresentation(image, 0.1);
+    QNConfiguration *config = [QNConfiguration build:^(QNConfigurationBuilder *builder) {
+        builder.zone = [QNZone zone2];
+    }];
+    NSDate *now = [NSDate date];
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    formatter.dateFormat = @"yyyyddMMHHmmss";
+    NSString *time = [formatter stringFromDate:now];
+    NSString *imageName = [NSString stringWithFormat:@"image_%@",time];
+    
+    @weakify(self)
+    QNUploadManager *upManager = [[QNUploadManager alloc] initWithConfiguration:config];
+    [upManager putData:data key:imageName token:qiniuToken
+              complete: ^(QNResponseInfo *info, NSString *key, NSDictionary *resp) {
+                  @strongify(self)
+                  
+                  if (info.statusCode == 200) {
+                      NSString *imageURL = [NSString stringWithFormat:@"http://on1svswrl.bkt.clouddn.com/%@",imageName];
+                      User *fromUser = [[Store sharedStore].userSignal first];
+                      SIMPMessage *msg = [[SIMPMessage alloc] initWithType:SIMPMessageTypeImage];
+                      uint64_t messageId = [[NSDate date] timeIntervalSince1970] - [[NSDate dateWithYear:2000 month:1 day:1] timeIntervalSince1970];
+                      [msg setMessageId:messageId];
+                      [msg setImageScale:image.size.width / image.size.height];
+                      [msg setTime:[NSDate date]];
+                      [msg setImageURL:imageURL];
+                      [msg setFromUser:fromUser.Id.stringValue];
+                      [msg setToUser:self.viewModel.user.Id.stringValue];
+                      [self.connection sendMessage:msg];
+                      [[YYImageCache sharedCache] setImage:image forKey:imageURL];
+                      ChatRecord *chatRecord = [[ChatRecord alloc] initWithSIMPMessage:msg];
+                      [self.viewModel.chatRecords addObject:chatRecord];
+                      [[Store sharedStore] updateChatRecords:self.viewModel.chatRecords];
+                      [self.tableView reloadData];
+                  } else {
+                      NSLog(@"上传失败");
+                  }
+                  
+              } option:nil];
+
+    
+}
+
+#pragma mark - UITableViewDelegate
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    CGFloat h = [self.tableView cellHeightForIndexPath:indexPath model:self.viewModel.chatRecords[indexPath.row] keyPath:@"chatRecord" cellClass:[ChatTableViewCell class] contentViewWidth:[UIScreen mainScreen].bounds.size.width];
+    return h;
+}
+
+#pragma mark - UITableViewDataSource
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return self.viewModel.chatRecords.count;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+
+    User *user = [[Store sharedStore].userSignal first];
+    ChatRecord *chatRecord = self.viewModel.chatRecords[indexPath.row];
+
+    ChatTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kChatTableViewCellId forIndexPath:indexPath];
+    [cell setChatRecord:chatRecord];
+    if (chatRecord.fromUserId.integerValue == user.Id.integerValue) {
+        [cell.iconButton yy_setBackgroundImageWithURL:[NSURL URLWithString:user.avatar] forState:UIControlStateNormal placeholder:[UIImage imageNamed:@"icon_placeholder"]];
+    }
+    else {
+        [cell.iconButton yy_setBackgroundImageWithURL:[NSURL URLWithString:self.viewModel.user.avatar] forState:UIControlStateNormal placeholder:[UIImage imageNamed:@"icon_placeholder"]];
+    }
+    return cell;
+}
+
+#pragma mark - UITextViewDelegate
+
+- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
+    if([text isEqualToString:@"\n"]) {
+        [self send];
+        return NO;
+    }
+    
+    return YES;
+}
+
+#pragma mark - UIImagePickerControllerDelegate
+
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info {
+    UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
+    [self sendImage:image];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [picker dismissViewControllerAnimated:YES completion:nil];
+    });
+}
+
+#pragma mark - SIMPConnectionDelegate
+
+- (void)connection:(SIMPConnection *)connection didConnectToAddress:(NSData *)address bySocket:(id)sock {
+    NSLog(@"didConnectToAdress--%@--bySocket:%@", address,sock);
+}
+- (void)connection:(SIMPConnection *)connection didClosedWithError:(NSError *)error bySocket:(id)sock {
+    NSLog(@"didClosedWithErrorBySocket:%@--error--%@", sock,error.localizedDescription);
+}
+- (void)connection:(SIMPConnection *)connection didSendMessageBySocket:(id)sock {
+    NSLog(@"didSendMessageBySocket:%@", sock);
+}
+
+- (void)connection:(SIMPConnection *)connection didReceiveMessage:(SIMPMessage *)msg bySocket:(id)sock {
+    
+    NSLog(@"didReceiveMessage--%@", msg.content);
+    ChatRecord *chatRecord = [[ChatRecord alloc] initWithSIMPMessage:msg];
+    [self.viewModel.chatRecords addObject:chatRecord];
+    [self.tableView reloadData];
+    [self scrollTableToFoot:YES];
+    [[Store sharedStore] updateChatRecords:self.viewModel.chatRecords];
+}
+
+- (void)connection:(SIMPConnection *)connection didSendMessageFailedDueToError:(NSError *)err bySocket:(id)sock {
+    NSLog(@"didSendDataFailedDueToErrorbySocket:%@", sock);
+}
+
+
+
 #pragma mark - lazy load
 
 - (UITableView *)tableView {
     if (!_tableView) {
         _tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
-        [_tableView registerNib:[UINib nibWithNibName:@"ChatMyselfTableViewCell" bundle:nil] forCellReuseIdentifier:myselfCellId];
-        [_tableView registerNib:[UINib nibWithNibName:@"ChatOthersTableViewCell" bundle:nil] forCellReuseIdentifier:othersCellId];
+        [_tableView registerClass:[ChatTableViewCell class] forCellReuseIdentifier:kChatTableViewCellId];
         _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         _tableView.dataSource = self;
         _tableView.delegate = self;
         _tableView.backgroundColor = [UIColor colorWithHex:0xF2F6FA];
-        _tableView.estimatedRowHeight = 100;
+        _tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 1, 20)];
     }
     return _tableView;
 }
@@ -227,35 +301,6 @@
         
     }
     return _connection;
-}
-
-#pragma mark - SIMPConnectionDelegate
-
-- (void)connection:(SIMPConnection *)connection didConnectToAdress:(NSData *)adress bySocket:(id)sock {
-    NSLog(@"didConnectToAdressbySocket:%@", sock);
-}
-- (void)connection:(SIMPConnection *)connection didClosedWithError:(NSError *)error bySocket:(id)sock {
-    NSLog(@"didClosedWithErrorbySocket:%@", sock);
-}
-- (void)connection:(SIMPConnection *)connection didSendMessageBySocket:(id)sock {
-    NSLog(@"didSendMessageBySocket:%@", sock);
-}
-
-- (void)connection:(SIMPConnection *)connection didReceiveMessage:(SIMPMessage *)msg bySocket:(id)sock {
-    
-    ChatRecord *chatRecord = [[ChatRecord alloc] initWithSIMPMessage:msg];
-    [self.viewModel.chatRecords addObject:chatRecord];
-    [self.tableView reloadData];
-    [self scrollTableToFoot:YES];
-    [[Store sharedStore] updateChatRecords:self.viewModel.chatRecords];
-}
-
-- (void)connection:(SIMPConnection *)connection didSendMessageFailedDueToError:(NSError *)err bySocket:(id)sock {
-    NSLog(@"didSendDataFailedDueToErrorbySocket:%@", sock);
-}
-
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    [self.view endEditing:YES];
 }
 
 
