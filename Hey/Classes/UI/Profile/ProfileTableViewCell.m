@@ -8,6 +8,8 @@
 
 #import "ProfileTableViewCell.h"
 
+NSString * const kProfileTableViewCellId = @"kProfileTableViewCellId";
+
 @implementation ProfileTableViewCell
 
 - (void)awakeFromNib {
@@ -22,9 +24,9 @@
 }
 
 + (instancetype)cellWithTableView:(UITableView *)tableView {
-    ProfileTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ProfileTableViewCellID"];
+    ProfileTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kProfileTableViewCellId];
     if (!cell) {
-        cell = [[ProfileTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"ProfileTableViewCellID"];
+        cell = [[ProfileTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:kProfileTableViewCellId];
     }
     return cell;
 }

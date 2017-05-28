@@ -147,6 +147,19 @@
     [self.viewModel.chatRecords addObject:chatRecord];
     [[Store sharedStore] updateChatRecords:self.viewModel.chatRecords];
     [self.tableView reloadData];
+    
+    Viewer *viewer = [[Store sharedStore].viewerSignal first];
+    NSMutableArray *sessions = [NSMutableArray array];
+    ChatSession *session = [[ChatSession alloc] initWithUser:self.viewModel.user];
+    for (int i = 0; i < sessions.count; ++i) {
+        ChatSession *s = viewer.chatSessions[i];
+        if (![s isEqualToSession:session]) {
+            [sessions addObject:s];
+        }
+    }
+    session.lastSentence = chatRecord.content;
+    [sessions insertObject:session atIndex:0];
+    [[Store sharedStore] updateSessions:sessions];
 }
 
 - (void)sendImage:(UIImage *)image {
@@ -162,36 +175,49 @@
     NSString *time = [formatter stringFromDate:now];
     NSString *imageName = [NSString stringWithFormat:@"image_%@",time];
     
+    NSString *imageURL = [NSString stringWithFormat:@"http://on1svswrl.bkt.clouddn.com/%@",imageName];
+    User *fromUser = [[Store sharedStore].userSignal first];
+    SIMPMessage *msg = [[SIMPMessage alloc] initWithType:SIMPMessageTypeImage];
+    uint64_t messageId = [[NSDate date] timeIntervalSince1970] - [[NSDate dateWithYear:2000 month:1 day:1] timeIntervalSince1970];
+    [msg setMessageId:messageId];
+    [msg setImageScale:image.size.width / image.size.height];
+    [msg setTime:[NSDate date]];
+    [msg setImageURL:imageURL];
+    [msg setFromUser:fromUser.Id.stringValue];
+    [msg setToUser:self.viewModel.user.Id.stringValue];
+    
+    [[YYImageCache sharedCache] setImage:image forKey:imageURL];
+    
+    ChatRecord *chatRecord = [[ChatRecord alloc] initWithSIMPMessage:msg];
+    [self.viewModel.chatRecords addObject:chatRecord];
+    [[Store sharedStore] updateChatRecords:self.viewModel.chatRecords];
+    [self.tableView reloadData];
+    
+    Viewer *viewer = [[Store sharedStore].viewerSignal first];
+    NSMutableArray *sessions = [NSMutableArray array];
+    ChatSession *session = [[ChatSession alloc] initWithUser:self.viewModel.user];
+    for (int i = 0; i < sessions.count; ++i) {
+        ChatSession *s = viewer.chatSessions[i];
+        if (![s isEqualToSession:session]) {
+            [sessions addObject:s];
+        }
+    }
+    session.lastSentence = @"[图片]";
+    [sessions insertObject:session atIndex:0];
+    [[Store sharedStore] updateSessions:sessions];
+    
     @weakify(self)
     QNUploadManager *upManager = [[QNUploadManager alloc] initWithConfiguration:config];
     [upManager putData:data key:imageName token:qiniuToken
               complete: ^(QNResponseInfo *info, NSString *key, NSDictionary *resp) {
                   @strongify(self)
-                  
                   if (info.statusCode == 200) {
-                      NSString *imageURL = [NSString stringWithFormat:@"http://on1svswrl.bkt.clouddn.com/%@",imageName];
-                      User *fromUser = [[Store sharedStore].userSignal first];
-                      SIMPMessage *msg = [[SIMPMessage alloc] initWithType:SIMPMessageTypeImage];
-                      uint64_t messageId = [[NSDate date] timeIntervalSince1970] - [[NSDate dateWithYear:2000 month:1 day:1] timeIntervalSince1970];
-                      [msg setMessageId:messageId];
-                      [msg setImageScale:image.size.width / image.size.height];
-                      [msg setTime:[NSDate date]];
-                      [msg setImageURL:imageURL];
-                      [msg setFromUser:fromUser.Id.stringValue];
-                      [msg setToUser:self.viewModel.user.Id.stringValue];
                       [self.connection sendMessage:msg];
-                      [[YYImageCache sharedCache] setImage:image forKey:imageURL];
-                      ChatRecord *chatRecord = [[ChatRecord alloc] initWithSIMPMessage:msg];
-                      [self.viewModel.chatRecords addObject:chatRecord];
-                      [[Store sharedStore] updateChatRecords:self.viewModel.chatRecords];
-                      [self.tableView reloadData];
                   } else {
                       NSLog(@"上传失败");
                   }
                   
               } option:nil];
-
-    
 }
 
 #pragma mark - UITableViewDelegate

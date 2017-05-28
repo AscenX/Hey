@@ -8,7 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface HomeTableViewCell : UITableViewCell
+extern NSString * const kSessionTableViewCellId;
+
+@interface SessionTableViewCell : UITableViewCell
 
 @property (weak, nonatomic) IBOutlet UIImageView *iconImageView;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;

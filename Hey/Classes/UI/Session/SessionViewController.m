@@ -6,25 +6,29 @@
 //  Copyright © 2017年 Ascen. All rights reserved.
 //
 
-#import "HomeViewController.h"
-#import "HomeTableViewCell.h"
+#import "SessionViewController.h"
+#import "SessionTableViewCell.h"
 #import "ChatViewController.h"
-#import "HomeViewModel.h"
+#import "SessionViewModel.h"
+#import "Store.h"
+#import <YYWebImage/YYWebImage.h>
 
-@interface HomeViewController ()<UITableViewDelegate, UITableViewDataSource>
+
+
+@interface SessionViewController ()<UITableViewDelegate, UITableViewDataSource>
 
 @property(nonatomic,strong) UITableView *tableView;
 
-@property (nonatomic, strong) HomeViewModel *viewModel;
+@property (nonatomic, strong) SessionViewModel *viewModel;
 
 @end
 
-@implementation HomeViewController
+@implementation SessionViewController
 
 
 - (instancetype)init {
     if (self = [super init]) {
-        _viewModel = [[HomeViewModel alloc] init];
+        _viewModel = [[SessionViewModel alloc] init];
     }
     return self;
 }
@@ -33,16 +37,27 @@
     [super viewDidLoad];
     [self.view setBackgroundColor:[UIColor whiteColor]];
     [self setupTableView];
+    [self bindData];
+    [self.tableView reloadData];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+//    [self.tableView reloadData];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    
-    [self.viewModel updateSessions];
 }
 
 - (void)setupTableView {
     [self.view addSubview:self.tableView];
+}
+
+- (void)bindData {
+    [[[[Store sharedStore].chatSessionSignal distinctUntilChanged] deliverOnMainThread] subscribeNext:^(id  _Nullable x) {
+       [self.tableView reloadData]; 
+    }];
 }
 
 
@@ -61,11 +76,12 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    HomeTableViewCell *cell = [HomeTableViewCell cellWithTableView:tableView];
-//    cell.iconImageView.image = [UIImage imageNamed:@"stan"];
-//    cell.nameLabel.text = @"Ascen";
-//    cell.lastSentLabel.text = @"life is a struggle";
-//    cell.timeLabel.text = @"昨天";
+    SessionTableViewCell *cell = [SessionTableViewCell cellWithTableView:tableView];
+    ChatSession *session = self.viewModel.sessions[indexPath.row];
+    cell.nameLabel.text = session.sessionName;
+    [cell.iconImageView yy_setImageWithURL:[NSURL URLWithString:session.iconURL] placeholder:[UIImage imageNamed:@"icon_placeholder"]];
+    cell.timeLabel.text = session.time;
+    cell.lastSentLabel.text = session.lastSentence;
     return cell;
 }
 
@@ -74,10 +90,11 @@
 - (UITableView *)tableView {
     if (!_tableView) {
         _tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
-        [_tableView registerNib:[UINib nibWithNibName:@"HomeTableViewCell" bundle:nil] forCellReuseIdentifier:@"HomeTableViewCellID"];
-        _tableView.rowHeight = 66;
+        [_tableView registerNib:[UINib nibWithNibName:@"SessionTableViewCell" bundle:nil] forCellReuseIdentifier:kSessionTableViewCellId];
+        _tableView.rowHeight = 80;
         _tableView.delegate = self;
         _tableView.dataSource = self;
+        _tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 1, 20)];
     }
     return _tableView;
 }

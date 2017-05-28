@@ -150,6 +150,7 @@
     [self.db executeUpdate:@"DELETE FROM t_users"];
     [self.db executeUpdate:@"DELETE FROM t_contacts"];
     [self.db executeUpdate:@"DELETE FROM t_chat_records"];
+    [self.db executeUpdate:@"DELETE FROM t_chat_sessions"];
     [[AccessTokenStore sharedStore] clearToken];
     
     if (viewer.user) {
@@ -174,21 +175,12 @@
     }
     
     if (viewer.chatSessions) {
-//        NSString *storeChatSessions = @"insert into t_chat_sessions (identity, avatar, name) values (?, ?, ?)";
-        /*
-         @property (nonatomic, strong) NSNumber *Id;
-         @property (nonatomic, copy) NSArray *userIds;
-         @property (nonatomic, strong) NSData *userIdsData;
-         @property (nonatomic, copy) NSString *username;
-         @property (nonatomic, copy) NSString *iconURL;
-         @property (nonatomic, copy) NSString *sessionName;
-         @property (nonatomic, copy) NSString *lastSentence;
-         @property (nonatomic, strong) NSDate *time;
-         */
-//        for (int i = 0; i < viewer.chatSessions.count; ++i) {
-//            ChatSession *session = viewer.chatSessions[i];
-//            [self.db executeUpdate:storeChatSessions, session.Id, session.userIdsData, session.username, session.iconURL, session.sessionName, session.lastSentence, ];
-//        }
+        NSString *insertChatSessions = @"insert into t_chat_sessions (user_id, user_name, icon_url, session_name, last_sentence, time) values (?, ?, ?, ?, ?, ?)";
+
+        for (int i = 0; i < viewer.chatSessions.count; ++i) {
+            ChatSession *session = viewer.chatSessions[i];
+            [self.db executeUpdate:insertChatSessions, session.userId, session.username, session.iconURL, session.sessionName, session.lastSentence, session.time];
+        }
     }
     
     if (viewer.accessToken) {
@@ -237,6 +229,13 @@
         [contacts addObject:contact];
     }
     
+    if (contacts.count == 0) {
+        if (error) {
+            NSLog(@"contacts--%@", error);
+        }
+        return nil;
+    }
+    
     FMResultSet *chatRecordsResultSet = [self.db executeQuery:@"SELECT * FROM t_chat_records"];
     NSMutableArray *chatRecords = [NSMutableArray array];
     while ([chatRecordsResultSet next]) {
@@ -244,27 +243,26 @@
         [chatRecords addObject:chatRecord];
     }
     
-    if (!contacts) {
+    if (chatRecords.count == 0) {
         if (error) {
-            NSLog(@"contacts--%@", error);
+            NSLog(@"chatRecords--%@", error);
         }
         return nil;
     }
     
-//    FMResultSet *contactsResultSet = [self.db executeQuery:@"SELECT * FROM t_contacts"];
-//    NSMutableArray *contacts = [NSMutableArray array];
-//    while ([contactsResultSet next]) {
-//        
-//        Contact *contact = [MTLFMDBAdapter modelOfClass:[Contact class] fromFMResultSet:contactsResultSet error:&error];
-//        [contacts addObject:contact];
-//    }
-//    
-//    if (!contacts) {
-//        if (error) {
-//            NSLog(@"contacts--%@", error);
-//        }
-//        return nil;
-//    }
+    FMResultSet *chatSessionsResultSet = [self.db executeQuery:@"SELECT * FROM t_chat_sessions"];
+    NSMutableArray *chatSessions = [NSMutableArray array];
+    while ([chatSessionsResultSet next]) {
+        ChatSession *chatSession = [MTLFMDBAdapter modelOfClass:[ChatSession class] fromFMResultSet:chatRecordsResultSet error:&error];
+        [chatSessions addObject:chatSession];
+    }
+    
+    if (chatSessions.count == 0) {
+        if (error) {
+            NSLog(@"chatSessions--%@", error);
+        }
+        return nil;
+    }
     
     Viewer *viewer = [[Viewer alloc] initWithDictionary:@{
                                                           @"accessToken" : accessToken ?:NSNull.null,
@@ -272,6 +270,8 @@
                                                           @"user" : user ?:NSNull.null,
                                                           @"contacts" : contacts ?:NSNull.null,
                                                           @"chatRecords" : chatRecords ?:NSNull.null,
+                                                          @"chatSessions" :
+                                                    chatSessions ?:NSNull.null,
                                                           } error:&error];
     if (error) {
         NSLog(@"%@", error);

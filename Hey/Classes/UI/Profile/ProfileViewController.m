@@ -114,7 +114,7 @@
         _tableView.dataSource = self;
         _tableView.tableHeaderView = self.headerView;
         _tableView.rowHeight = 44;
-        [_tableView registerNib:[UINib nibWithNibName:@"ProfileTableViewCell" bundle:nil] forCellReuseIdentifier:@"ProfileTableViewCellID"];
+        [_tableView registerNib:[UINib nibWithNibName:@"ProfileTableViewCell" bundle:nil] forCellReuseIdentifier:kProfileTableViewCellId];
         [_tableView registerNib:[UINib nibWithNibName:@"ProfileTitleTableViewCell" bundle:nil] forCellReuseIdentifier:@"ProfileTitleTableViewCellID"];
         _tableView.tableFooterView = [UIView new];
         _tableView.backgroundColor = [UIColor clearColor];

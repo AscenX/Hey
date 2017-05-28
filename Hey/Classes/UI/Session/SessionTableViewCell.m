@@ -6,14 +6,16 @@
 //  Copyright © 2017年 Ascen. All rights reserved.
 //
 
-#import "HomeTableViewCell.h"
+#import "SessionTableViewCell.h"
 
-@implementation HomeTableViewCell
+NSString * const kSessionTableViewCellId = @"SessionTableViewCellId";
+
+@implementation SessionTableViewCell
 
 + (instancetype)cellWithTableView:(UITableView *)tableView {
-    HomeTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"HomeTableViewCellID"];
+    SessionTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kSessionTableViewCellId];
     if (!cell) {
-        cell = [[HomeTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"HomeTableViewCellID"];
+        cell = [[SessionTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:kSessionTableViewCellId];
     }
     return cell;
 }

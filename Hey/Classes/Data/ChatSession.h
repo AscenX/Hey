@@ -9,15 +9,19 @@
 #import <Mantle/Mantle.h>
 #import <MTLFMDBAdapter/MTLFMDBAdapter.h>
 
+@class User;
+
 @interface ChatSession : MTLModel <MTLJSONSerializing, MTLFMDBSerializing>
 
-@property (nonatomic, strong) NSNumber *Id;
-@property (nonatomic, copy) NSArray *userIds;
-@property (nonatomic, strong) NSData *userIdsData;
+@property (nonatomic, strong) NSNumber *userId;
 @property (nonatomic, copy) NSString *username;
 @property (nonatomic, copy) NSString *iconURL;
 @property (nonatomic, copy) NSString *sessionName;
 @property (nonatomic, copy) NSString *lastSentence;
-@property (nonatomic, strong) NSDate *time;
+@property (nonatomic, copy) NSString *time;
+
+- (instancetype)initWithUser:(User *)user;
+
+- (BOOL)isEqualToSession:(ChatSession *)session;
 
 @end

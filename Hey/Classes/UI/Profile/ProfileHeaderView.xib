@@ -12,27 +12,27 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="ProfileHeaderView">
-            <rect key="frame" x="0.0" y="0.0" width="375" height="90"/>
+            <rect key="frame" x="0.0" y="0.0" width="375" height="109"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aOV-dd-VBO">
-                    <rect key="frame" x="0.0" y="0.0" width="375" height="90"/>
+                    <rect key="frame" x="0.0" y="20" width="375" height="89"/>
                     <subviews>
                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="CMo-Xa-swj">
-                            <rect key="frame" x="20" y="17" width="56" height="56"/>
+                            <rect key="frame" x="20" y="13" width="56" height="56"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="56" id="HDQ-FW-rOv"/>
                                 <constraint firstAttribute="width" constant="56" id="kdT-U2-gpw"/>
                             </constraints>
                         </imageView>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SdJ-SU-zIF">
-                            <rect key="frame" x="101" y="17" width="254" height="21"/>
+                            <rect key="frame" x="101" y="13" width="254" height="21"/>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tti-Xd-H2q">
-                            <rect key="frame" x="101" y="56" width="254" height="17"/>
+                            <rect key="frame" x="101" y="52" width="254" height="17"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
@@ -40,23 +40,23 @@
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
+                        <constraint firstAttribute="bottom" secondItem="CMo-Xa-swj" secondAttribute="bottom" constant="20" id="2DW-z4-8El"/>
                         <constraint firstItem="tti-Xd-H2q" firstAttribute="trailing" secondItem="SdJ-SU-zIF" secondAttribute="trailing" id="Dcb-06-4Zq"/>
                         <constraint firstAttribute="trailing" secondItem="SdJ-SU-zIF" secondAttribute="trailing" constant="20" id="NWT-Ht-WtQ"/>
                         <constraint firstItem="SdJ-SU-zIF" firstAttribute="leading" secondItem="CMo-Xa-swj" secondAttribute="trailing" constant="25" id="ThC-Os-9Tv"/>
                         <constraint firstItem="SdJ-SU-zIF" firstAttribute="top" secondItem="CMo-Xa-swj" secondAttribute="top" id="YIe-2B-9OL"/>
-                        <constraint firstItem="CMo-Xa-swj" firstAttribute="centerY" secondItem="aOV-dd-VBO" secondAttribute="centerY" id="fNy-it-CBc"/>
                         <constraint firstItem="tti-Xd-H2q" firstAttribute="leading" secondItem="SdJ-SU-zIF" secondAttribute="leading" id="iZ0-z2-fwC"/>
                         <constraint firstItem="CMo-Xa-swj" firstAttribute="leading" secondItem="aOV-dd-VBO" secondAttribute="leading" constant="20" id="moK-oU-0wI"/>
                         <constraint firstItem="tti-Xd-H2q" firstAttribute="bottom" secondItem="CMo-Xa-swj" secondAttribute="bottom" id="q4F-vw-ncL"/>
                     </constraints>
                 </view>
             </subviews>
-            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstAttribute="bottom" secondItem="aOV-dd-VBO" secondAttribute="bottom" id="5yx-BR-DkQ"/>
                 <constraint firstAttribute="trailing" secondItem="aOV-dd-VBO" secondAttribute="trailing" id="8dL-Xd-8Hy"/>
                 <constraint firstItem="aOV-dd-VBO" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="aTk-Ia-epJ"/>
-                <constraint firstItem="aOV-dd-VBO" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="lRb-gw-1Yk"/>
+                <constraint firstItem="aOV-dd-VBO" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="20" id="lRb-gw-1Yk"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
@@ -64,7 +64,7 @@
                 <outlet property="avatarImageView" destination="CMo-Xa-swj" id="gns-h8-LzG"/>
                 <outlet property="nameLabel" destination="SdJ-SU-zIF" id="de4-4A-Sf7"/>
             </connections>
-            <point key="canvasLocation" x="-28.5" y="-43"/>
+            <point key="canvasLocation" x="-187.5" y="-13.5"/>
         </view>
     </objects>
 </document>

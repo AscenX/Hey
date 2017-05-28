@@ -15,6 +15,8 @@
 #import "UIColor+Help.h"
 #import "User.h"
 #import "ChatViewController.h"
+#import "ChatSession.h"
+#import "Store.h"
 
 @interface UserInfoViewController () <UITableViewDelegate, UITableViewDataSource>
 
@@ -66,7 +68,18 @@
     }];
     
     [[[self.footerView.comeToChatButton rac_signalForControlEvents:UIControlEventTouchUpInside] deliverOnMainThread] subscribeNext:^(id  _Nullable x) {
-//        [self.navigationController popToRootViewControllerAnimated:NO];
+        Viewer *viewer = [[Store sharedStore].viewerSignal first];
+        NSMutableArray *sessions = [NSMutableArray array];
+        ChatSession *session = [[ChatSession alloc] initWithUser:self.viewModel.user];
+        for (int i = 0; i < sessions.count; ++i) {
+            ChatSession *s = viewer.chatSessions[i];
+            if (![s isEqualToSession:session]) {
+                [sessions addObject:s];
+            }
+        }
+        [sessions insertObject:session atIndex:0];
+        [[Store sharedStore] updateSessions:sessions];
+        
         ChatViewController *chatVC = [[ChatViewController alloc] initWithUser:self.viewModel.user];
         self.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:chatVC animated:YES];

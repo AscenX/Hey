@@ -8,7 +8,7 @@
 
 #import "TabBarViewController.h"
 
-#import "HomeViewController.h"
+#import "SessionViewController.h"
 #import "ContactsViewController.h"
 #import "StatusViewController.h"
 #import "ProfileViewController.h"
@@ -27,11 +27,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    UIViewController* homeVC = [[HomeViewController alloc] init];
-    [homeVC setTitle:@"Hey"];
-    UINavigationController *homeNav = [[UINavigationController alloc] initWithRootViewController:homeVC];
-    homeNav.tabBarItem.image = [UIImage imageNamed:@"icon_chat"];
-    [self addChildViewController:homeNav];
+    UIViewController* sessionVC = [[SessionViewController alloc] init];
+    [sessionVC setTitle:@"Hey"];
+    UINavigationController *sessionNav = [[UINavigationController alloc] initWithRootViewController:sessionVC];
+    sessionNav.tabBarItem.image = [UIImage imageNamed:@"icon_chat"];
+    [self addChildViewController:sessionNav];
     
     UIViewController* contactsVC = [[ContactsViewController alloc] init];
     [contactsVC setTitle:@"通讯录"];

@@ -10,9 +10,9 @@
 
 @class ChatSession;
 
-@interface HomeViewModel : NSObject
+@interface SessionViewModel : NSObject
 
-@property (nonatomic, strong, readonly) NSMutableArray<ChatSession *> *sessions;
+@property (nonatomic, strong, readonly) NSArray *sessions;
 
 - (void)updateSessions;
 

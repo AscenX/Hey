@@ -7,13 +7,31 @@
 //
 
 #import "ChatSession.h"
+#import "User.h"
+#import <DateTools/NSDate+DateTools.h>
 
 @implementation ChatSession
 
+- (instancetype)initWithUser:(User *)user {
+    if (self = [super init]) {
+        _userId = user.Id;
+        _username = user.name;
+        _sessionName = user.name;
+        _iconURL = user.avatar;
+        _lastSentence = nil;
+        if ([[NSDate date] formattedDateWithFormat:@"MM"].integerValue > 9) {
+            _time = [[NSDate date] formattedDateWithFormat:@"MM月dd日 HH:mm"];
+        }
+        else {
+            _time = [[NSDate date] formattedDateWithFormat:@"M月dd日 HH:mm"];
+        }
+    }
+    return self;
+}
+
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
     return @{
-             @"Id" : @"identity",
-             @"userIdsData" : @"user_ids",
+             @"userId" : @"user_id",
              @"userName" : @"username",
              @"sessionName" : @"session_name",
              @"imageURL" : @"image_url",
@@ -24,8 +42,7 @@
 
 + (NSDictionary *)FMDBColumnsByPropertyKey {
     return @{
-             @"Id" : @"identity",
-             @"userIdsData" : @"user_ids",
+             @"userId" : @"user_id",
              @"userName" : @"username",
              @"sessionName" : @"session_name",
              @"imageURL" : @"image_url",
@@ -39,35 +56,11 @@
 }
 
 + (NSArray *)FMDBPrimaryKeys {
-    return @[@"identity"];
+    return @[@"user_id"];
 }
 
-- (NSArray *)userIds {
-    return [NSKeyedUnarchiver unarchiveObjectWithData:_userIdsData];
-}
-
-- (void)setUserIds:(NSArray *)userIds {
-    _userIdsData = [NSKeyedArchiver archivedDataWithRootObject:userIds];
-}
-
-+ (NSDateFormatter *)dateFormatter {
-    static dispatch_once_t onceToken;
-    static NSDateFormatter *dateFormatter;
-    dispatch_once(&onceToken, ^{
-        dateFormatter = [[NSDateFormatter alloc] init];
-        dateFormatter.locale = [[NSLocale alloc] initWithLocaleIdentifier:@"zh_CN"];
-        dateFormatter.timeZone = [NSTimeZone timeZoneForSecondsFromGMT:0];
-        dateFormatter.dateFormat = @"yyyy-MM-dd HH:mm:ss.SSSSSS+Z";
-    });
-    return dateFormatter;
-}
-
-+ (NSValueTransformer *)timeJSONTransformer {
-    return [MTLValueTransformer transformerUsingForwardBlock:^id(NSString *value, BOOL *success, NSError *__autoreleasing *error) {
-        return [[self dateFormatter] dateFromString:value];
-    } reverseBlock:^id(NSDate *date, BOOL *success, NSError *__autoreleasing *error) {
-        return [[self dateFormatter] stringFromDate:date];
-    }];
+- (BOOL)isEqualToSession:(ChatSession *)session {
+    return self.userId.integerValue == session.userId.integerValue;
 }
 
 @end
