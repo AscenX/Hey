@@ -11,6 +11,7 @@
 #import "Store.h"
 #import "AccessTokenStore.h"
 #import "Contact.h"
+#import "User.h"
 
 @implementation UserManager
 
@@ -39,6 +40,21 @@
     return [[[RestClient sharedClient] contactsWithUserId:userId] doNext:^(id  _Nullable x) {
         [[Store sharedStore] updateContacts:x];
     }];
+}
+
+- (User *)getUserById:(NSNumber *)userId {
+    Viewer *viewer = [[Store sharedStore].viewerSignal first];
+    NSArray *contacts = viewer.contacts;
+    User *user = [[User alloc] init];
+    for (int i = 0; i < contacts.count; ++i) {
+        Contact *contact = contacts[i];
+        if (contact.Id.integerValue == userId.integerValue) {
+            user.Id = contact.Id;
+            user.name = contact.name;
+            user.avatar = contact.avatar;
+        }
+    }
+    return user;
 }
 
 @end

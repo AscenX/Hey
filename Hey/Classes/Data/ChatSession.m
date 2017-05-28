@@ -31,23 +31,23 @@
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
     return @{
-             @"userId" : @"user_id",
+             @"userId" : @"identity",
              @"userName" : @"username",
              @"sessionName" : @"session_name",
              @"imageURL" : @"image_url",
              @"lastSentence" : @"last_sentence",
-             @"time" : @"created_at",
+             @"time" : @"time",
              };
 }
 
 + (NSDictionary *)FMDBColumnsByPropertyKey {
     return @{
-             @"userId" : @"user_id",
+             @"userId" : @"identity",
              @"userName" : @"username",
              @"sessionName" : @"session_name",
              @"imageURL" : @"image_url",
              @"lastSentence" : @"last_sentence",
-             @"time" : @"created_at",
+             @"time" : @"time",
              };
 }
 
@@ -56,7 +56,7 @@
 }
 
 + (NSArray *)FMDBPrimaryKeys {
-    return @[@"user_id"];
+    return @[@"identity"];
 }
 
 - (BOOL)isEqualToSession:(ChatSession *)session {

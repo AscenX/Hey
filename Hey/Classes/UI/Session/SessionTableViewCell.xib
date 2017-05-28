@@ -12,30 +12,30 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="scaleToFill" restorationIdentifier="SessionTableViewCellId" id="iN0-l3-epB" customClass="SessionTableViewCell">
-            <rect key="frame" x="0.0" y="0.0" width="290" height="80"/>
+            <rect key="frame" x="0.0" y="0.0" width="290" height="66"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ZHZ-i5-IUB">
-                    <rect key="frame" x="15" y="10" width="60" height="60"/>
+                    <rect key="frame" x="15" y="5" width="56" height="56"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="60" id="OiY-kJ-Bw9"/>
-                        <constraint firstAttribute="width" constant="60" id="qyj-KU-3iu"/>
+                        <constraint firstAttribute="height" constant="56" id="OiY-kJ-Bw9"/>
+                        <constraint firstAttribute="width" constant="56" id="qyj-KU-3iu"/>
                     </constraints>
                 </imageView>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Hu-dx-2DS">
-                    <rect key="frame" x="90" y="48" width="180" height="16"/>
+                    <rect key="frame" x="86" y="39" width="184" height="16"/>
                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
                     <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="p2P-gP-oBr">
-                    <rect key="frame" x="237" y="11.5" width="33" height="16"/>
+                    <rect key="frame" x="237" y="6.5" width="33" height="16"/>
                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
                     <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kAL-VW-Tmu">
-                    <rect key="frame" x="90" y="10" width="42" height="20.5"/>
+                    <rect key="frame" x="86" y="5" width="42" height="20.5"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>

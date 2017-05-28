@@ -23,7 +23,7 @@ CREATE TABLE t_chat_records (
 );
 
 CREATE TABLE t_chat_sessions (
-    user_id            NUMBER PRIMARY KEY ON CONFLICT REPLACE,
+    identity            NUMBER PRIMARY KEY ON CONFLICT REPLACE,
     username            TEXT,
     session_name        TEXT,
     image_url           TEXT,

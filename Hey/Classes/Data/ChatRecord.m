@@ -17,15 +17,15 @@
         switch (message.type) {
             case SIMPMessageTypeText:
                 _type = @"text";
-                _chatRecordType = ChatRecordTypeText;
+//                _chatRecordType = ChatRecordTypeText;
                 break;
             case SIMPMessageTypeImage:
                 _type = @"image";
-                _chatRecordType = ChatRecordTypeImage;
+//                _chatRecordType = ChatRecordTypeImage;
                 break;
             case SIMPMessageTypeAudio:
                 _type = @"audio";
-                _chatRecordType = ChatRecordTypeAudio;
+//                _chatRecordType = ChatRecordTypeAudio;
                 break;
             default:
                 break;
@@ -42,7 +42,7 @@
             _time = [message.time formattedDateWithFormat:@"M月dd日 HH:mm"];
         }
         _imageURL = message.imageURL;
-        _imageScale = message.imageScale;
+        _imageScale = [NSNumber numberWithFloat:message.imageScale];
     }
     return self;
 }
@@ -54,7 +54,6 @@
              @"toUserId" : @"to_user_id",
              @"time" : @"time",
              @"type" : @"type",
-             @"chatRecordType" : @"type",
              @"content" : @"content",
              @"imageURL" : @"image_url",
              @"imageScale" : @"image_scale",
@@ -74,14 +73,14 @@
              };
 }
 
-+ (NSValueTransformer *)chatRecordTypeJSONTransformer {
-    return [NSValueTransformer mtl_valueMappingTransformerWithDictionary:
-            @{
-              @"text" :  @(ChatRecordTypeText),
-              @"image" : @(ChatRecordTypeImage),
-              @"audio" : @(ChatRecordTypeAudio),
-              }];
-}
+//+ (NSValueTransformer *)chatRecordTypeJSONTransformer {
+//    return [NSValueTransformer mtl_valueMappingTransformerWithDictionary:
+//            @{
+//              @"text" :  @(ChatRecordTypeText),
+//              @"image" : @(ChatRecordTypeImage),
+//              @"audio" : @(ChatRecordTypeAudio),
+//              }];
+//}
 
 + (NSString *)FMDBTableName {
     return @"t_chat_records";

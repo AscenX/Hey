@@ -93,7 +93,7 @@ NSString *const kChatTableViewCellId = @"ChatTableViewCellId";
     
     [self setMessageOriginWithChatRecord:chatRecord];
     
-    if (chatRecord.chatRecordType == ChatRecordTypeImage) { // 有图片的先看下设置图片自动布局
+    if ([chatRecord.type isEqualToString:@"image"]) { // 有图片的先看下设置图片自动布局
         
         // cell重用时候清除只有文字的情况下设置的container宽度自适应约束
         [self.container clearAutoWidthSettings];
@@ -110,7 +110,7 @@ NSString *const kChatTableViewCellId = @"ChatTableViewCellId";
             
             if (w > kMaxChatImageViewWidth || w > kMaxChatImageViewHeight) {
                 
-                widthHeightRatio = chatRecord.imageScale;
+                widthHeightRatio = chatRecord.imageScale.floatValue;
                 
                 if (widthHeightRatio > 1.0f) {
                     w = kMaxChatImageViewWidth;
@@ -130,7 +130,7 @@ NSString *const kChatTableViewCellId = @"ChatTableViewCellId";
             [self.messageImageView yy_setImageWithURL:[NSURL URLWithString:chatRecord.imageURL] placeholder:[UIImage imageNamed:@"icon_placeholder"] options:YYWebImageOptionProgressive | YYWebImageOptionProgressiveBlur completion:^(UIImage * _Nullable image, NSURL * _Nonnull url, YYWebImageFromType from, YYWebImageStage stage, NSError * _Nullable error) {
                 self.messageImageView.image = image;
             }];
-            widthHeightRatio = chatRecord.imageScale;
+            widthHeightRatio = chatRecord.imageScale.floatValue;
             
             CGFloat h;
             CGFloat w;
@@ -163,7 +163,7 @@ NSString *const kChatTableViewCellId = @"ChatTableViewCellId";
         self.messageImageView.layer.cornerRadius = 5.0f;
         
     }
-    else if (chatRecord.chatRecordType == ChatRecordTypeText) { // 没有图片有文字情况下设置文字自动布局
+    else if ([chatRecord.type isEqualToString:@"text"]) { // 没有图片有文字情况下设置文字自动布局
         
         // 清除展示图片时候用到的mask
 //        [_container.layer.mask removeFromSuperlayer];

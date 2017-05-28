@@ -11,6 +11,7 @@
 #import "ChatViewController.h"
 #import "SessionViewModel.h"
 #import "Store.h"
+#import "UserManager.h"
 #import <YYWebImage/YYWebImage.h>
 
 
@@ -43,7 +44,7 @@
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-//    [self.tableView reloadData];
+    [self.tableView reloadData];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -55,18 +56,21 @@
 }
 
 - (void)bindData {
-    [[[[Store sharedStore].chatSessionSignal distinctUntilChanged] deliverOnMainThread] subscribeNext:^(id  _Nullable x) {
-       [self.tableView reloadData]; 
-    }];
+//    [[[[Store sharedStore].chatSessionSignal distinctUntilChanged] deliverOnMainThread] subscribeNext:^(id  _Nullable x) {
+//       [self.tableView reloadData];
+//    }];
 }
 
 
 #pragma mark - UITableViewDelegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    ChatViewController *vc = [[ChatViewController alloc] init];
-    
-    [self.navigationController pushViewController:vc animated:YES];
+    ChatSession *session = self.viewModel.sessions[indexPath.row];
+    User *user = [[UserManager sharedManager] getUserById:session.userId];
+    ChatViewController *chatVC = [[ChatViewController alloc] initWithUser:user];
+    self.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:chatVC animated:YES];
+    self.hidesBottomBarWhenPushed = NO;
 }
 
 #pragma mark - UITableViewDataSource

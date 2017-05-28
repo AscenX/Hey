@@ -71,7 +71,7 @@
         Viewer *viewer = [[Store sharedStore].viewerSignal first];
         NSMutableArray *sessions = [NSMutableArray array];
         ChatSession *session = [[ChatSession alloc] initWithUser:self.viewModel.user];
-        for (int i = 0; i < sessions.count; ++i) {
+        for (int i = 0; i < viewer.chatSessions.count; ++i) {
             ChatSession *s = viewer.chatSessions[i];
             if (![s isEqualToSession:session]) {
                 [sessions addObject:s];
