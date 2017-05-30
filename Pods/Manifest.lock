@@ -27,6 +27,7 @@ PODS:
   - Mantle (2.1.0):
     - Mantle/extobjc (= 2.1.0)
   - Mantle/extobjc (2.1.0)
+  - MJRefresh (3.1.12)
   - MLEmojiLabel (1.0.2):
     - TTTAttributedLabel (~> 1.13.4)
   - MTLFMDBAdapter (0.3.2):
@@ -42,6 +43,7 @@ PODS:
   - TTTAttributedLabel (1.13.4)
   - TZImagePickerController (1.7.9)
   - UICKeyChainStore (2.1.1)
+  - UIView+FDCollapsibleConstraints (1.1)
   - YYCache (1.0.4)
   - YYImage (1.0.4):
     - YYImage/Core (= 1.0.4)
@@ -57,6 +59,7 @@ DEPENDENCIES:
   - FMDB (~> 2.6.2)
   - FMDBMigrationManager (~> 1.4.1)
   - Mantle (~> 2.1.0)
+  - MJRefresh (~> 3.1.12)
   - MLEmojiLabel (~> 1.0.2)
   - MTLFMDBAdapter (~> 0.3.2)
   - Protobuf (~> 3.2.0)
@@ -66,6 +69,7 @@ DEPENDENCIES:
   - SVProgressHUD
   - TZImagePickerController
   - UICKeyChainStore (~> 2.1.1)
+  - UIView+FDCollapsibleConstraints (~> 1.1)
   - YYWebImage (~> 1.0.5)
 
 SPEC CHECKSUMS:
@@ -76,6 +80,7 @@ SPEC CHECKSUMS:
   FMDBMigrationManager: d52007f328ea0665e8985ca8a33500707aef084f
   HappyDNS: 06a9fed2796663fd87626dbf02552933265bf059
   Mantle: 2fa750afa478cd625a94230fbf1c13462f29395b
+  MJRefresh: b96cdb21c4aa75a7b07654311ab2f315c497e806
   MLEmojiLabel: 36d73c19f9975cbf9def24e5bc135263b0337fd8
   MTLFMDBAdapter: 052190e3e25d35adc56a6cf74f88d648c8ad2615
   Protobuf: 2ccbaf193f6c65adc67745453ca0c13234c32796
@@ -86,10 +91,11 @@ SPEC CHECKSUMS:
   TTTAttributedLabel: 0a2ac7b2dd726d32a070dafb01446026b11e624f
   TZImagePickerController: 0a8ff228d287ebdd7d485e8c42a2a932894f1fba
   UICKeyChainStore: 239558492fa260531a0774cfc611ea83a6eaff3a
+  UIView+FDCollapsibleConstraints: 9357eaf03b4e088263ab74a3b86a382a64ce38dd
   YYCache: 8105b6638f5e849296c71f331ff83891a4942952
   YYImage: 1e1b62a9997399593e4b9c4ecfbbabbf1d3f3b54
   YYWebImage: 5f7f36aee2ae293f016d418c7d6ba05c4863e928
 
-PODFILE CHECKSUM: 713a0ddbe2b214a16e76625a590c677ac799dd7b
+PODFILE CHECKSUM: d01b8f76e7f421a7ce1321a17f1c45493b295fb1
 
 COCOAPODS: 1.2.0.beta.3

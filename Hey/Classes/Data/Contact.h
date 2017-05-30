@@ -9,7 +9,7 @@
 #import <Mantle/Mantle.h>
 #import <MTLFMDBAdapter/MTLFMDBAdapter.h>
 
-@interface Contact : MTLModel<MTLJSONSerializing, MTLFMDBSerializing>
+@interface Contact : MTLModel <MTLJSONSerializing, MTLFMDBSerializing>
 
 @property (nonatomic, copy) NSNumber *Id;
 @property (nonatomic, copy) NSString *name;

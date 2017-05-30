@@ -35,6 +35,17 @@
 		9885B4871ED2F52600E3DC43 /* DBMigrationHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 9885B4861ED2F52600E3DC43 /* DBMigrationHelper.m */; };
 		9885B4891ED2F57000E3DC43 /* 0_initial.sql in Resources */ = {isa = PBXBuildFile; fileRef = 9885B4881ED2F57000E3DC43 /* 0_initial.sql */; };
 		988E25111EA9B53A0064FF8C /* UserManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 988E25101EA9B53A0064FF8C /* UserManager.m */; };
+		98A672021EDBFCF400B6A6B0 /* StatusViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A672011EDBFCF400B6A6B0 /* StatusViewModel.m */; };
+		98A672051EDBFD1900B6A6B0 /* ChatTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A672041EDBFD1900B6A6B0 /* ChatTableViewCell.m */; };
+		98A672081EDBFD6A00B6A6B0 /* StatusTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A672071EDBFD6A00B6A6B0 /* StatusTableViewCell.m */; };
+		98A6720A1EDC043A00B6A6B0 /* StatusTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98A672091EDC043A00B6A6B0 /* StatusTableViewCell.xib */; };
+		98A6720D1EDC2A1700B6A6B0 /* StatusManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A6720C1EDC2A1700B6A6B0 /* StatusManager.m */; };
+		98A672181EDC2A9000B6A6B0 /* RestClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A672151EDC2A9000B6A6B0 /* RestClient.m */; };
+		98A672191EDC2A9000B6A6B0 /* RestClient+Status.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A672161EDC2A9000B6A6B0 /* RestClient+Status.m */; };
+		98A6721A1EDC2A9000B6A6B0 /* RestClient+User.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A672171EDC2A9000B6A6B0 /* RestClient+User.m */; };
+		98A6721D1EDC2C8700B6A6B0 /* Status.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A6721C1EDC2C8700B6A6B0 /* Status.m */; };
+		98A672241EDC6FA100B6A6B0 /* StatusSendView.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A672231EDC6FA100B6A6B0 /* StatusSendView.m */; };
+		98A672261EDC6FB500B6A6B0 /* StatusSendView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98A672251EDC6FB500B6A6B0 /* StatusSendView.xib */; };
 		98BEE3111EBB870A00399558 /* ChatSession.m in Sources */ = {isa = PBXBuildFile; fileRef = 98BEE3101EBB870A00399558 /* ChatSession.m */; };
 		98C682AC1ED33BD300B4170A /* ContactsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 98C682AA1ED33BD300B4170A /* ContactsTableViewCell.m */; };
 		98C682AD1ED33BD300B4170A /* ContactsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98C682AB1ED33BD300B4170A /* ContactsTableViewCell.xib */; };
@@ -51,15 +62,12 @@
 		98C682D41ED41A0800B4170A /* UserInfoTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98C682D21ED41A0800B4170A /* UserInfoTableViewCell.xib */; };
 		98C682D71ED422FF00B4170A /* UserInfoFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 98C682D61ED422FF00B4170A /* UserInfoFooterView.m */; };
 		98C682D91ED4231100B4170A /* UserInfoFooterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98C682D81ED4231100B4170A /* UserInfoFooterView.xib */; };
-		98C682EC1ED940BF00B4170A /* ChatTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 98C682EB1ED940BF00B4170A /* ChatTableViewCell.m */; };
 		98C682F21ED9B62700B4170A /* Message.pbobjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 98C682F11ED9B62700B4170A /* Message.pbobjc.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		98C682F61EDA0F5E00B4170A /* AboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 98C682F51EDA0F5E00B4170A /* AboutViewController.m */; };
 		98C682FF1EDA17C400B4170A /* SessionTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 98C682F91EDA17C400B4170A /* SessionTableViewCell.m */; };
 		98C683001EDA17C400B4170A /* SessionTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98C682FA1EDA17C400B4170A /* SessionTableViewCell.xib */; };
 		98C683011EDA17C400B4170A /* SessionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 98C682FC1EDA17C400B4170A /* SessionViewController.m */; };
 		98C683021EDA17C400B4170A /* SessionViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 98C682FE1EDA17C400B4170A /* SessionViewModel.m */; };
-		98D2900C1EA67CF400DD677C /* RestClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 98D2900B1EA67CF400DD677C /* RestClient.m */; };
-		98E894321EA9FB9C0012851A /* RestClient+User.m in Sources */ = {isa = PBXBuildFile; fileRef = 98E894311EA9FB9C0012851A /* RestClient+User.m */; };
 		98E894651EAB97530012851A /* BaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 98E894381EAB97530012851A /* BaseViewController.m */; };
 		98E8946D1EAB97530012851A /* ContactsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 98E894481EAB97530012851A /* ContactsViewController.m */; };
 		98E894741EAB97530012851A /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 98E894581EAB97530012851A /* LoginViewController.m */; };
@@ -165,6 +173,26 @@
 		9885B4881ED2F57000E3DC43 /* 0_initial.sql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 0_initial.sql; sourceTree = "<group>"; };
 		988E250F1EA9B53A0064FF8C /* UserManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserManager.h; sourceTree = "<group>"; };
 		988E25101EA9B53A0064FF8C /* UserManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserManager.m; sourceTree = "<group>"; };
+		98A672001EDBFCF400B6A6B0 /* StatusViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StatusViewModel.h; sourceTree = "<group>"; };
+		98A672011EDBFCF400B6A6B0 /* StatusViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StatusViewModel.m; sourceTree = "<group>"; };
+		98A672031EDBFD1900B6A6B0 /* ChatTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ChatTableViewCell.h; path = Chat/ChatTableViewCell.h; sourceTree = "<group>"; };
+		98A672041EDBFD1900B6A6B0 /* ChatTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ChatTableViewCell.m; path = Chat/ChatTableViewCell.m; sourceTree = "<group>"; };
+		98A672061EDBFD6A00B6A6B0 /* StatusTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StatusTableViewCell.h; sourceTree = "<group>"; };
+		98A672071EDBFD6A00B6A6B0 /* StatusTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StatusTableViewCell.m; sourceTree = "<group>"; };
+		98A672091EDC043A00B6A6B0 /* StatusTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StatusTableViewCell.xib; sourceTree = "<group>"; };
+		98A6720B1EDC2A1700B6A6B0 /* StatusManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StatusManager.h; sourceTree = "<group>"; };
+		98A6720C1EDC2A1700B6A6B0 /* StatusManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StatusManager.m; sourceTree = "<group>"; };
+		98A672121EDC2A9000B6A6B0 /* RestClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RestClient.h; sourceTree = "<group>"; };
+		98A672131EDC2A9000B6A6B0 /* RestClient+Status.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "RestClient+Status.h"; sourceTree = "<group>"; };
+		98A672141EDC2A9000B6A6B0 /* RestClient+User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "RestClient+User.h"; sourceTree = "<group>"; };
+		98A672151EDC2A9000B6A6B0 /* RestClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RestClient.m; sourceTree = "<group>"; };
+		98A672161EDC2A9000B6A6B0 /* RestClient+Status.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "RestClient+Status.m"; sourceTree = "<group>"; };
+		98A672171EDC2A9000B6A6B0 /* RestClient+User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "RestClient+User.m"; sourceTree = "<group>"; };
+		98A6721B1EDC2C8700B6A6B0 /* Status.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Status.h; sourceTree = "<group>"; };
+		98A6721C1EDC2C8700B6A6B0 /* Status.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Status.m; sourceTree = "<group>"; };
+		98A672221EDC6FA100B6A6B0 /* StatusSendView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StatusSendView.h; sourceTree = "<group>"; };
+		98A672231EDC6FA100B6A6B0 /* StatusSendView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StatusSendView.m; sourceTree = "<group>"; };
+		98A672251EDC6FB500B6A6B0 /* StatusSendView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StatusSendView.xib; sourceTree = "<group>"; };
 		98BEE30F1EBB870A00399558 /* ChatSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatSession.h; sourceTree = "<group>"; };
 		98BEE3101EBB870A00399558 /* ChatSession.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatSession.m; sourceTree = "<group>"; };
 		98C682A91ED33BD300B4170A /* ContactsTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactsTableViewCell.h; sourceTree = "<group>"; };
@@ -191,8 +219,6 @@
 		98C682D51ED422FF00B4170A /* UserInfoFooterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserInfoFooterView.h; path = UserInfo/UserInfoFooterView.h; sourceTree = "<group>"; };
 		98C682D61ED422FF00B4170A /* UserInfoFooterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserInfoFooterView.m; path = UserInfo/UserInfoFooterView.m; sourceTree = "<group>"; };
 		98C682D81ED4231100B4170A /* UserInfoFooterView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = UserInfoFooterView.xib; path = UserInfo/UserInfoFooterView.xib; sourceTree = "<group>"; };
-		98C682EA1ED940BF00B4170A /* ChatTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatTableViewCell.h; sourceTree = "<group>"; };
-		98C682EB1ED940BF00B4170A /* ChatTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatTableViewCell.m; sourceTree = "<group>"; };
 		98C682F01ED9B62700B4170A /* Message.pbobjc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Message.pbobjc.h; sourceTree = "<group>"; };
 		98C682F11ED9B62700B4170A /* Message.pbobjc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Message.pbobjc.m; sourceTree = "<group>"; };
 		98C682F41EDA0F5E00B4170A /* AboutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AboutViewController.h; path = About/AboutViewController.h; sourceTree = "<group>"; };
@@ -204,10 +230,6 @@
 		98C682FC1EDA17C400B4170A /* SessionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SessionViewController.m; sourceTree = "<group>"; };
 		98C682FD1EDA17C400B4170A /* SessionViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SessionViewModel.h; sourceTree = "<group>"; };
 		98C682FE1EDA17C400B4170A /* SessionViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SessionViewModel.m; sourceTree = "<group>"; };
-		98D2900A1EA67CF400DD677C /* RestClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RestClient.h; path = RestClient/RestClient.h; sourceTree = "<group>"; };
-		98D2900B1EA67CF400DD677C /* RestClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RestClient.m; path = RestClient/RestClient.m; sourceTree = "<group>"; };
-		98E894301EA9FB9C0012851A /* RestClient+User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "RestClient+User.h"; path = "Data/RestClient+User.h"; sourceTree = "<group>"; };
-		98E894311EA9FB9C0012851A /* RestClient+User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "RestClient+User.m"; path = "Data/RestClient+User.m"; sourceTree = "<group>"; };
 		98E894371EAB97530012851A /* BaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseViewController.h; sourceTree = "<group>"; };
 		98E894381EAB97530012851A /* BaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseViewController.m; sourceTree = "<group>"; };
 		98E894471EAB97530012851A /* ContactsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactsViewController.h; sourceTree = "<group>"; };
@@ -316,8 +338,8 @@
 		9836619C1EA73BF0004DCD07 /* Data */ = {
 			isa = PBXGroup;
 			children = (
+				98A672111EDC2A7B00B6A6B0 /* RestClient */,
 				98E427271EBA4AE5009A38D7 /* Database */,
-				98D9FC7C1E822D3C006FCB87 /* RestClient */,
 				98FAB0A11EA79FBB00A3FC19 /* Manager */,
 				983661AD1EA73C03004DCD07 /* DataCenter */,
 				983661AE1EA73C18004DCD07 /* Model */,
@@ -360,6 +382,8 @@
 				9885B47A1ECF619900E3DC43 /* User.m */,
 				9885B4821ED1A04600E3DC43 /* Contact.h */,
 				9885B4831ED1A04600E3DC43 /* Contact.m */,
+				98A6721B1EDC2C8700B6A6B0 /* Status.h */,
+				98A6721C1EDC2C8700B6A6B0 /* Status.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -427,6 +451,19 @@
 			path = HeyUITests;
 			sourceTree = "<group>";
 		};
+		98A672111EDC2A7B00B6A6B0 /* RestClient */ = {
+			isa = PBXGroup;
+			children = (
+				98A672121EDC2A9000B6A6B0 /* RestClient.h */,
+				98A672151EDC2A9000B6A6B0 /* RestClient.m */,
+				98A672141EDC2A9000B6A6B0 /* RestClient+User.h */,
+				98A672171EDC2A9000B6A6B0 /* RestClient+User.m */,
+				98A672131EDC2A9000B6A6B0 /* RestClient+Status.h */,
+				98A672161EDC2A9000B6A6B0 /* RestClient+Status.m */,
+			);
+			name = RestClient;
+			sourceTree = "<group>";
+		};
 		98BCEA731ED322760074757A /* Token */ = {
 			isa = PBXGroup;
 			children = (
@@ -474,18 +511,6 @@
 				98C682FA1EDA17C400B4170A /* SessionTableViewCell.xib */,
 			);
 			path = Session;
-			sourceTree = "<group>";
-		};
-		98D9FC7C1E822D3C006FCB87 /* RestClient */ = {
-			isa = PBXGroup;
-			children = (
-				98D2900A1EA67CF400DD677C /* RestClient.h */,
-				98D2900B1EA67CF400DD677C /* RestClient.m */,
-				98E894301EA9FB9C0012851A /* RestClient+User.h */,
-				98E894311EA9FB9C0012851A /* RestClient+User.m */,
-			);
-			name = RestClient;
-			path = ..;
 			sourceTree = "<group>";
 		};
 		98D9FC7F1E8232E7006FCB87 /* Libs */ = {
@@ -592,6 +617,14 @@
 			children = (
 				98E894621EAB97530012851A /* StatusViewController.h */,
 				98E894631EAB97530012851A /* StatusViewController.m */,
+				98A672001EDBFCF400B6A6B0 /* StatusViewModel.h */,
+				98A672011EDBFCF400B6A6B0 /* StatusViewModel.m */,
+				98A672061EDBFD6A00B6A6B0 /* StatusTableViewCell.h */,
+				98A672071EDBFD6A00B6A6B0 /* StatusTableViewCell.m */,
+				98A672091EDC043A00B6A6B0 /* StatusTableViewCell.xib */,
+				98A672221EDC6FA100B6A6B0 /* StatusSendView.h */,
+				98A672231EDC6FA100B6A6B0 /* StatusSendView.m */,
+				98A672251EDC6FB500B6A6B0 /* StatusSendView.xib */,
 			);
 			path = Status;
 			sourceTree = "<group>";
@@ -601,10 +634,10 @@
 			children = (
 				98E8947E1EABD0EB0012851A /* ChatViewController.h */,
 				98E8947F1EABD0EB0012851A /* ChatViewController.m */,
-				98C682EA1ED940BF00B4170A /* ChatTableViewCell.h */,
-				98C682EB1ED940BF00B4170A /* ChatTableViewCell.m */,
 				98E894811EABD1030012851A /* ChatViewModel.h */,
 				98E894821EABD1030012851A /* ChatViewModel.m */,
+				98A672031EDBFD1900B6A6B0 /* ChatTableViewCell.h */,
+				98A672041EDBFD1900B6A6B0 /* ChatTableViewCell.m */,
 				983A0D1C1EB776F4001337B8 /* ChatBottomView.h */,
 				983A0D1D1EB776F4001337B8 /* ChatBottomView.m */,
 				983A0D211EB7771B001337B8 /* ChatBottomView.xib */,
@@ -617,6 +650,8 @@
 			children = (
 				988E250F1EA9B53A0064FF8C /* UserManager.h */,
 				988E25101EA9B53A0064FF8C /* UserManager.m */,
+				98A6720B1EDC2A1700B6A6B0 /* StatusManager.h */,
+				98A6720C1EDC2A1700B6A6B0 /* StatusManager.m */,
 			);
 			name = Manager;
 			sourceTree = "<group>";
@@ -773,7 +808,9 @@
 				98C682D41ED41A0800B4170A /* UserInfoTableViewCell.xib in Resources */,
 				983A0D221EB7771B001337B8 /* ChatBottomView.xib in Resources */,
 				98C682BB1ED3F03500B4170A /* ProfileHeaderView.xib in Resources */,
+				98A6720A1EDC043A00B6A6B0 /* StatusTableViewCell.xib in Resources */,
 				98C682C81ED40BAF00B4170A /* ProfileTitleTableViewCell.xib in Resources */,
+				98A672261EDC6FB500B6A6B0 /* StatusSendView.xib in Resources */,
 				98C682D91ED4231100B4170A /* UserInfoFooterView.xib in Resources */,
 				98C683001EDA17C400B4170A /* SessionTableViewCell.xib in Resources */,
 				98C682C31ED3F43B00B4170A /* ProfileTableViewCell.xib in Resources */,
@@ -863,6 +900,7 @@
 				98C683011EDA17C400B4170A /* SessionViewController.m in Sources */,
 				98C682BE1ED3F18700B4170A /* ProfileViewModel.m in Sources */,
 				98C682D71ED422FF00B4170A /* UserInfoFooterView.m in Sources */,
+				98A672191EDC2A9000B6A6B0 /* RestClient+Status.m in Sources */,
 				9885B4841ED1A04600E3DC43 /* Contact.m in Sources */,
 				9885B47B1ECF619900E3DC43 /* User.m in Sources */,
 				983A0D1E1EB776F4001337B8 /* ChatBottomView.m in Sources */,
@@ -878,9 +916,11 @@
 				98C682C71ED40BAF00B4170A /* ProfileTitleTableViewCell.m in Sources */,
 				983661A81EA73BF0004DCD07 /* ChatRecord.m in Sources */,
 				98FAB0B71EA7A08200A3FC19 /* SIMPMessage.m in Sources */,
+				98A672021EDBFCF400B6A6B0 /* StatusViewModel.m in Sources */,
+				98A6720D1EDC2A1700B6A6B0 /* StatusManager.m in Sources */,
 				988E25111EA9B53A0064FF8C /* UserManager.m in Sources */,
-				98D2900C1EA67CF400DD677C /* RestClient.m in Sources */,
 				98FAB0B61EA7A08200A3FC19 /* SIMPGroup.m in Sources */,
+				98A672081EDBFD6A00B6A6B0 /* StatusTableViewCell.m in Sources */,
 				98FAB0B51EA7A08200A3FC19 /* SIMPConstants.m in Sources */,
 				98C683021EDA17C400B4170A /* SessionViewModel.m in Sources */,
 				98FAB0B81EA7A08200A3FC19 /* SIMPMessageStorage.m in Sources */,
@@ -888,16 +928,19 @@
 				98E894771EAB97530012851A /* ProfileViewController.m in Sources */,
 				98E894801EABD0EB0012851A /* ChatViewController.m in Sources */,
 				983661AB1EA73BF0004DCD07 /* Viewer.m in Sources */,
+				98A672241EDC6FA100B6A6B0 /* StatusSendView.m in Sources */,
 				98E8946D1EAB97530012851A /* ContactsViewController.m in Sources */,
+				98A672181EDC2A9000B6A6B0 /* RestClient.m in Sources */,
 				986E6AB51E26A2DA00CF1707 /* AppDelegate.m in Sources */,
-				98C682EC1ED940BF00B4170A /* ChatTableViewCell.m in Sources */,
-				98E894321EA9FB9C0012851A /* RestClient+User.m in Sources */,
+				98A672051EDBFD1900B6A6B0 /* ChatTableViewCell.m in Sources */,
 				9885B47E1ED07D6000E3DC43 /* ContactsViewModel.m in Sources */,
 				98E894831EABD1030012851A /* ChatViewModel.m in Sources */,
 				986E6AB21E26A2DA00CF1707 /* main.m in Sources */,
 				98FAB0B41EA7A08200A3FC19 /* SIMPConnection.m in Sources */,
 				98C682F61EDA0F5E00B4170A /* AboutViewController.m in Sources */,
+				98A6721A1EDC2A9000B6A6B0 /* RestClient+User.m in Sources */,
 				98E894741EAB97530012851A /* LoginViewController.m in Sources */,
+				98A6721D1EDC2C8700B6A6B0 /* Status.m in Sources */,
 				98FAB0B91EA7A08200A3FC19 /* SIMPParser.m in Sources */,
 				98E894651EAB97530012851A /* BaseViewController.m in Sources */,
 				98C682C21ED3F43B00B4170A /* ProfileTableViewCell.m in Sources */,
