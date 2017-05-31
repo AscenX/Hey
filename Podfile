@@ -16,7 +16,6 @@ target 'Hey' do
     pod 'SVProgressHUD'
     pod 'DateTools', '~> 2.0.0'
     pod 'MLEmojiLabel', '~> 1.0.2'
-    pod 'UIView+FDCollapsibleConstraints', '~> 1.1'
     pod 'MJRefresh', '~> 3.1.12'
     
     #data

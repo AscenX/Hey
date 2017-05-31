@@ -13,16 +13,16 @@
 @interface StatusTableViewCell : UITableViewCell
 
 @property (nonatomic, strong) Status *status;
-
-@property (weak, nonatomic) IBOutlet UIButton *iconButton;
-@property (weak, nonatomic) IBOutlet UIButton *nameButton;
-@property (weak, nonatomic) IBOutlet UILabel *timeLabel;
-
-@property (weak, nonatomic) IBOutlet UIView *containerView;
-@property (weak, nonatomic) IBOutlet UILabel *contentLabel;
-@property (weak, nonatomic) IBOutlet UIImageView *contentImageView;
-@property (weak, nonatomic) IBOutlet UIButton *commentButton;
-@property (weak, nonatomic) IBOutlet UIButton *likeButton;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *imageRightCons;
+    
+@property (nonatomic, strong) UIView *containerView;
+@property (nonatomic, strong) UIButton *iconButton;
+@property (nonatomic, strong) UIButton *nameButton;
+@property (nonatomic, strong) UILabel *timeLabel;
+@property (nonatomic, strong) UILabel *contentLabel;
+@property (nonatomic, strong) UIImageView *contentImageView;
+@property (nonatomic, strong) UIButton *commentButton;
+@property (nonatomic, strong) UIButton *likeButton;
+@property (nonatomic, strong) UIView *lineView;
+@property (nonatomic, strong) UIView *hlineView;
 
 @end

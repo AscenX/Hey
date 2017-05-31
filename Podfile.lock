@@ -43,7 +43,6 @@ PODS:
   - TTTAttributedLabel (1.13.4)
   - TZImagePickerController (1.7.9)
   - UICKeyChainStore (2.1.1)
-  - UIView+FDCollapsibleConstraints (1.1)
   - YYCache (1.0.4)
   - YYImage (1.0.4):
     - YYImage/Core (= 1.0.4)
@@ -69,7 +68,6 @@ DEPENDENCIES:
   - SVProgressHUD
   - TZImagePickerController
   - UICKeyChainStore (~> 2.1.1)
-  - UIView+FDCollapsibleConstraints (~> 1.1)
   - YYWebImage (~> 1.0.5)
 
 SPEC CHECKSUMS:
@@ -91,11 +89,10 @@ SPEC CHECKSUMS:
   TTTAttributedLabel: 0a2ac7b2dd726d32a070dafb01446026b11e624f
   TZImagePickerController: 0a8ff228d287ebdd7d485e8c42a2a932894f1fba
   UICKeyChainStore: 239558492fa260531a0774cfc611ea83a6eaff3a
-  UIView+FDCollapsibleConstraints: 9357eaf03b4e088263ab74a3b86a382a64ce38dd
   YYCache: 8105b6638f5e849296c71f331ff83891a4942952
   YYImage: 1e1b62a9997399593e4b9c4ecfbbabbf1d3f3b54
   YYWebImage: 5f7f36aee2ae293f016d418c7d6ba05c4863e928
 
-PODFILE CHECKSUM: d01b8f76e7f421a7ce1321a17f1c45493b295fb1
+PODFILE CHECKSUM: f5531f454c09dd741915abc3c7cfc3bcd56029bb
 
 COCOAPODS: 1.2.0.beta.3

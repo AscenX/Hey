@@ -36,14 +36,29 @@
     return _fetchStatusCommand;
     
 }
-
-- (void)sendStatus:(Status *)status {
-    [[[StatusManager sharedManager] sendStatus:status] subscribeNext:^(id  _Nullable x) {
-        if (x) {
-//            [self.statuses addObject:x];
+    
+    - (RACCommand *)sendStatusCommand {
+        if (!_sendStatusCommand) {
+            _sendStatusCommand = [[RACCommand alloc] initWithSignalBlock:^RACSignal * _Nonnull(Status *status) {
+                return [[[StatusManager sharedManager] sendStatus:status] doNext:^(id  _Nullable x) {
+                    if (x) {
+                        //            [self.statuses addObject:x];
+                    }
+                }];
+            }];
         }
-    }];
-}
+        return _sendStatusCommand;
+    }
+    
+    - (RACCommand *)likeStatusCommand {
+        if (!_likeStatusCommand) {
+            _likeStatusCommand = [[RACCommand alloc] initWithSignalBlock:^RACSignal * _Nonnull(Status *status) {
+                return [[StatusManager sharedManager] likeStatusId:status.Id like:!status.youLike];
+            }];
+        }
+        return _likeStatusCommand;
+    }
+
 
 
 @end

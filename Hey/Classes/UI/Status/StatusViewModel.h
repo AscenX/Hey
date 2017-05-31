@@ -17,8 +17,8 @@
 
 @property (nonatomic, strong) RACCommand *fetchStatusCommand;
 
-//@property (nonatomic, strong) RACCommand *refreshCommand;
+@property (nonatomic, strong) RACCommand *sendStatusCommand;
+@property (nonatomic, strong) RACCommand *likeStatusCommand;
 
-- (void)sendStatus:(Status *)status;
 
 @end

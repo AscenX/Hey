@@ -14,11 +14,11 @@
 #import <MJRefresh/MJRefresh.h>
 #import <YYWebImage/YYWebImage.h>
 #import "Status.h"
-#import <UIView_FDCollapsibleConstraints/UIView+FDCollapsibleConstraints.h>
 #import <SDAutoLayout/SDAutoLayout.h>
 #import "StatusSendView.h"
 #import <DateTools/NSDate+DateTools.h>
 #import <Qiniu/QiniuSDK.h>
+#import <SVProgressHUD/SVProgressHUD.h>
 
 @interface StatusViewController () <UITableViewDelegate, UITableViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 
@@ -77,8 +77,17 @@
     @weakify(self)
     [[RACObserve(self.viewModel, statuses) deliverOnMainThread] subscribeNext:^(id  _Nullable x) {
         @strongify(self)
-        [self.tableView.mj_header endRefreshing];
+        if (self.tableView.mj_header.isRefreshing) {
+            [self.tableView.mj_header endRefreshing];
+        }
         [self.tableView reloadData];
+    }];
+    
+    [[self.viewModel.fetchStatusCommand.errors deliverOnMainThread] subscribeNext:^(id  _Nullable x) {
+        @strongify(self)
+        if (self.tableView.mj_header.isRefreshing) {
+            [self.tableView.mj_header endRefreshing];
+        }
     }];
     
     self.navigationItem.rightBarButtonItem.rac_command = [[RACCommand alloc] initWithSignalBlock:^RACSignal *(id input) {
@@ -98,8 +107,13 @@
     }];
     
     [[[self.sendView.cancelButton rac_signalForControlEvents:UIControlEventTouchUpInside] deliverOnMainThread] subscribeNext:^(id  _Nullable x) {
+        @strongify(self)
         [self.maskView removeFromSuperview];
         [self.sendView removeFromSuperview];
+    }];
+    
+    [[[self.viewModel.sendStatusCommand.executionSignals switchToLatest] deliverOnMainThread] subscribeNext:^(id  _Nullable x) {
+        [SVProgressHUD showWithStatus:@"发送动态成功啦啦啦"];
     }];
     
     [[self.sendView.sendButton rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(id  _Nullable x) {
@@ -134,7 +148,7 @@
                           @strongify(self)
                           if (info.statusCode == 200) {
                               NSLog(@"上传成功");
-                              [self.viewModel sendStatus:status];
+                              [self.viewModel.sendStatusCommand execute:status];
                           } else {
                               NSLog(@"上传失败");
                           }
@@ -142,7 +156,7 @@
                       } option:nil];
         }
         else {
-            [self.viewModel sendStatus:status];
+            [self.viewModel.sendStatusCommand execute:status];
         }
         
         
@@ -158,6 +172,7 @@
     
     self.sendView.imageButton.rac_command = [[RACCommand alloc] initWithSignalBlock:^RACSignal * _Nonnull(id  _Nullable input) {
         return [RACSignal createSignal:^RACDisposable * _Nullable(id<RACSubscriber>  _Nonnull subscriber) {
+            @strongify(self)
             if (self.selectedImage) {
                 [self presentViewController:self.alertController animated:YES completion:nil];
             }
@@ -216,8 +231,29 @@
 #pragma mark - UITableViewDelegate
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    CGFloat h = [self.tableView cellHeightForIndexPath:indexPath model:self.viewModel.statuses[indexPath.row] keyPath:@"status" cellClass:[StatusTableViewCell class] contentViewWidth:[UIScreen mainScreen].bounds.size.width];
-    return h;
+    Status *status = self.viewModel.statuses[indexPath.row];
+    CGFloat height = 0.0;
+    CGFloat w;
+    CGFloat h;
+    
+    CGRect rect = [status.content boundingRectWithSize:CGSizeMake(self.view.width - 2 * 15, 500) options:NSStringDrawingUsesFontLeading attributes:@{ NSFontAttributeName : [UIFont systemFontOfSize:14]} context:nil];
+    if ([status.imageURL isEqualToString:@""] || status.imageURL == nil) {
+        h = 0;
+        height = h + 75 + rect.size.height + 15  + 15 + 44;
+    }
+    else {
+        if (status.imageScale.floatValue >= 1.0f) {
+            w = self.view.bounds.size.width - 2 * 15;
+            h = w / status.imageScale.floatValue;
+        }
+        else {
+            h = 300;
+            w = h * status.imageScale.floatValue;
+        }
+        height = h + 75 + rect.size.height + 15  + 15 + 10 + 44;
+    }
+    
+    return height;
 }
 
 #pragma mark - UITableViewDataSource
@@ -227,9 +263,15 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    StatusTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"StatusTableViewCellId" forIndexPath:indexPath];
+    StatusTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"StatusTableViewCellId"];
     Status *status = self.viewModel.statuses[indexPath.row];
+    @weakify(self)
+    [[cell.likeButton rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(id  _Nullable x) {
+        @strongify(self)
+        [self.viewModel.likeStatusCommand execute:status];
+    }];
     [cell setStatus:status];
+
     return cell;
 }
 
@@ -253,8 +295,10 @@
         _tableView.backgroundColor = [UIColor clearColor];
         _tableView.delegate = self;
         _tableView.dataSource = self;
-        [_tableView registerNib:[UINib nibWithNibName:@"StatusTableViewCell" bundle:nil] forCellReuseIdentifier:@"StatusTableViewCellId"];
-        _tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 1, 20)];
+//        [_tableView registerNib:[UINib nibWithNibName:@"StatusTableViewCell" bundle:nil] forCellReuseIdentifier:@"StatusTableViewCellId"];
+        [_tableView registerClass:[StatusTableViewCell class] forCellReuseIdentifier:@"StatusTableViewCellId"];
+//        _tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 1, 20)];
+//        _tableView.estimatedRowHeight = 400;
     }
     return _tableView;
 }

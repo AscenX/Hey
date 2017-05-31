@@ -20,5 +20,6 @@
 @property (nonatomic, strong) NSNumber *likeNum;
 @property (nonatomic, copy) NSString *time;
 @property (nonatomic, strong) NSNumber *imageScale;
+@property (nonatomic, assign) BOOL youLike;
 
 @end

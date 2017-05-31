@@ -17,6 +17,8 @@
 - (RACSignal *)fetchAllStatuses;
 
 - (RACSignal *)sendStatus:(Status *)status;
+    
+- (RACSignal *)likeStatusId:(NSNumber *)statusId like:(BOOL)like;
 
 
 @end

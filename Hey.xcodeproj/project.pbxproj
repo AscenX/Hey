@@ -38,7 +38,6 @@
 		98A672021EDBFCF400B6A6B0 /* StatusViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A672011EDBFCF400B6A6B0 /* StatusViewModel.m */; };
 		98A672051EDBFD1900B6A6B0 /* ChatTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A672041EDBFD1900B6A6B0 /* ChatTableViewCell.m */; };
 		98A672081EDBFD6A00B6A6B0 /* StatusTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A672071EDBFD6A00B6A6B0 /* StatusTableViewCell.m */; };
-		98A6720A1EDC043A00B6A6B0 /* StatusTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98A672091EDC043A00B6A6B0 /* StatusTableViewCell.xib */; };
 		98A6720D1EDC2A1700B6A6B0 /* StatusManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A6720C1EDC2A1700B6A6B0 /* StatusManager.m */; };
 		98A672181EDC2A9000B6A6B0 /* RestClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A672151EDC2A9000B6A6B0 /* RestClient.m */; };
 		98A672191EDC2A9000B6A6B0 /* RestClient+Status.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A672161EDC2A9000B6A6B0 /* RestClient+Status.m */; };
@@ -179,7 +178,6 @@
 		98A672041EDBFD1900B6A6B0 /* ChatTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ChatTableViewCell.m; path = Chat/ChatTableViewCell.m; sourceTree = "<group>"; };
 		98A672061EDBFD6A00B6A6B0 /* StatusTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StatusTableViewCell.h; sourceTree = "<group>"; };
 		98A672071EDBFD6A00B6A6B0 /* StatusTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StatusTableViewCell.m; sourceTree = "<group>"; };
-		98A672091EDC043A00B6A6B0 /* StatusTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StatusTableViewCell.xib; sourceTree = "<group>"; };
 		98A6720B1EDC2A1700B6A6B0 /* StatusManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StatusManager.h; sourceTree = "<group>"; };
 		98A6720C1EDC2A1700B6A6B0 /* StatusManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StatusManager.m; sourceTree = "<group>"; };
 		98A672121EDC2A9000B6A6B0 /* RestClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RestClient.h; sourceTree = "<group>"; };
@@ -621,7 +619,6 @@
 				98A672011EDBFCF400B6A6B0 /* StatusViewModel.m */,
 				98A672061EDBFD6A00B6A6B0 /* StatusTableViewCell.h */,
 				98A672071EDBFD6A00B6A6B0 /* StatusTableViewCell.m */,
-				98A672091EDC043A00B6A6B0 /* StatusTableViewCell.xib */,
 				98A672221EDC6FA100B6A6B0 /* StatusSendView.h */,
 				98A672231EDC6FA100B6A6B0 /* StatusSendView.m */,
 				98A672251EDC6FB500B6A6B0 /* StatusSendView.xib */,
@@ -808,7 +805,6 @@
 				98C682D41ED41A0800B4170A /* UserInfoTableViewCell.xib in Resources */,
 				983A0D221EB7771B001337B8 /* ChatBottomView.xib in Resources */,
 				98C682BB1ED3F03500B4170A /* ProfileHeaderView.xib in Resources */,
-				98A6720A1EDC043A00B6A6B0 /* StatusTableViewCell.xib in Resources */,
 				98C682C81ED40BAF00B4170A /* ProfileTitleTableViewCell.xib in Resources */,
 				98A672261EDC6FB500B6A6B0 /* StatusSendView.xib in Resources */,
 				98C682D91ED4231100B4170A /* UserInfoFooterView.xib in Resources */,

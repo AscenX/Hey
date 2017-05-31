@@ -32,5 +32,10 @@
     User *user = [[Store sharedStore].userSignal first];
     return [[RestClient sharedClient] sendStatus:status withUserId:user.Id];
 }
+    
+- (RACSignal *)likeStatusId:(NSNumber *)statusId like:(BOOL)like {
+    User *user = [[Store sharedStore].userSignal first];
+    return [[RestClient sharedClient] likeStatus:statusId like:like];
+}
 
 @end

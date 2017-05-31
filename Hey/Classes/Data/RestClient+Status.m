@@ -30,5 +30,13 @@
         return [MTLJSONAdapter modelOfClass:[Status class] fromJSONDictionary:[value objectForKey:@"status"] error:errorPtr];
     }];
 }
+    
+- (RACSignal *)likeStatus:(NSNumber *)statusId like:(BOOL)like {
+    User *user = [[Store sharedStore].userSignal first];
+    NSString *likeStr = like ? @"like" : @"cancel_like";
+    return [[[RestClient sharedClient] patch:[NSString stringWithFormat:@"status/%@/%@", statusId, likeStr] param:@{@"userId" : user.Id }] map:^id(id value) {
+        return [value objectForKey:@"like_count"];
+    }];
+}
 
 @end

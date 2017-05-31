@@ -15,5 +15,6 @@
 
 - (RACSignal *)sendStatus:(Status *)status withUserId:(NSNumber *)userId;
 
+- (RACSignal *)likeStatus:(NSNumber *)statusId like:(BOOL)like;
 
 @end

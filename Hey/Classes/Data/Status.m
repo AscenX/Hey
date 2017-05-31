@@ -22,6 +22,7 @@
              @"likeNum" : @"LikeNum",
              @"time" : @"CreatedAt",
              @"imageScale" : @"ImageScale",
+             @"youLike" : @"YouLike",
              };
 }
 
@@ -36,6 +37,7 @@
              @"likeNum" : @"like_num",
              @"time" : @"time",
              @"imageScale" : @"image_scale",
+             @"youLike" : @"you_like",
              };
 }
 
