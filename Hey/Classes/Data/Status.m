@@ -9,6 +9,7 @@
 #import "Status.h"
 
 
+
 @implementation Status
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
@@ -40,6 +41,14 @@
              @"youLike" : @"you_like",
              };
 }
+    
+//+ (NSValueTransformer *)timeJSONTransformer {
+//    return [NSValueTransformer mtl_dateTransformerWithDateFormat:@"yyyy-MM-dd'T'HH:mm:ss.SSSSSS'Z'" calendar:nil locale:[NSLocale systemLocale] timeZone:[NSTimeZone timeZoneWithName:@"UTC"] defaultDate:nil];
+//}
+- (NSString *)time {
+    return [NSString stringWithFormat:@"%@ %@",[_time substringToIndex:10], [_time substringWithRange:NSMakeRange(11, 8)]];
+}
+
 
 + (NSString *)FMDBTableName {
     return @"t_statuses";

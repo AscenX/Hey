@@ -12,14 +12,17 @@
 @interface StatusViewModel ()
 
 @property (nonatomic, copy, readwrite) NSMutableArray *statuses;
+    
+    @property (nonatomic, assign) BOOL fromMyStatus;
 
 
 @end
 
 @implementation StatusViewModel
 
-- (instancetype)init {
+- (instancetype)initWithFromMyStatus:(BOOL)fromMyStatus {
     if (self = [super init]) {
+        _fromMyStatus = fromMyStatus;
         _statuses = [NSMutableArray array];
     }
     return self;
@@ -28,9 +31,16 @@
 - (RACCommand *)fetchStatusCommand {
     if (!_fetchStatusCommand) {
         _fetchStatusCommand = [[RACCommand alloc] initWithSignalBlock:^RACSignal * _Nonnull(id  _Nullable input) {
-            return [[[StatusManager sharedManager] fetchAllStatuses] doNext:^(id  _Nullable x) {
-                self.statuses = x;
-            }];
+            if (self.fromMyStatus) {
+                return [[[StatusManager sharedManager] fetchUserStatuses] doNext:^(id  _Nullable x) {
+                    self.statuses = x;
+                }];
+            }
+            else {
+                return [[[StatusManager sharedManager] fetchAllStatuses] doNext:^(id  _Nullable x) {
+                    self.statuses = x;
+                }];
+            }
         }];
     }
     return _fetchStatusCommand;
@@ -40,11 +50,7 @@
     - (RACCommand *)sendStatusCommand {
         if (!_sendStatusCommand) {
             _sendStatusCommand = [[RACCommand alloc] initWithSignalBlock:^RACSignal * _Nonnull(Status *status) {
-                return [[[StatusManager sharedManager] sendStatus:status] doNext:^(id  _Nullable x) {
-                    if (x) {
-                        //            [self.statuses addObject:x];
-                    }
-                }];
+                return [[StatusManager sharedManager] sendStatus:status];
             }];
         }
         return _sendStatusCommand;
@@ -52,13 +58,27 @@
     
     - (RACCommand *)likeStatusCommand {
         if (!_likeStatusCommand) {
+            @weakify(self)
             _likeStatusCommand = [[RACCommand alloc] initWithSignalBlock:^RACSignal * _Nonnull(Status *status) {
-                return [[StatusManager sharedManager] likeStatusId:status.Id like:!status.youLike];
+                if (self.fromMyStatus) {
+                    return [[[StatusManager sharedManager] likeUserStatusId:status.Id like:!status.youLike] doNext:^(id  _Nullable x) {
+                        @strongify(self)
+                        self.statuses = x;
+                    }];
+                }
+                else {
+                    return [[[StatusManager sharedManager] likeStatusId:status.Id like:!status.youLike] doNext:^(id  _Nullable x) {
+                        @strongify(self)
+                        self.statuses = x;
+                    }];
+                }
             }];
         }
         return _likeStatusCommand;
     }
 
-
+- (void)likeStatus:(Status *)status {
+    [self.likeStatusCommand execute:status];
+}
 
 @end

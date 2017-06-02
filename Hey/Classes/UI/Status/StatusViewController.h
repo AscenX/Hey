@@ -9,5 +9,7 @@
 #import "BaseViewController.h"
 
 @interface StatusViewController : BaseViewController
+    
+    - (instancetype)initWithFromMyStatus:(BOOL)fromMyStatus;
 
 @end

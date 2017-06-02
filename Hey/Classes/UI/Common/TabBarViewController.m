@@ -39,7 +39,7 @@
     contactsNav.tabBarItem.image = [UIImage imageNamed:@"icon_contact"];
     [self addChildViewController:contactsNav];
     
-    UIViewController *statusVC = [[StatusViewController alloc] init];
+    UIViewController *statusVC = [[StatusViewController alloc] initWithFromMyStatus:NO];
     [statusVC setTitle:@"动态"];
     UINavigationController *statusNav = [[UINavigationController alloc] initWithRootViewController:statusVC];
     statusNav.tabBarItem.image = [UIImage imageNamed:@"icon_status"];

@@ -11,10 +11,14 @@
 
 @interface RestClient (Status)
 
-- (RACSignal *)statusByUserId:(NSNumber *)userId;
+- (RACSignal *)userStatusByUserId:(NSNumber *)userId;
+    
+- (RACSignal *)allStatusByUserId:(NSNumber *)userId;
 
 - (RACSignal *)sendStatus:(Status *)status withUserId:(NSNumber *)userId;
 
 - (RACSignal *)likeStatus:(NSNumber *)statusId like:(BOOL)like;
+    
+- (RACSignal *)likeUserStatus:(NSNumber *)statusId like:(BOOL)like;
 
 @end

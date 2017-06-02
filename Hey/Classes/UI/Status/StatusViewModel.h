@@ -12,6 +12,8 @@
 @class Status;
 
 @interface StatusViewModel : NSObject
+    
+    - (instancetype)initWithFromMyStatus:(BOOL)fromMyStatus;
 
 @property (nonatomic, copy, readonly) NSMutableArray *statuses;
 
@@ -19,6 +21,8 @@
 
 @property (nonatomic, strong) RACCommand *sendStatusCommand;
 @property (nonatomic, strong) RACCommand *likeStatusCommand;
+    
+- (void)likeStatus:(Status *)status;
 
 
 @end

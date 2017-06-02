@@ -74,6 +74,10 @@
         }
     }];
     
+    [[self.viewModel.loginCommand.errors deliverOnMainThread] subscribeNext:^(NSError *error) {
+        [SVProgressHUD showErrorWithStatus:error.localizedDescription];
+    }];
+    
     self.loginBtn.rac_command = self.viewModel.loginCommand;
 }
 

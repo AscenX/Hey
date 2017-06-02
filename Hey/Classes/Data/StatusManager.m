@@ -25,7 +25,12 @@
 
 - (RACSignal *)fetchAllStatuses {
     User *user = [[Store sharedStore].userSignal first];
-    return [[RestClient sharedClient] statusByUserId:user.Id];
+    return [[RestClient sharedClient] allStatusByUserId:user.Id];
+}
+    
+- (RACSignal *)fetchUserStatuses {
+    User *user = [[Store sharedStore].userSignal first];
+    return [[RestClient sharedClient] userStatusByUserId:user.Id];
 }
 
 - (RACSignal *)sendStatus:(Status *)status {
@@ -34,8 +39,11 @@
 }
     
 - (RACSignal *)likeStatusId:(NSNumber *)statusId like:(BOOL)like {
-    User *user = [[Store sharedStore].userSignal first];
     return [[RestClient sharedClient] likeStatus:statusId like:like];
+}
+    
+- (RACSignal *)likeUserStatusId:(NSNumber *)statusId like:(BOOL)like {
+    return [[RestClient sharedClient] likeUserStatus:statusId like:like];
 }
 
 @end

@@ -10,6 +10,8 @@
 #import "Status.h"
 #import <YYWebImage/YYWebImage.h>
 #import <SDAutoLayout/SDAutoLayout.h>
+#import "UIColor+Help.h"
+#import "DateTools/NSDate+DateTools.h"
 
 
 @implementation StatusTableViewCell
@@ -77,6 +79,8 @@
     _likeButton = [[UIButton alloc] init];
     [_likeButton setImage:[UIImage imageNamed:@"icon_like"] forState:UIControlStateNormal];
     [_likeButton setImage:[UIImage imageNamed:@"icon_liked"] forState:UIControlStateSelected];
+    [_likeButton setTitleColor:[UIColor colorWithHex:0x9B9B9B alpha:0.64f] forState:UIControlStateNormal];
+    [_likeButton setTitleColor:[UIColor redColor] forState:UIControlStateSelected];
     [_containerView addSubview:_likeButton];
     
     _contentImageView = [[UIImageView alloc] init];
@@ -130,8 +134,19 @@
     [_iconButton yy_setImageWithURL:[NSURL URLWithString:status.avatar] forState:UIControlStateNormal placeholder:[UIImage imageNamed:@"icon_avatar"]];
     [_nameButton setTitle:status.username forState:UIControlStateNormal];
     _timeLabel.text = status.time;
-    
     _contentLabel.text = status.content;
+    
+    self.likeButton.selected = status.youLike;
+    if (status.likeNum.integerValue == 0) {
+        [self.likeButton setTitle:@"" forState:UIControlStateSelected];
+        [self.likeButton setTitle:@"" forState:UIControlStateNormal];
+    }
+    else {
+        [self.likeButton setTitle:[NSString stringWithFormat:@"%@", status.likeNum] forState:UIControlStateSelected];
+        [self.likeButton setTitle:[NSString stringWithFormat:@"%@", status.likeNum] forState:UIControlStateNormal];
+    }
+    
+    
 }
 
 @end

@@ -13,6 +13,8 @@
 #import "ProfileHeaderView.h"
 #import "Store.h"
 #import "UIColor+Help.h"
+#import "StatusViewController.h"
+#import "AboutViewController.h"
 
 #import <YYWebImage/YYWebImage.h>
 
@@ -71,6 +73,20 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    if (indexPath.section == 0 && indexPath.row == 0) {
+        UIViewController *statusVC = [[StatusViewController alloc] initWithFromMyStatus:YES];
+        [statusVC setTitle:@"我的动态"];
+        self.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:statusVC animated:YES];
+        self.hidesBottomBarWhenPushed = NO;
+    }
+    if (indexPath.section == 1 && indexPath.row == 1) {
+        UIViewController *aboutVC = [[AboutViewController alloc] init];
+        [aboutVC setTitle:@"关于"];
+        self.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:aboutVC animated:YES];
+        self.hidesBottomBarWhenPushed = NO;
+    }
     if (indexPath.section == self.viewModel.infos.count - 1) {
         [self.viewModel.logoutCommand execute:nil];
     }

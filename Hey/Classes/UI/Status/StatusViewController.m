@@ -31,14 +31,17 @@
 
 @property (nonatomic, strong) UIImage *image;
 @property (nonatomic, assign) BOOL selectedImage;
+    
+@property (nonatomic, assign) BOOL fromMyStatus;
 
 @end
 
 @implementation StatusViewController
 
-- (instancetype)init {
+- (instancetype)initWithFromMyStatus:(BOOL)fromMyStatus {
     if (self = [super init]) {
-        _viewModel = [[StatusViewModel alloc] init];
+        _fromMyStatus = fromMyStatus;
+        _viewModel = [[StatusViewModel alloc] initWithFromMyStatus:fromMyStatus];
     }
     return self;
 }
@@ -54,8 +57,9 @@
 - (void)setupView {
     [self.view addSubview:self.tableView];
     
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"icon_add"] style:UIBarButtonItemStylePlain target:nil action:nil];
-
+    if (!self.fromMyStatus) {
+        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"icon_add"] style:UIBarButtonItemStylePlain target:nil action:nil];
+    }
     
     //上拉加载
     @weakify(self)
@@ -113,13 +117,14 @@
     }];
     
     [[[self.viewModel.sendStatusCommand.executionSignals switchToLatest] deliverOnMainThread] subscribeNext:^(id  _Nullable x) {
-        [SVProgressHUD showWithStatus:@"发送动态成功啦啦啦"];
+        [SVProgressHUD showSuccessWithStatus:@"发送成功啦~"];
+        self.sendView.textView.text = @"";
+       [self.sendView.imageButton setImage:nil forState:UIControlStateNormal];
     }];
     
     [[self.sendView.sendButton rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(id  _Nullable x) {
         uint64_t statusId = [[NSDate date] timeIntervalSince1970] - [[NSDate dateWithYear:2000 month:1 day:1] timeIntervalSince1970];
         @strongify(self)
-        
         
         NSString *qiniuToken = @"tDr4Ga9QlnMTI5b7Mq30SApbRvmbJtieEgDTSS6t:dr25PzRVBmX7kotCTapvpvS4-HU=:eyJzY29wZSI6InRlc3QtY29udGVudCIsImRlYWRsaW5lIjoxNTk1OTEzMDg4fQ==";
         NSData *data = UIImageJPEGRepresentation(self.image, 0.1);
@@ -189,6 +194,10 @@
         }];
     }];
     
+//    [[self.viewModel.likeStatusCommand.executionSignals switchToLatest] subscribeNext:^(id  _Nullable x) {
+//        @strongify(self)
+//        [self.tableView reloadData];
+//    }];
 }
 
 #pragma mark - others methods
@@ -257,23 +266,27 @@
 }
 
 #pragma mark - UITableViewDataSource
+    
+    
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return self.viewModel.statuses.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    StatusTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"StatusTableViewCellId"];
+    StatusTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"StatusTableViewCellId" forIndexPath:indexPath];
     Status *status = self.viewModel.statuses[indexPath.row];
     @weakify(self)
-    [[cell.likeButton rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(id  _Nullable x) {
+    cell.likeButton.rac_command = [[RACCommand alloc] initWithSignalBlock:^RACSignal * _Nonnull(id  _Nullable input) {
         @strongify(self)
-        [self.viewModel.likeStatusCommand execute:status];
+        [self.viewModel likeStatus:status];
+        return [RACSignal empty];
     }];
     [cell setStatus:status];
 
     return cell;
 }
+
 
 #pragma mark - UIImagePickerControllerDelegate
 
@@ -298,7 +311,6 @@
 //        [_tableView registerNib:[UINib nibWithNibName:@"StatusTableViewCell" bundle:nil] forCellReuseIdentifier:@"StatusTableViewCellId"];
         [_tableView registerClass:[StatusTableViewCell class] forCellReuseIdentifier:@"StatusTableViewCellId"];
 //        _tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 1, 20)];
-//        _tableView.estimatedRowHeight = 400;
     }
     return _tableView;
 }

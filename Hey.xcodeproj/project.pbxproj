@@ -34,6 +34,8 @@
 		9885B4841ED1A04600E3DC43 /* Contact.m in Sources */ = {isa = PBXBuildFile; fileRef = 9885B4831ED1A04600E3DC43 /* Contact.m */; };
 		9885B4871ED2F52600E3DC43 /* DBMigrationHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 9885B4861ED2F52600E3DC43 /* DBMigrationHelper.m */; };
 		9885B4891ED2F57000E3DC43 /* 0_initial.sql in Resources */ = {isa = PBXBuildFile; fileRef = 9885B4881ED2F57000E3DC43 /* 0_initial.sql */; };
+		9888B43A1EE1D2F70035B2A0 /* about.html in Resources */ = {isa = PBXBuildFile; fileRef = 9888B4391EE1D2F70035B2A0 /* about.html */; };
+		9888B43E1EE1D84E0035B2A0 /* NSString+MD5.m in Sources */ = {isa = PBXBuildFile; fileRef = 9888B43D1EE1D84E0035B2A0 /* NSString+MD5.m */; };
 		988E25111EA9B53A0064FF8C /* UserManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 988E25101EA9B53A0064FF8C /* UserManager.m */; };
 		98A672021EDBFCF400B6A6B0 /* StatusViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A672011EDBFCF400B6A6B0 /* StatusViewModel.m */; };
 		98A672051EDBFD1900B6A6B0 /* ChatTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A672041EDBFD1900B6A6B0 /* ChatTableViewCell.m */; };
@@ -170,6 +172,9 @@
 		9885B4851ED2F52600E3DC43 /* DBMigrationHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBMigrationHelper.h; sourceTree = "<group>"; };
 		9885B4861ED2F52600E3DC43 /* DBMigrationHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DBMigrationHelper.m; sourceTree = "<group>"; };
 		9885B4881ED2F57000E3DC43 /* 0_initial.sql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 0_initial.sql; sourceTree = "<group>"; };
+		9888B4391EE1D2F70035B2A0 /* about.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = about.html; sourceTree = "<group>"; };
+		9888B43C1EE1D84E0035B2A0 /* NSString+MD5.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+MD5.h"; path = "Data/NSString+MD5.h"; sourceTree = "<group>"; };
+		9888B43D1EE1D84E0035B2A0 /* NSString+MD5.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+MD5.m"; path = "Data/NSString+MD5.m"; sourceTree = "<group>"; };
 		988E250F1EA9B53A0064FF8C /* UserManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserManager.h; sourceTree = "<group>"; };
 		988E25101EA9B53A0064FF8C /* UserManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserManager.m; sourceTree = "<group>"; };
 		98A672001EDBFCF400B6A6B0 /* StatusViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StatusViewModel.h; sourceTree = "<group>"; };
@@ -426,6 +431,7 @@
 		986E6AB01E26A2DA00CF1707 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				9888B4391EE1D2F70035B2A0 /* about.html */,
 				986E6AB11E26A2DA00CF1707 /* main.m */,
 			);
 			name = "Supporting Files";
@@ -447,6 +453,15 @@
 				986E6AD71E26A2DA00CF1707 /* Info.plist */,
 			);
 			path = HeyUITests;
+			sourceTree = "<group>";
+		};
+		9888B43B1EE1D82C0035B2A0 /* MD5 */ = {
+			isa = PBXGroup;
+			children = (
+				9888B43C1EE1D84E0035B2A0 /* NSString+MD5.h */,
+				9888B43D1EE1D84E0035B2A0 /* NSString+MD5.m */,
+			);
+			name = MD5;
 			sourceTree = "<group>";
 		};
 		98A672111EDC2A7B00B6A6B0 /* RestClient */ = {
@@ -514,6 +529,7 @@
 		98D9FC7F1E8232E7006FCB87 /* Libs */ = {
 			isa = PBXGroup;
 			children = (
+				9888B43B1EE1D82C0035B2A0 /* MD5 */,
 				981EE5BD1EAE6D7900EC329F /* UIColor+Help */,
 			);
 			name = Libs;
@@ -807,6 +823,7 @@
 				98C682BB1ED3F03500B4170A /* ProfileHeaderView.xib in Resources */,
 				98C682C81ED40BAF00B4170A /* ProfileTitleTableViewCell.xib in Resources */,
 				98A672261EDC6FB500B6A6B0 /* StatusSendView.xib in Resources */,
+				9888B43A1EE1D2F70035B2A0 /* about.html in Resources */,
 				98C682D91ED4231100B4170A /* UserInfoFooterView.xib in Resources */,
 				98C683001EDA17C400B4170A /* SessionTableViewCell.xib in Resources */,
 				98C682C31ED3F43B00B4170A /* ProfileTableViewCell.xib in Resources */,
@@ -923,6 +940,7 @@
 				98C682CC1ED4161600B4170A /* UserInfoViewController.m in Sources */,
 				98E894771EAB97530012851A /* ProfileViewController.m in Sources */,
 				98E894801EABD0EB0012851A /* ChatViewController.m in Sources */,
+				9888B43E1EE1D84E0035B2A0 /* NSString+MD5.m in Sources */,
 				983661AB1EA73BF0004DCD07 /* Viewer.m in Sources */,
 				98A672241EDC6FA100B6A6B0 /* StatusSendView.m in Sources */,
 				98E8946D1EAB97530012851A /* ContactsViewController.m in Sources */,

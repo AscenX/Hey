@@ -10,9 +10,14 @@
 
 @implementation RestClient (Status)
 
+    - (RACSignal *)userStatusByUserId:(NSNumber *)userId {
+        return [[[RestClient sharedClient] get:@"status/user" param:@{ @"userId" : userId }] tryMap:^id _Nonnull(id  _Nullable value, NSError * _Nullable __autoreleasing * _Nullable errorPtr) {
+            return [MTLJSONAdapter modelsOfClass:[Status class] fromJSONArray:[value objectForKey:@"statuses"] error:errorPtr];
+        }];
+    }
 
-- (RACSignal *)statusByUserId:(NSNumber *)userId {
-    return [[[RestClient sharedClient] get:@"status" param:@{ @"userId" : userId }] tryMap:^id _Nonnull(id  _Nullable value, NSError * _Nullable __autoreleasing * _Nullable errorPtr) {
+- (RACSignal *)allStatusByUserId:(NSNumber *)userId {
+    return [[[RestClient sharedClient] get:@"status/all" param:@{ @"userId" : userId }] tryMap:^id _Nonnull(id  _Nullable value, NSError * _Nullable __autoreleasing * _Nullable errorPtr) {
         return [MTLJSONAdapter modelsOfClass:[Status class] fromJSONArray:[value objectForKey:@"statuses"] error:errorPtr];
     }];
 }
@@ -34,8 +39,16 @@
 - (RACSignal *)likeStatus:(NSNumber *)statusId like:(BOOL)like {
     User *user = [[Store sharedStore].userSignal first];
     NSString *likeStr = like ? @"like" : @"cancel_like";
-    return [[[RestClient sharedClient] patch:[NSString stringWithFormat:@"status/%@/%@", statusId, likeStr] param:@{@"userId" : user.Id }] map:^id(id value) {
-        return [value objectForKey:@"like_count"];
+    return [[[RestClient sharedClient] patch:[NSString stringWithFormat:@"status/all/%@/%@", statusId, likeStr] param:@{@"userId" : user.Id }] tryMap:^id _Nonnull(id  _Nullable value, NSError * _Nullable __autoreleasing * _Nullable errorPtr) {
+        return [MTLJSONAdapter modelsOfClass:[Status class] fromJSONArray:[value objectForKey:@"statuses"] error:errorPtr];
+    }];
+}
+    
+- (RACSignal *)likeUserStatus:(NSNumber *)statusId like:(BOOL)like {
+    User *user = [[Store sharedStore].userSignal first];
+    NSString *likeStr = like ? @"like" : @"cancel_like";
+    return [[[RestClient sharedClient] patch:[NSString stringWithFormat:@"status/user/%@/%@", statusId, likeStr] param:@{@"userId" : user.Id }] tryMap:^id _Nonnull(id  _Nullable value, NSError * _Nullable __autoreleasing * _Nullable errorPtr) {
+        return [MTLJSONAdapter modelsOfClass:[Status class] fromJSONArray:[value objectForKey:@"statuses"] error:errorPtr];
     }];
 }
 

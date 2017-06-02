@@ -15,10 +15,13 @@
 + (instancetype)sharedManager;
 
 - (RACSignal *)fetchAllStatuses;
+    
+- (RACSignal *)fetchUserStatuses;
 
 - (RACSignal *)sendStatus:(Status *)status;
     
 - (RACSignal *)likeStatusId:(NSNumber *)statusId like:(BOOL)like;
-
+    
+- (RACSignal *)likeUserStatusId:(NSNumber *)statusId like:(BOOL)like;
 
 @end
